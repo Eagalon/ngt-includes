@@ -1,0 +1,281 @@
+#include"hip.ngt"
+#include"key_hold.ngt"
+timer navtime,menulooptimer;
+/*
+* custom menu
+by harry min khant
+*
+* this class requires the helpful includes pack of harry min khant.
+* this class requires the timer object called navtime, which was already declared in this script. If you have multiple navtime timer though, don't forget to change others to the new!
+*/
+//error codes
+enum custommenuerrorcodes
+{
+cme_none=0,
+cme_no_special,
+cme_faildelexist,
+cme_run_title_empty,
+cme_alreadyactive,
+cme_canceled,
+cme_outrange,
+cme_invalid_length
+}
+/*
+* declare the class, which will store variables, functions, and methods.
+* everything is handled by custom error rather than the default error of which the NGT provides.
+*/
+key_hold ckeyup(SDLK_UP,300,50);
+key_hold ckeydown(SDLK_DOWN,300,60);
+key_hold ckpagedown(SDLK_PAGEDOWN,300,50);
+key_hold ckpageup(SDLK_PAGEUP,300,60);
+class custom_menu
+{
+bool wrap=false;
+bool allowenter=true,allownumpadenter=true,allowrightenter=true;
+//private variables and therefore they should not be modified.
+private string[] items,refs;
+private double line=-1;
+private bool running=false;
+private int cm_error=cme_none;
+private string title;
+private bool tell=true;
+custom_menu()
+{
+this.cm_error=cme_none;
+this.running=false;
+this.reset(true);
+}
+void reset(bool completely=false)
+{
+this.cm_error=cme_none;
+this.items.resize(0);
+this.refs.resize(0);
+if(completely)
+{
+running=false;
+this.wrap=false;
+this.allowenter=true;this.allownumpadenter=true;this.allowrightenter=true;
+this.line=-1;
+this.title="";
+return;
+}
+}
+void create(string ctitle,bool say_dialog=false,bool allowoverrun=false)
+{
+if(this.running && !allowoverrun)
+{
+this.cm_error=cme_alreadyactive;
+return;
+}
+string d=ctitle;
+if(say_dialog) d+="  dialog";
+this.title=d;
+this.running=true;
+speak(this.title);
+return;
+}
+bool add(string i,string ref)
+{
+this.cm_error=cme_none;
+this.items.insert_last(i);
+this.refs.insert_last(ref);
+return true;
+}
+bool remove(string ref)
+{
+this.cm_error=cme_none;
+for(uint i=0;i<this.refs.length();i++)
+{
+if(this.refs[i]==ref)
+{
+this.items.remove_at(i);
+this.refs.remove_at(i);
+return true;
+}
+}
+this.cm_error=cme_faildelexist;
+return false;
+}//end.remove
+bool verify_item_references()
+{
+if(this.items.length()!=this.refs.length()) return false;
+return true;
+}
+void monitor()
+{
+if(this.title==""||this.title==" ")
+{
+this.cm_error=cme_run_title_empty;
+return;
+}
+if(!this.verify_item_references())
+{
+this.cm_error=cme_invalid_length;
+return;
+}
+string char,multichar,test;
+if(this.tell)
+{
+if(this.items.length()>0 && !is_over_value(items,this.line)) speak(this.items[this.line]);
+this.tell=false;
+}
+/*if(navtime.elapsed_millis()>1000 and multichar!="")
+multichar="";
+string c=get_input().capitalize();
+if(c!="" and multichar!=c)
+{
+navtime.restart();
+multichar+=c;
+}
+if(multichar!="" and c!="")
+{
+multichar=multichar.capitalize();
+bool found=false;
+for (uint i=this.line; i<items.length(); i++)
+{
+if(is_over_value(items,i)) continue;
+if(i==this.line) continue;
+test=this.items[i];
+test=test.capitalize();
+if (test.substr(0, multichar.length())==multichar)
+{
+if(this.items[this.line].capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+{
+found=true;
+break;
+}
+if (this.line<i)
+this.line=i;
+else if (this.line>i)
+this.line=i;
+if(!is_over_value(items,this.line)) speak(this.items[this.line]);
+found=true;
+break;
+}
+}
+if (found==false)
+{
+multichar=multichar.capitalize();
+for (uint i=0; i<items.length(); i++)
+{
+test=this.items[i];
+test=test.capitalize();
+if (test.substr(0, multichar.length())==multichar)
+{
+if(!is_over_value(this.items,this.line) && this.items[this.line].capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+{
+found=true;
+break;
+}
+if (this.line<i)
+this.line=i;
+else if (this.line>i)
+this.line=i;
+if(!is_over_value(items,this.line)) speak(this.items[this.line]);
+found=true;
+break;
+}
+}
+}
+}*/
+if(!this.verify_item_references())
+{
+this.running=false;
+this.cm_error=cme_invalid_length;
+return;
+}
+if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing())
+{
+this.line-=10;
+if(this.line<0) this.line=0;
+speak(this.items[this.line]);
+}
+if(!key_pressed(SDLK_PAGEDOWN) && ckpagedown.pressing())
+{
+this.line+=10;
+if(this.line>items.length()-1) this.line=items.length()-1;
+speak(this.items[this.line]);
+}
+if(!key_pressed(SDLK_UP) && ckeyup.pressing())
+{
+if(this.line<0) this.line=this.items.length()-1;
+else if(this.line>0) this.line--;
+if(this.line<=0 and this.wrap) this.line=this.items.length()-1;
+if(!is_over_value(items,this.line)) speak(this.items[this.line]);
+}
+if(!key_pressed(SDLK_DOWN) && ckeydown.pressing())
+{
+if(this.line<items.length()-1) this.line++;
+if(this.line>=items.length()-1 && this.wrap) this.line=0;
+if(!is_over_value(items,this.line)) speak(this.items[this.line]);
+}
+if(key_pressed(SDLK_HOME))
+{
+this.line=0;
+speak(this.items[this.line]);
+}
+if(key_pressed(SDLK_END))
+{
+this.line=items.length()-1;
+speak(this.items[this.line]);
+}
+}//end
+string get_current_ref()
+{
+if(!this.running) return"";
+if(!is_over_value(items,this.line))
+{
+string result=this.refs[this.line];
+return result;
+}
+return"";
+}
+double item_length()
+{
+return this.items.length();
+}
+bool is_running()
+{
+return this.running;
+}
+string get_item(string ref)
+{
+for(uint i=0; i<this.refs.length(); i++)
+{
+if(this.refs[i]==ref) return this.items[i];
+}
+return"";
+}
+double get_position()
+{
+return this.line;
+}
+bool set_position(double per)
+{
+this.cm_error=cme_none;
+if(per<0 || per>=this.items.length())
+{
+this.cm_error=cme_outrange;
+return false;
+}
+this.line=per;
+return true;
+}
+int get_error()
+{
+return this.cm_error;
+}
+string get_error_info()
+{
+int aa=this.get_error();
+if(aa==cme_none) return"";
+if(aa==cme_faildelexist) return"bad request: trying to remove the item that does not exist";
+if(aa==cme_no_special) return"the operation cannot be done because of containing special characters used to determine the menu items";
+if(aa==cme_run_title_empty) return"the menu could not run. bad request: the title for the menu is empty";
+if(aa==cme_canceled) return"user choose to cancel";
+if(aa==cme_alreadyactive) return"the menu cannot run. bad request: not allowed overrun";
+if(aa==cme_outrange) return"1 or more parameters are out of range";
+if(aa==cme_invalid_length) return"the items and the references length are not same each other, thus it is invalid for the menu to show up";
+return"";
+}
+}//end.class
