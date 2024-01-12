@@ -214,10 +214,10 @@ double result=second/first;
 //result=round(result,round_to);
 return result;
 }
-/*string get_item_text(string text,string split_with="[[]]")
+string get_item_text(string text,string split_with="[[]]")
 {
 string final;
-string[] ma=string_split(text,split_with,true);
+string[] ma=text.split(split_with);
 if(ma.length()>1)
 {
 final=ma[1];
@@ -228,10 +228,10 @@ return final;
 string get_item_name(string text,string split_with="[[]]")
 {
 string final;
-string[] ma=string_split(text,split_with,true);
+string[] ma=text.split(split_with);
 final=ma[0];
 return final;
-}*/
+}
 double percent(double n1, double n2)
 {
 return (n1/n2)*100;
@@ -341,31 +341,31 @@ second="0"+second;
 }
 if(result!="")
 {
-result=string_replace(result, "<d>", ""+c+"", true);
-result=string_replace(result, "<D>", ""+c+"", true);
-result=string_replace(result, "<dd>", date, true);
-result=string_replace(result, "<DD>", date, true);
-result=string_replace(result, "<w>", ""+cl.weekday, true);
-result=string_replace(result, "<W>", cl.weekday_name, true);
-result=string_replace(result, "<m>", ""+b, true);
-result=string_replace(result, "<M>", cl.month_name, true);
-result=string_replace(result, "<mm>", month, true);
-result=string_replace(result, "<y>", ""+a, true);
-result=string_replace(result, "<Y>", year, true);
-result=string_replace(result, "<h>", hour12x0, true);
-result=string_replace(result, "<hh>", hour12, true);
-result=string_replace(result, "<H>", ""+d, true);
-result=string_replace(result, "<HH>", hour24, true);
-result=string_replace(result, "<n>", ""+e, true);
-result=string_replace(result, "<N>", ""+e, true);
-result=string_replace(result, "<nn>", minute, true);
-result=string_replace(result, "<NN>", minute, true);
-result=string_replace(result, "<s>", ""+f, true);
-result=string_replace(result, "<S>", ""+f, true);
-result=string_replace(result, "<ss>", second, true);
-result=string_replace(result, "<SS>", second, true);
-result=string_replace(result, "<tt>", daytime_lc, true);
-result=string_replace(result, "<TT>", daytime, true);
+result=result.replace("<d>", ""+c+"");
+result=result.replace("<D>", ""+c+"");
+result=result.replace("<dd>", date);
+result=result.replace("<DD>", date);
+result=result.replace("<w>", ""+cl.weekday);
+result=result.replace("<W>", cl.weekday_name);
+result=result.replace("<m>", ""+b);
+result=result.replace("<M>", cl.month_name);
+result=result.replace("<mm>", month);
+result=result.replace("<y>", ""+a);
+result=result.replace("<Y>", year);
+result=result.replace("<h>", hour12x0);
+result=result.replace("<hh>", hour12);
+result=result.replace("<H>", ""+d);
+result=result.replace("<HH>", hour24);
+result=result.replace("<n>", ""+e);
+result=result.replace("<N>", ""+e);
+result=result.replace("<nn>", minute);
+result=result.replace("<NN>", minute);
+result=result.replace("<s>", ""+f);
+result=result.replace("<S>", ""+f);
+result=result.replace("<ss>", second);
+result=result.replace("<SS>", second);
+result=result.replace("<tt>", daytime_lc);
+result=result.replace("<TT>", daytime);
 }
 return result;
 }*/

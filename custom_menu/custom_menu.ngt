@@ -1,6 +1,6 @@
 #include"hip.ngt"
 #include"key_hold.ngt"
-timer navtime,menulooptimer;
+timer navtime;
 /*
 * custom menu
 by harry min khant
@@ -119,7 +119,7 @@ if(this.tell)
 if(this.items.length()>0 && !is_over_value(items,this.line)) speak(this.items[this.line]);
 this.tell=false;
 }
-/*if(navtime.elapsed_millis()>1000 and multichar!="")
+if(navtime.elapsed_millis()>1000 and multichar!="")
 multichar="";
 string c=get_input().capitalize();
 if(c!="" and multichar!=c)
@@ -177,7 +177,7 @@ break;
 }
 }
 }
-}*/
+}
 if(!this.verify_item_references())
 {
 this.running=false;
@@ -229,6 +229,13 @@ string result=this.refs[this.line];
 return result;
 }
 return"";
+}
+bool set_text_by_ref(string ref, string caption)
+{
+double f=this.refs.find(ref);
+if(f<0) return false;
+this.items[f]=caption;
+return true;
 }
 double item_length()
 {
