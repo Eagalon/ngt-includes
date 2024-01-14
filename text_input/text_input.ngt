@@ -1,4 +1,4 @@
-//This is a simple text box that uses BGT's internal features rather than a regular system box.
+//This is a simple text box that uses NGT's internal features
 //This class also supports the ability to mask the characters written, copy and paste, as well as set a limit of how many characters can be typed. There are also options for adjusting the echoing of characters, and how capital characters are announced.
 #include "key_hold.ngt"
 class text_input
@@ -80,7 +80,7 @@ else{
 string char=""+entry[position];
 if(passworded) speak(""+mask,true);
 else{
-if(string_is_upper_case(char))
+if(char.is_upper())
 {
 if(caps==1) speak("Cap "+char,true);
 else if(caps==2){
@@ -112,7 +112,7 @@ else{
 if(repeat==1){
 if(passworded) speak(mask,true);
 else{
-if(string_is_upper_case(char))
+if(char.is_upper())
 {
 if(caps==1) speak("Cap "+char,true);
 else if(caps==2){
@@ -380,9 +380,5 @@ return word;
 bool control_down()
 {
 if(key_down(SDLK_LCTRL) or key_down(SDLK_RCTRL)) return true;
-return false;
-}
-bool string_is_upper_case(string cc)
-{
 return false;
 }

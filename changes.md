@@ -1,6 +1,7 @@
 # changes
 [visit this repo to get documentations](https://github.com/harrymkt/ngt-docs)
 ## changes on Sunday, January 14, 2024:
+* fixed the spoken of capital letters on text_input.
 * added rotation class. warning! round function is still not available, and it is thus it may have slight issues, especially the direction calculations, currently using ceil function.
 
 ## changes on Saturday, January 13, 2024:
