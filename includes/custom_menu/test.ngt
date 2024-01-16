@@ -1,0 +1,36 @@
+#include"custom_menu.ngt"
+custom_menu c;
+sound test;
+bool mediaplaying = false;
+void main()
+{
+show_game_window("ngt menu test");
+c.add("test1","t1");
+c.add_checkbox("enable music playback", "playback", true);
+c.add("quit","q");
+c.set_position(-1);
+wait(1000);
+c.create("test");
+test.load("C:\\Windows\\Media\\Ring05.wav");
+test.set_volume(-10);
+test.play_looped();
+mediaplaying = true;
+while(true)
+{
+update_game_window();
+c.monitor();
+bool p = c.is_checked("playback");
+if(p!=mediaplaying) {
+mediaplaying = p;
+if(!mediaplaying and test.is_playing()) test.stop();
+else if(mediaplaying and !test.is_playing()) test.play();
+}
+if(c.is_clicked("t1")) speak("t1 is pressed, test1");
+else if(c.is_clicked("q"))
+{
+speak("exiting");
+wait(1000);
+quit();
+}
+}
+}
