@@ -39,6 +39,7 @@ string ref;
 int type = -1;
 custom_menu@menu_parent;
 bool checked;
+double sd_min,sd_max,sd_index;
 menu_item(const string&in name, const string&in ref, int type, custom_menu@ parent)
 {
 this.name = name;
@@ -52,6 +53,20 @@ void on_focus()
 void on_click()
 {
 this.menu_parent.clicked = this.ref;
+}
+}
+class slider_menu_item: menu_item
+{
+slider_menu_item(const string&in name, const string&in ref, double indexval, double min, double max, custom_menu@parent)
+{
+super(name, ref, cme_type_slider, parent);
+this.sd_min=min;
+this.sd_max=max;
+this.sd_index=indexval;
+}
+void on_focus()
+{
+speak(this.name+"  slider "+this.sd_index);
 }
 }
 class checkbox_menu_item: menu_item
@@ -84,6 +99,8 @@ bool allowenter=true,allownumpadenter=true,allowrightenter=true;
 //private variables and therefore they should not be modified.
 key_hold ckeyup(SDLK_UP,300,50);
 key_hold ckeydown(SDLK_DOWN,300,60);
+key_hold ckeyleft(SDLK_LEFT,300,50);
+key_hold ckeyright(SDLK_RIGHT,300,60);
 key_hold ckpagedown(SDLK_PAGEDOWN,300,50);
 key_hold ckpageup(SDLK_PAGEUP,300,60);
 private menu_item@[]items(0);
@@ -137,6 +154,12 @@ checkbox_menu_item ch(name, ref, checked, this);
 this.items.insert_last(ch);
 return true;
 }
+bool add_slider(string i,string ref, double sdindex=0, double sdmin=0, double sdmax=100)
+{
+this.cm_error=cme_none;
+this.items.insert_last(slider_menu_item(i, ref, sdindex, sdmin, sdmax, this));
+return true;
+}
 bool add(string i,string ref)
 {
 this.cm_error=cme_none;
@@ -180,6 +203,18 @@ this.cm_error=cme_invalid_type;
 return false;
 }
 return this.items[f].checked;
+}
+double get_slider_val(string ref)
+{
+if(ref == "") return -1;
+int f= this.get_menu_item(ref);
+if(f<0) return -1;
+if(this.items[f].type != cme_type_slider)
+{
+this.cm_error=cme_invalid_type;
+return -1;
+}
+return this.items[f].sd_index;
 }
 void monitor()
 {
@@ -295,6 +330,35 @@ if(key_pressed(SDLK_SPACE) and !is_over_value(this.items.length(), this.line) &&
 this.items[this.line].checked = (this.items[this.line].checked?false:true);
 speak((this.items[this.line].checked?"checked":"not checked"));
 }
+if(!is_over_value(this.items.length(), this.line) && this.items[this.line].type == cme_type_slider)
+{
+if(ckeyleft.pressing())
+{
+if(control_is_down())
+{
+this.items[this.line].sd_index-=10;
+}
+else
+{
+this.items[this.line].sd_index--;
+}
+if(this.items[this.line].sd_index<this.items[this.line].sd_min) this.items[this.line].sd_index=this.items[this.line].sd_min;
+speak(""+this.items[this.line].sd_index);
+}
+if(ckeyright.pressing())
+{
+if(control_is_down())
+{
+this.items[this.line].sd_index+=10;
+}
+else
+{
+this.items[this.line].sd_index++;
+}
+if(this.items[this.line].sd_index>this.items[this.line].sd_max) this.items[this.line].sd_index=this.items[this.line].sd_max;
+speak(""+this.items[this.line].sd_index);
+}
+}//slider
 if(key_pressed(SDLK_RETURN) and this.allowenter)
 {
 if(!is_over_value(this.items.length(), this.line)) this.items[this.line].on_click();

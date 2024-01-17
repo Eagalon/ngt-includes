@@ -10,6 +10,18 @@ harrymk64@gmail.com
 telegram:
 @harrymktbot
 */
+bool control_is_down()
+{
+return key_down(SDLK_LCTRL) || key_down(SDLK_RCTRL);
+}
+bool alt_is_down()
+{
+return key_down(SDLK_LALT) || key_down(SDLK_RALT);
+}
+bool shift_is_down()
+{
+return key_down(SDLK_LSHIFT) || key_down(SDLK_RSHIFT);
+}
 double rdm(double minimum,double maximum,bool rounded=false,double number_of_rounding=0)
 {
 double final=-1;
@@ -265,6 +277,11 @@ return r;
 bool is_over_value(string[] pars,double currentc=0)
 {
 if(currentc<0 or currentc>pars.length()-1) return true;
+else return false;
+}
+bool is_over_value(double len,double currentc=0)
+{
+if(currentc<0 or currentc>len-1) return true;
 else return false;
 }
 /*string get_time_in_format(string format="<dd>/<mm>/<y>, <hh>:<nn>:<ss> <TT>",double a=DATE_YEAR,double b=DATE_MONTH,double c=DATE_DAY,double d=TIME_HOUR,double e=TIME_MINUTE,double f=TIME_SECOND)

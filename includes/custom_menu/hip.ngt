@@ -10,6 +10,18 @@ harrymk64@gmail.com
 telegram:
 @harrymktbot
 */
+bool control_is_down()
+{
+return key_down(SDLK_LCTRL) || key_down(SDLK_RCTRL);
+}
+bool alt_is_down()
+{
+return key_down(SDLK_LALT) || key_down(SDLK_RALT);
+}
+bool shift_is_down()
+{
+return key_down(SDLK_LSHIFT) || key_down(SDLK_RSHIFT);
+}
 double rdm(double minimum,double maximum,bool rounded=false,double number_of_rounding=0)
 {
 double final=-1;

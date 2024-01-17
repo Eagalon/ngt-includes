@@ -1,0 +1,14 @@
+#include"text_input.ngt"
+text_input t;
+void main()
+{
+show_game_window("test");
+wait(750);
+t.reset();
+t.copyable=false;t.pasteable=false;
+t.set_not_allowed_chars("o\\oroao3928;\"'","this char isn't allowed");
+string n=t.input("username");
+if(t.canceled) n="operation canceled";
+alert("final",n);
+quit();
+}

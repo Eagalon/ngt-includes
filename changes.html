@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NGT Includes Changes</title>
+</head>
+<body>
+
+<h1>Changes</h1>
+<p><a href="https://github.com/harrymkt/ngt-docs">Visit this repo to get documentations</a></p>
+
+<h2>Changes on Wednesday, January 17, 2024:</h2>
+<ul>
+<li>Added the ability to set not allowed characters or only certain characters in text_input class. See test.ngt for example. The functions are:
+<code>bool is_allowed_char(string&in);</code>
+<code>bool is_only_allowed_char(string&in);</code>
+<code>bool set_only_allowed_chars(string&in);</code>
+<code>bool set_not_allowed_chars(string&in);</code>.
+The set functions can be cleared by passing none (in lowercase).
+</li>
+<li>Added the ability to check whether the user presses escape to quit the input, the canceled bool. See test.ngt.</li>
+<li>Added properties pasteable and copyable to set whether the input can be pasted or copied. Test in test.ngt.</li>
+<li>Added slider menu in custom_menu object. Functions are:
+<code>bool add_slider(string name, string reference, double slider_index, double slider_minimum, double slider_maximum);</code>
+<code>double get_slider_val(string reference);</code>.
+When you are on a slider, press left and right arrow keys to change. Combine with control will change by 10 percent.
+</li>
+</ul>
+
+<h2>Changes on Tuesday, January 16, 2024:</h2>
+<ul>
+<li>Custom_menu object has been recoded. Added checkbox support, use <code>add_checkbox(string&in, string&in, bool);</code>. See test.ngt for example.</li>
+<li>You can no longer manually set return key. is_click method has been added instead.</li>
+<li>Use <code>is_checked(string&in ref)</code> method to check whether the given reference is checked. Returns false if the checkbox is unchecked or if it is an invalid type.</li>
+</ul>
+
+<h2>Changes on Sunday, January 14, 2024:</h2>
+<ul>
+<li>Fixed the spoken of capital letters.</li>
+<li>Added rotation class. Warning! Round function is still not available, and it may have slight issues, especially the direction calculations, currently using ceil function.</li>
+</ul>
+
+<h2>Changes on Saturday, January 13, 2024:</h2>
+<ul>
+<li>Added text_input class. This is the simple text input class.</li>
+<li>Added set_text_by_ref function to custom_menu. With this function, it is easier to change the item text throughout the menu runtime.</li>
+<li>Updated helpful includes pack.</li>
+<li>Added multi-letter navigation to the menu.</li>
+<li>Added this changes file to ensure up-to-date changes.</li>
+</ul>
+
+</body>
+</html>

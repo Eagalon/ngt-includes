@@ -4,10 +4,11 @@
 class text_input
 {
 sound capital;
-string[] entry;
-string title;
-int cursor=0;
+private string[] entry;
+private string title;
+private int cursor=0;
 bool passworded=false;
+bool pasteable=true,copyable=true;
 int textlength=0;
 int repeat=1;
 int caps=1;
@@ -16,19 +17,78 @@ key_hold back(SDLK_BACKSPACE,500,40);
 key_hold back2(SDLK_DELETE,500,40);
 key_hold larrow(SDLK_LEFT,500,40);
 key_hold rarrow(SDLK_RIGHT,500,40);
+private string[] nochars;
+private string[] onlychars;
+private string nochardes="";
 //Constructor.
+bool canceled=false;
 text_input()
 {
 reset();
 }
 void reset()
 {
-cursor=0;
-entry.resize(0);
-title="";
-passworded=false;
-mask="";
-textlength=0;
+this.cursor=0;
+this.entry.resize(0);
+this.title="";
+this.passworded=false;
+this.mask="";
+this.textlength=0;
+this.pasteable=true;this.copyable=true;
+this.nochars.resize(0);
+this.onlychars.resize(0);
+this.nochardes="";
+this.canceled=false;
+}
+bool is_only_allowed_char(string char)
+{
+//true on If the character is found, false If it is not allowed.
+for(uint i=0;i<char.length();i++)
+{
+if(this.onlychars.find(""+char[i])<0) return false;
+}
+return true;
+}
+bool is_allowed_char(string char)
+{
+//true on If the character is found, false If it is not allowed.
+for(uint i=0;i<char.length();i++)
+{
+if(this.nochars.find(""+char[i])<0) return true;
+}
+return false;
+}
+bool set_only_allowed_chars(string ch, string des)
+{
+if(ch.is_empty()) return false;
+if(ch=="none")
+{
+this.nochars.resize(0);
+this.onlychars.resize(0);
+this.nochardes="";
+return true;
+}
+this.nochars.resize(0);
+this.onlychars.resize(0);
+for(uint i=0;i<ch.length();i++) this.onlychars.insert_last(""+ch[i]);
+this.nochardes=des;
+return true;
+}
+bool set_not_allowed_chars(string ch, string des)
+{
+if(ch.is_empty()) return false;
+if(ch=="none")
+{
+this.nochars.resize(0);
+this.onlychars.resize(0);
+this.nochardes="";
+return true;
+}
+this.nochars.resize(0);
+this.onlychars.resize(0);
+for(uint i=0;i<ch.length();i++) this.nochars.insert_last(""+ch[i]);
+this.nochardes=des;
+return true;
 }
 //This function simply returns the appropriate word form for any symbols that may arise, in case screen readers are set to not read punctuation.
 string symbol_to_word(string char)
@@ -100,14 +160,23 @@ else speak(symbol_to_word(char),true);
 }
 }
 }
-void input_character(string char)
+bool input_character(string char)
 {
 if(entry.length()==textlength and textlength>0)
 {
 cursor=entry.length()-1;
-return;
+return false;
 }
-
+if(this.onlychars.length()>0 && !this.is_only_allowed_char(char))
+{
+if(this.nochardes!="") speak(this.nochardes);
+return false;
+}
+if(this.nochars.length()>0 && !this.is_allowed_char(char))
+{
+if(this.nochardes!="") speak(this.nochardes);
+return false;
+}
 else{
 if(repeat==1){
 if(passworded) speak(mask,true);
@@ -133,10 +202,10 @@ else speak(symbol_to_word(char),true);
 }
 entry.insert_at(cursor,char);
 }
+return true;
 }
 string input(string ttl,string default_text="",bool uses_password=false,string mask_char="",int txtlength=0)
 {
-reset();
 if(!capital.is_active()) capital.load("cap.ogg");
 title=ttl;
 passworded=uses_password;
@@ -156,18 +225,32 @@ while(true)
 update_game_window();
 string c=get_input();
 if(c!="" and c.length()==1){ 
-input_character(c);
-cursor++;
+if(input_character(c)) cursor++;
 }
 if(key_pressed(SDLK_TAB))speak(title,true);
 if(control_down())
 {
 if(key_pressed(SDLK_v))
 {
+if(!this.pasteable)
+{
+speak("this input does not allow pasting.");
+continue;
+}
 string pastetext=clipboard_read_text();
 if(pastetext.length()==0) continue;
 int space=entry.length()+pastetext.length();
 if(space>textlength and textlength>0) continue;
+if(this.onlychars.length()>0 && !this.is_only_allowed_char(pastetext))
+{
+if(this.nochardes!="") speak(this.nochardes);
+continue;
+}
+if(this.nochars.length()>0 && !this.is_allowed_char(pastetext))
+{
+if(this.nochardes!="") speak(this.nochardes);
+continue;
+}
 for(uint i=0; i<pastetext.length(); i++){ 
 entry.insert_at(cursor,""+pastetext[i]);
 cursor++;
@@ -176,6 +259,11 @@ speak("Pasted from clipboard.");
 }
 if(key_pressed(SDLK_c))
 {
+if(!this.copyable)
+{
+speak("this input does not allow copying.");
+continue;
+}
 string fulltext;
 for(uint i=0; i<entry.length(); i++) fulltext+=""+entry[i];
 if(fulltext.length()==0) continue;
@@ -264,7 +352,11 @@ entry.remove_at(cursor-1);
 cursor--;
 }
 }
-if(key_pressed(SDLK_ESCAPE))break;
+if(key_pressed(SDLK_ESCAPE))
+{
+this.canceled=true;
+break;
+}
 }
 return "";
 }

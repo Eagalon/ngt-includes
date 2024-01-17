@@ -7,12 +7,13 @@ void main()
 show_game_window("ngt menu test");
 c.add("test1","t1");
 c.add_checkbox("enable music playback", "playback", true);
+c.add_slider("music volume", "mv", 0, -100, 0);
 c.add("quit","q");
 c.set_position(-1);
 wait(1000);
 c.create("test");
 test.load("C:\\Windows\\Media\\Ring05.wav");
-test.set_volume(-10);
+test.set_volume(0);
 test.play_looped();
 mediaplaying = true;
 while(true)
@@ -25,6 +26,8 @@ mediaplaying = p;
 if(!mediaplaying and test.is_playing()) test.stop();
 else if(mediaplaying and !test.is_playing()) test.play();
 }
+double mvs=c.get_slider_val("mv");
+if(test.get_volume()!=mvs) test.set_volume(mvs);
 if(c.is_clicked("t1")) speak("t1 is pressed, test1");
 else if(c.is_clicked("q"))
 {
