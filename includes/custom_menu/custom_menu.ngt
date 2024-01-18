@@ -30,7 +30,8 @@ enum cmenu_types
 cme_type_text = 0,
 cme_type_checkbox,
 cme_type_slider,
-cme_type_audio
+cme_type_audio,
+cme_type_list
 }
 class menu_item
 {
@@ -40,6 +41,9 @@ int type = -1;
 custom_menu@menu_parent;
 bool checked;
 double sd_min,sd_max,sd_index;
+listitem@[] lists;
+int listper=-1;
+bool list_multi;
 menu_item(const string&in name, const string&in ref, int type, custom_menu@ parent)
 {
 this.name = name;
@@ -81,6 +85,31 @@ void on_focus()
 speak(this.name+"  check box "+(this.checked?"checked":"not checked"));
 }
 }
+class list_menu_item: menu_item
+{
+list_menu_item(const string&in name, const string&in ref, bool mulsel, custom_menu@parent)
+{
+super(name, ref, cme_type_list, parent);
+this.list_multi = mulsel;
+this.lists.resize(0);
+}
+void on_focus()
+{
+if(this.list_multi)
+{
+double f=0;
+for(uint i=0;i<this.lists.length();i++)
+{
+if(this.lists[i].selected) f++;
+}
+speak(this.name+"  list with "+f+" selected");
+return;
+}
+string d;
+if(!is_over_value(this.lists.length(),this.listper)) d=""+this.lists[this.listper].item;
+speak(this.name+"  list  "+d);
+}
+}
 class text_menu_item: menu_item
 {
 text_menu_item(const string&in name, const string&in ref, custom_menu@parent)
@@ -90,6 +119,17 @@ super(name, ref, cme_type_text, parent);
 void on_focus()
 {
 speak(this.name);
+}
+}
+class listitem
+{
+string item, ref;
+bool selected;
+listitem()
+{
+this.item="";
+this.selected=false;
+this.ref=this.item;
 }
 }
 class custom_menu
@@ -139,14 +179,51 @@ if(this.running && !allowoverrun)
 this.cm_error=cme_alreadyactive;
 return;
 }
-string d=ctitle;
-if(say_dialog) d+="  dialog";
-this.title=d;
+string d="";
+if(say_dialog) d="  dialog";
+this.title=ctitle;
 this.running=true;
-speak(this.title);
+speak(this.title+d);
 this.clicked = "";
 return;
 }
+private void list_monitor(string ref)
+{
+int f=this.get_menu_item(ref);
+if(f<0) return;
+if(this.items[f].type!=cme_type_list) return;
+speak(this.items[f].name+"  list");
+double cc=this.items[f].listper;
+while(true)
+{
+update_game_window();
+if(key_pressed(SDLK_UP))
+{
+if(cc>0) cc--;
+string s;
+if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
+speak(""+this.items[f].lists[cc].item+s);
+}
+if(key_pressed(SDLK_DOWN))
+{
+if(cc<this.items[f].lists.length()-1) cc++;
+string s;
+if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
+speak(""+this.items[f].lists[cc].item+s);
+}
+if(key_pressed(SDLK_SPACE) && !is_over_value(this.items[f].lists.length(), cc) && this.items[f].list_multi)
+{
+bool ccc=(this.items[f].lists[cc].selected?false:true);
+this.items[f].lists[cc].selected=ccc;
+speak((ccc?"checked":"not checked"));
+}
+if(key_pressed(SDLK_RETURN))
+{
+this.items[f].listper=cc;
+break;
+}
+}//while
+}//end.listmonitor
 bool add_checkbox(string name, string ref, bool checked = false)
 {
 this.cm_error=cme_none;
@@ -164,6 +241,37 @@ bool add(string i,string ref)
 {
 this.cm_error=cme_none;
 this.items.insert_last(text_menu_item(i, ref, this));
+return true;
+}
+bool add_list(string i,string ref, bool multi=false)
+{
+this.cm_error=cme_none;
+this.items.insert_last(list_menu_item(i, ref, multi, this));
+return true;
+}
+bool add_list_item_to(string ref,string item, string list_ref="", int per=-1, bool select=false)
+{
+this.cm_error=cme_none;
+int f=this.get_menu_item(ref);
+if(f<0) return false;
+if(list_ref=="") list_ref=item;
+listitem l;
+l.item=item;
+l.ref=list_ref;
+if(this.items[f].list_multi) l.selected=select;
+if(per>-1) this.items[f].lists.insert_at(per, l);
+else this.items[f].lists.insert_last(l);
+return true;
+}
+bool remove_list_item_from(string ref, int per)
+{
+this.cm_error=cme_none;
+int f=this.get_menu_item(ref);
+if(f<0) return false;
+if(this.items[f].type!=cme_type_list) return false;
+if(is_over_value(this.items[f].lists.length(),per)) return false;
+@this.items[f].lists[per]=null;
+this.items[f].lists.remove_at(per);
 return true;
 }
 bool remove(string ref)
@@ -359,9 +467,14 @@ if(this.items[this.line].sd_index>this.items[this.line].sd_max) this.items[this.
 speak(""+this.items[this.line].sd_index);
 }
 }//slider
-if(key_pressed(SDLK_RETURN) and this.allowenter)
+if(key_pressed(SDLK_RETURN) and this.allowenter && !is_over_value(this.items.length(), this.line))
 {
-if(!is_over_value(this.items.length(), this.line)) this.items[this.line].on_click();
+if(this.items[this.line].type==cme_type_list)
+{
+this.list_monitor(this.items[this.line].ref);
+return;
+}
+this.items[this.line].on_click();
 }
 if(key_pressed(SDLK_HOME))
 {
@@ -398,6 +511,34 @@ return this.items.length();
 bool is_running()
 {
 return this.running;
+}
+int[] get_list_selections(string ref)
+{
+int[] e;
+int f= this.get_menu_item(ref);
+if(f<0) return e;
+if(this.items[f].type!=cme_type_list) return e;
+if(!this.items[f].list_multi) return e;
+for(uint i=0;i<this.items[f].lists.length();i++)
+{
+if(this.items[f].lists[i].selected) e.insert_last(i);
+}
+return e;
+}
+int get_list_position(string ref)
+{
+int f= this.get_menu_item(ref);
+if(f<0) return -1;
+if(this.items[f].type!=cme_type_list) return -1;
+return this.items[f].listper;
+}
+string get_list_item(string ref, int per)
+{
+int f= this.get_menu_item(ref);
+if(f<0) return "";
+if(this.items[f].type!=cme_type_list) return "";
+if(is_over_value(this.items[f].lists.length(), per)) return"";
+return this.items[f].lists[per].item;
 }
 int get_menu_item(const string&in ref)
 {
