@@ -1,33 +1,249 @@
+const string mapex=".map";
+const string mapparse=":";
+const string sndex=".ogg";
+tile@[] tiles(0);
+vector user;
 /*
-This is a really simple map class.
-Author:
-Twitter: @NicklasMCHD
-AudioGames Forum Name: NicklasMCHD
+make sure to have rotation.ngt imported.
+make sure to have sound_pool p; is declared.
+make sure to declare double facing=0;
+at beginning of void main function, make sure to add below 3 codes to insure false information.
+
+user.x=0;
+user.y=0;
+user.z=0;
+
 */
-
-
-// this map uses dictionaries
-dictionary map;
-
-// spawn a set of tiles.
-void spawn_tile(int lx, int rx, int miny, int maxy, int minz, int maxz, string tile="air")
+map m;
+class map
 {
-for(int i=lx; i<=rx; i++)
+vector minimum,maximum;
+string name;
+timer wallt; //timer for wall bumps
+map(string&in name="")
 {
-for(int i2=miny; i2<=maxy; i2++)
+this.minimum.x=0; this.minimum.y=0; this.minimum.z=0;
+this.maximum.x=0; this.maximum.y=0; this.maximum.z=0;
+if(name!="") this.load(name);
+}
+void load(string data)
 {
-for(int i3=minz; i3<=maxz; i3++)
+file f;
+string[] lines=data.split_lines(); //split lines
+f.close();
+if(lines.length()<1) return; //empty map.
+destroy_all_tiles();
+for(uint i=0;i<lines.length();i++)
 {
-map.set(i+":"+i2+":"+i3, tile);
+string[] p=lines[i].split(mapparse); //split with colons. you can change the mapparse var to whatever you want, by default is colon (:).
+if(p[0]=="mapname"&&p.length()>1) this.name=p[1];
+if(p[0]=="minx"&&p.length()>1) this.minimum.x=string_to_number(p[1]);
+if(p[0]=="miny"&&p.length()>1) this.minimum.y=string_to_number(p[1]);
+if(p[0]=="minz"&&p.length()>1) this.minimum.z=string_to_number(p[1]);
+if(p[0]=="maxx"&&p.length()>1) this.maximum.x=string_to_number(p[1]);
+if(p[0]=="maxy"&&p.length()>1) this.maximum.y=string_to_number(p[1]);
+if(p[0]=="maxz"&&p.length()>1) this.maximum.z=string_to_number(p[1]);
+if(p[0]=="tile" && p.length()>7)
+{
+double a=parseFloat(p[1]);
+double b=parseFloat(p[2]);
+double c=parseFloat(p[3]);
+double d=parseFloat(p[4]);
+double e=parseFloat(p[5]);
+double f=parseFloat(p[6]);
+string tilename=p[7];
+spawn_tile(a,b,c,d,e,f,tilename,this.name);
+}
+}//loop i
+}//end of load
+}//end of map class.
+void move(string dir)
+{
+if(dir=="up")
+{
+if(get_tile_at(user.x, user.y, user.z+1)!="" and get_tile_at(user.x, user.y, user.z+1)!="blank" and user.z+1<=m.maximum.z)
+{
+user.z++;
+if(get_tile_at(user.x,user.y,user.z).contains("wall"))
+{
+if(m.wallt.elapsed_millis()>=250)
+{
+m.wallt.restart();
+p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
+}
+user.z--;
+}
+else
+{
+playstep(user,5);
 }
 }
 }
-}
-
-// Get a tile at a specific location.
-string get_tile_at(int x, int y, int z)
+if(dir=="down")
 {
-string tile;
-map.get(x+":"+y+":"+z, tile);
-return tile;
+if(get_tile_at(user.x, user.y, user.z-1)!="" and get_tile_at(user.x, user.y, user.z-1)!="blank" and user.z-1>=m.minimum.z)
+{
+user.z--;
+if(get_tile_at(user.x,user.y,user.z).contains("wall"))
+{
+if(m.wallt.elapsed_millis()>=250)
+{
+m.wallt.restart();
+p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
+}
+user.z++;
+}
+else
+{
+playstep(user,5);
+}
+}
+}
+if(dir=="forward")
+{
+double ox=user.x;
+double oy=user.y;
+vector ma=move(user.x, user.y, user.z, facing, north);
+if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
+user=ma;
+user.x=round(user.x, 0);
+user.y=round(user.y, 0);
+if(get_tile_at(user.x,user.y,user.z).contains("wall"))
+{
+if(m.wallt.elapsed_millis()>=250)
+{
+m.wallt.restart();
+p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
+}
+user.x=ox; user.y=oy;
+user.x=round(ox,0); user.y=round(oy,0);
+}
+else
+{
+playstep(user,5);
+}
+}
+if(dir=="backward")
+{
+double ox=user.x;
+double oy=user.y;
+vector ma=move(user.x, user.y, user.z, facing, south);
+if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
+user=ma;
+user.x=round(user.x, 0);
+user.y=round(user.y, 0);
+if(get_tile_at(user.x,user.y,user.z).contains("wall"))
+{
+if(m.wallt.elapsed_millis()>=250)
+{
+m.wallt.restart();
+p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
+}
+user.x=ox; user.y=oy;
+user.x=round(ox,0); user.y=round(oy,0);
+}
+else
+{
+playstep(user,5);
+}
+}
+if(dir=="left")
+{
+double ox=user.x;
+double oy=user.y;
+vector ma=move(user.x, user.y, user.z, facing, west);
+if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
+user=ma;
+user.x=round(user.x, 0);
+user.y=round(user.y, 0);
+if(get_tile_at(user.x,user.y,user.z).contains("wall"))
+{
+if(m.wallt.elapsed_millis()>=250)
+{
+m.wallt.restart();
+p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
+}
+user.x=ox; user.y=oy;
+user.x=round(ox,0); user.y=round(oy,0);
+}
+else
+{
+playstep(user,5);
+}
+}
+if(dir=="right")
+{
+double ox=user.x;
+double oy=user.y;
+vector ma=move(user.x, user.y, user.z, facing, east);
+if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
+user=ma;
+user.x=round(user.x, 0);
+user.y=round(user.y, 0);
+if(get_tile_at(user.x,user.y,user.z).contains("wall"))
+{
+if(m.wallt.elapsed_millis()>=250)
+{
+m.wallt.restart();
+p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
+}
+user.x=ox; user.y=oy;
+user.x=round(ox,0); user.y=round(oy,0);
+}
+else
+{
+playstep(user,5);
+}
+}
+}
+//end of move
+void playstep(vector u,int max_step=5,string sndpath="sounds")
+{
+p.play_stationary(get_tile_at(u.x,u.y,u.z)+"step"+random(1,max_step)+sndex,false);
+}
+string get_tile_at(double x,double y,double z,string mapname=m.name)
+{
+if(mapname=="") return"";
+if(tiles.is_empty()) return"";
+for(uint i=0;i<tiles.length();i++)
+{
+if(tiles[i].mapname!=mapname) continue;
+if(tiles[i].minx<=x and tiles[i].maxx>=x and tiles[i].miny<=y and tiles[i].maxy>=y and tiles[i].minz<=z and tiles[i].maxz>=z) return ""+tiles[i].type;
+}
+return"";
+}
+class tile
+{
+double minx,maxx,miny,maxy,minz,maxz;
+string type,mapname;
+tile(double a, double b, double c, double d, double e, double f, string type, string mapn)
+{
+this.minx=a;this.maxx=b;this.miny=c;this.maxy=d;this.minz=e;this.maxz=f;
+this.type=type;
+this.mapname=mapn;
+}
+}
+void spawn_tile(double a, double b, double c, double d, double e, double f, string type, string mapn)
+{
+tile t(a,b,c,d,e,f,type,mapn);
+tiles.insert_last(t);
+}
+void destroy_tile(uint index)
+{
+if(index<0 || index>=tiles.length()) return;
+@tiles[index]=null;
+tiles.remove_at(index);
+}
+void destroy_all_tiles()
+{
+for(uint i=0;i<tiles.length();i++)
+{
+destroy_tile(i);
+}
+tiles.resize(0);
+}
+double string_to_number(string f)
+{
+//this function too, shall be removed when engine has it.
+return parseFloat(f);
 }
