@@ -150,6 +150,7 @@ private int cm_error=cme_none;
 private string title;
 private bool tell=true;
 string clicked = "";
+private string char,multichar,test;
 custom_menu()
 {
 this.clicked = "";
@@ -337,7 +338,6 @@ if(!this.verify_item_references())
 this.cm_error=cme_invalid_length;
 return;
 }
-string char,multichar,test;
 if(this.tell)
 {
 if(this.items.length()>0 && !is_over_value(items.length(),this.line)) this.items[this.line].on_focus();

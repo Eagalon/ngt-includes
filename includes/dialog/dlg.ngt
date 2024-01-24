@@ -13,3 +13,4 @@ if (key_pressed(SDLK_RETURN) or key_pressed(SDLK_ESCAPE))
 break;
 }
 }
+}

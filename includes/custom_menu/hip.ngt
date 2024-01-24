@@ -386,3 +386,19 @@ result=result.replace("<TT>", daytime);
 }
 return result;
 }*/
+bool toggle(bool b)
+{
+return b?false:true;
+}
+bool int_to_bool(int b)
+{
+return b==1?true:false;
+}
+int toggle(int b)
+{
+return b==1?0:1;
+}
+int bool_to_int(bool b)
+{
+return b?1:0;
+}
