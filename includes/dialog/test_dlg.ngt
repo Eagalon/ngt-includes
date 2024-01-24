@@ -1,0 +1,7 @@
+#include"dlg.ngt"
+void main() {
+show_game_window("dialog test");
+wait(1000);
+dlg("this is a test message");
+quit();
+}

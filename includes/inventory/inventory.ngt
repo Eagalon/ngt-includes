@@ -1,0 +1,91 @@
+//inventory class.
+//written: July 9, 2020 Ivan Soto (IMS-Productions).
+//updated for use with NGT: Tuesday, January 23, 2024.
+class inventory {
+inventory_item@[]items(0);
+int invpos;
+//constructor.
+inventory() {
+reset();
+}
+int get_item_index(const string a) {
+for(uint i=0; i<this.items.length(); i+=1) {
+if(this.items[i].name==a) return i;
+}
+return -1;
+}
+inventory_item@get_current_item() {
+if(this.invpos >= 0 and this.invpos < this.items.length()) {
+return this.items[this.invpos];
+}
+return null;
+}
+string get_current_item_string() {
+inventory_item@current_item = this.get_current_item();
+if(current_item != null) {
+return current_item.name;
+}
+return "";
+}
+void speak_item(bool speak_position = true) {
+inventory_item@current_item = this.get_current_item();
+if(@current_item != null) {
+speak(current_item.name+", you have "+current_item.amount);
+if(speak_position) speak("Item "+(this.invpos+1)+" of "+this.items.length(), false);
+}
+else speak("no item");
+}
+void cycle(const int direction=1) {
+if(this.items.length() <= 0) return;
+invpos = (invpos + direction) % this.items.length();
+if (invpos < 0) invpos += this.items.length();
+}
+inventory_item@get_inv_item_handle(const string a) {
+for(uint i=0; i<this.items.length(); i+=1) {
+if(this.items[i].name==a) return this.items[i];
+}
+return null;
+}
+void reset() {
+//this will remove all items in the inventory.
+this.items.resize(0);
+this.invpos = 0;
+}
+string export(const string del="=", const string del2="\r\n") {
+//This prints a human-friendly version of your inventory. It will return in ini format by default, but you can change this by changing the del and del2 strings to something else.
+if(this.items.length()<=0) //nothing here.
+return "";
+string output;
+for(int i=0; i<this.items.length(); i+=1) {
+output+=items[i].name+del+items[i].amount+del2;
+}
+return output;
+}
+void give(const string what, const int amount) {
+inventory_item@temp=get_inv_item_handle(what);
+if(@temp==null) {
+@temp=inventory_item(what, amount);
+this.items.insert_last(temp);
+}
+else {
+temp.amount+=amount;
+if(temp.amount<=0)
+this.items.remove_at(this.get_item_index(temp.name));
+}
+}
+int get_item_amount(const string a) {
+for(int i=0; i<items.length(); i+=1) {
+if(items[i].name==a) return items[i].amount;
+}
+return -1;
+}
+}
+//end of inventory class.
+class inventory_item {
+string name;
+int amount;
+inventory_item(string a, int b) {
+this.name=a;
+this.amount=b;
+}
+}
