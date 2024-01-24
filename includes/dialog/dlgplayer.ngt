@@ -1,0 +1,39 @@
+﻿sound dlgaudio;
+void dlgplay(string dlgsound, bool dlgfade=false, int fadespeed=30, bool is_file=true)
+{
+dlgaudio.load(dlgsound);
+dlgaudio.play();
+while(dlgaudio.is_playing())
+{
+delay(5);
+update_game_window();
+if(key_pressed(SDLK_RETURN) or key_pressed(SDLK_SPACE))
+{
+if (dlgfade==true)
+{
+fade(dlgaudio, -80, fadespeed);
+}
+dlgaudio.stop();
+break;
+}
+}
+}
+void fade (sound@ handle, double final_volume=-50, double delay=25)
+{
+if (handle.get_volume() == final_volume)
+{
+return;
+}
+while (handle.get_volume() != final_volume)
+{
+if (handle.get_volume() > final_volume)
+{
+handle.set_volume(handle.get_volume()-1);
+}
+else if (handle.get_volume() < final_volume)
+{
+handle.set_volume(handle.get_volume()+1);
+}
+wait (delay);
+}
+}
