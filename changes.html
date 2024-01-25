@@ -11,6 +11,10 @@
 <p><a href="https://github.com/harrymkt/ngt-docs">Visit this repo to get documentations</a></p>
 <h2> changes on Thursday, January 25, 2024:</h2>
 <ul>
+<li>you can now get any clicked item on custom_menu object, by using get_click() method.</li>
+<li>fixed possible runtime errors with the list in custom_menu object.</li>
+<li>optimized the code, using delay method to insure smooth run. this includes, custom_menu, text_input, and everything within while loops. thanks abdallah hayder for the issue report!</li>
+<li>you can now specify the type of the list. default is list. function sintax:  bool add_list(string i,string ref, bool multi=false, string listtype="list")</li>
 <li>added ms_to_readable_time(double) function to hip.ngt in general folder. this funcion allows you to display the readable time as the millisecond is specified.</li>
 <li>as from the previous commit, added dlplay in dialog, and inventory class has been added. both of them have been requested by Ivan Soto.</li>
 <li>added tests as well.</li>

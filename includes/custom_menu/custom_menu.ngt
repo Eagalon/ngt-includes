@@ -44,6 +44,7 @@ double sd_min,sd_max,sd_index;
 listitem@[] lists;
 int listper=-1;
 bool list_multi;
+string listtype;
 menu_item(const string&in name, const string&in ref, int type, custom_menu@ parent)
 {
 this.name = name;
@@ -87,11 +88,12 @@ speak(this.name+"  check box "+(this.checked?"checked":"not checked"));
 }
 class list_menu_item: menu_item
 {
-list_menu_item(const string&in name, const string&in ref, bool mulsel, custom_menu@parent)
+list_menu_item(const string&in name, const string&in ref, bool mulsel, string ltype, custom_menu@parent)
 {
 super(name, ref, cme_type_list, parent);
 this.list_multi = mulsel;
 this.lists.resize(0);
+this.listtype=ltype;
 }
 void on_focus()
 {
@@ -102,12 +104,12 @@ for(uint i=0;i<this.lists.length();i++)
 {
 if(this.lists[i].selected) f++;
 }
-speak(this.name+"  list with "+f+" selected");
+speak(this.name+"  "+this.listtype+" with "+f+" selected");
 return;
 }
 string d;
 if(!is_over_value(this.lists.length(),this.listper)) d=""+this.lists[this.listper].item;
-speak(this.name+"  list  "+d);
+speak(this.name+"  "+this.listtype+"  "+d);
 }
 }
 class text_menu_item: menu_item
@@ -193,7 +195,7 @@ private void list_monitor(string ref)
 int f=this.get_menu_item(ref);
 if(f<0) return;
 if(this.items[f].type!=cme_type_list) return;
-speak(this.items[f].name+"  list");
+speak(this.items[f].name+"  "+this.items[f].listtype);
 double cc=this.items[f].listper;
 while(true)
 {
@@ -201,6 +203,7 @@ update_game_window();
 if(key_pressed(SDLK_UP))
 {
 if(cc>0) cc--;
+else if(cc<0) cc=this.items[f].lists.length()-1;
 string s;
 if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
 speak(""+this.items[f].lists[cc].item+s);
@@ -208,6 +211,7 @@ speak(""+this.items[f].lists[cc].item+s);
 if(key_pressed(SDLK_DOWN))
 {
 if(cc<this.items[f].lists.length()-1) cc++;
+else if(cc>=this.items[f].lists.length()) cc=0;
 string s;
 if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
 speak(""+this.items[f].lists[cc].item+s);
@@ -221,6 +225,10 @@ speak((ccc?"checked":"not checked"));
 if(key_pressed(SDLK_RETURN))
 {
 this.items[f].listper=cc;
+break;
+}
+if(key_pressed(SDLK_ESCAPE))
+{
 break;
 }
 }//while
@@ -244,10 +252,10 @@ this.cm_error=cme_none;
 this.items.insert_last(text_menu_item(i, ref, this));
 return true;
 }
-bool add_list(string i,string ref, bool multi=false)
+bool add_list(string i,string ref, bool multi=false, string listtype="list")
 {
 this.cm_error=cme_none;
-this.items.insert_last(list_menu_item(i, ref, multi, this));
+this.items.insert_last(list_menu_item(i, ref, multi, listtype, this));
 return true;
 }
 bool add_list_item_to(string ref,string item, string list_ref="", int per=-1, bool select=false)
@@ -496,6 +504,10 @@ string result=this.items[this.line].ref;
 return result;
 }
 return"";
+}
+string get_click()
+{
+return this.clicked;
 }
 bool set_text_by_ref(string ref, string caption)
 {
