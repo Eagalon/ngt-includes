@@ -5,7 +5,15 @@ bool mediaplaying = false;
 void main()
 {
 show_game_window("ngt menu test");
+c.reset(true);
+c.clicksound="snd/menuclick.ogg";
+c.movesound="snd/menumove.ogg";
+c.opensound="snd/menuopen.ogg";
+c.wrapsound="snd/menuwrap.ogg";
+c.edgesound="snd/menuedge.ogg";
 c.add("test1","t1");
+c.add_checkbox("menu wrapping","wrap",false);
+c.add_checkbox("menu sidescrolling","sidescr",false);
 c.add_checkbox("enable music playback", "playback", true);
 c.add_slider("music volume", "mv", 0, -100, 0);
 c.add_list("sounds","snd",true, "multilist");
@@ -21,9 +29,12 @@ test.play_looped();
 mediaplaying = true;
 while(true)
 {
+delay(5);
 update_game_window();
 c.monitor();
 bool p = c.is_checked("playback");
+c.wrap=c.is_checked("wrap");
+c.sidescrolling=c.is_checked("sidescr");
 if(p!=mediaplaying) {
 mediaplaying = p;
 if(!mediaplaying and test.is_playing()) test.stop();
