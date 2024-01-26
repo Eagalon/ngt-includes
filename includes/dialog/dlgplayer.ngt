@@ -1,13 +1,23 @@
 ﻿sound dlgaudio;
-void dlgplay(string dlgsound, bool dlgfade=false, int fadespeed=30, bool is_file=true)
+int dlgplay(string dlgsound, bool dlgfade=false, int fadespeed=30)
 {
 dlgaudio.load(dlgsound);
 dlgaudio.play();
+int result = 1;
 while(dlgaudio.is_playing())
 {
 delay(5);
 update_game_window();
-if(key_pressed(SDLK_RETURN) or key_pressed(SDLK_SPACE))
+if(key_pressed(SDLK_ESCAPE)) {
+if (dlgfade==true)
+{
+fade(dlgaudio, -80, fadespeed);
+}
+dlgaudio.stop();
+result = 0;
+break;
+}
+if(key_pressed(SDLK_RETURN))
 {
 if (dlgfade==true)
 {
@@ -17,6 +27,7 @@ dlgaudio.stop();
 break;
 }
 }
+return result;
 }
 void fade (sound@ handle, double final_volume=-50, double delay=25)
 {
