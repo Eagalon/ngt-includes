@@ -8,7 +8,7 @@ show_game_window("ngt menu test");
 c.add("test1","t1");
 c.add_checkbox("enable music playback", "playback", true);
 c.add_slider("music volume", "mv", 0, -100, 0);
-c.add_list("sounds","snd",true);
+c.add_list("sounds","snd",true, "multilist");
 c.add_list_item_to("snd","sound1","");
 c.add_list_item_to("snd","sound2","");
 c.add("quit","q");
@@ -31,12 +31,15 @@ else if(mediaplaying and !test.is_playing()) test.play();
 }
 double mvs=c.get_slider_val("mv");
 if(test.get_volume()!=mvs) test.set_volume(mvs);
-if(c.is_clicked("t1")) speak("t1 is pressed, test1");
-else if(c.is_clicked("q"))
+if(c.is_clicked("q"))
 {
 speak("exiting");
 wait(1000);
 quit();
 }
+else if(c.get_click()!="")
+{
+speak("alright, you clicked the reference of the item. the ref was, "+c.get_click());
 }
-}
+}//while
+}//end
