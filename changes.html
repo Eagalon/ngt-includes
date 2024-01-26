@@ -11,6 +11,7 @@
 <p><a href="https://github.com/harrymkt/ngt-docs">Visit this repo to get documentations</a></p>
 <h2>changes on Friday, January 26, 2024:</h2>
 <ul>
+<li>removed the set_position in custom_menu, and added focus method instead. the focus method takes 1 parameter, either a string of the reference name or the position.</li>
 <li>added menu sounds in custom_menu. clicksound="", movesound=="", wrapsound=="", edgesound=="", opensound=="". you can see it in <code lang="NGT">test.ngt</code> for example.</li>
 <li>added menu sidescrooling and wrap. sidescrolling=false, wrap=false. these can be changed or get directly.</li>
 <li>fixed missing delay issues. note, the monitor functions have no delay functions used, and it is thus you have to call delay before using the menu.monitor();.</li>

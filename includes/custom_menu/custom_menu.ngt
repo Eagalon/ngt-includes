@@ -71,7 +71,7 @@ this.sd_index=indexval;
 }
 void on_focus()
 {
-speak(this.name+"  slider "+this.sd_index);
+speak(this.name+"  slider "+this.sd_index,false);
 this.menu_parent.play_movesound();
 }
 }
@@ -84,7 +84,7 @@ this.checked = checked;
 }
 void on_focus()
 {
-speak(this.name+"  check box "+(this.checked?"checked":"not checked"));
+speak(this.name+"  check box "+(this.checked?"checked":"not checked"),false);
 this.menu_parent.play_movesound();
 }
 }
@@ -106,13 +106,13 @@ for(uint i=0;i<this.lists.length();i++)
 {
 if(this.lists[i].selected) f++;
 }
-speak(this.name+"  "+this.listtype+" with "+f+" selected");
+speak(this.name+"  "+this.listtype+" with "+f+" selected",false);
 this.menu_parent.play_movesound();
 return;
 }
 string d;
 if(!is_over_value(this.lists.length(),this.listper)) d=""+this.lists[this.listper].item;
-speak(this.name+"  "+this.listtype+"  "+d);
+speak(this.name+"  "+this.listtype+"  "+d,false);
 this.menu_parent.play_movesound();
 }
 }
@@ -124,7 +124,7 @@ super(name, ref, cme_type_text, parent);
 }
 void on_focus()
 {
-speak(this.name);
+speak(this.name,false);
 this.menu_parent.play_movesound();
 }
 }
@@ -195,7 +195,7 @@ string d="";
 if(say_dialog) d="  dialog";
 this.title=ctitle;
 this.running=true;
-speak(this.title+d);
+speak(this.title+d,false);
 this.clicked = "";
 this.play_opensound();
 return;
@@ -205,7 +205,7 @@ private void list_monitor(string ref)
 int f=this.get_menu_item(ref);
 if(f<0) return;
 if(this.items[f].type!=cme_type_list) return;
-speak(this.items[f].name+"  "+this.items[f].listtype);
+speak(this.items[f].name+"  "+this.items[f].listtype,false);
 double cc=this.items[f].listper;
 while(true)
 {
@@ -217,7 +217,7 @@ if(cc>0) cc--;
 else if(cc<0) cc=this.items[f].lists.length()-1;
 string s;
 if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
-speak(""+this.items[f].lists[cc].item+s);
+speak(""+this.items[f].lists[cc].item+s,false);
 }
 if(key_pressed(SDLK_DOWN))
 {
@@ -225,7 +225,7 @@ if(cc<this.items[f].lists.length()-1) cc++;
 else if(cc>=this.items[f].lists.length()) cc=0;
 string s;
 if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
-speak(""+this.items[f].lists[cc].item+s);
+speak(""+this.items[f].lists[cc].item+s,false);
 }
 if(key_pressed(SDLK_SPACE) && !is_over_value(this.items[f].lists.length(), cc) && this.items[f].list_multi)
 {
@@ -642,7 +642,7 @@ double get_position()
 {
 return this.line;
 }
-bool set_position(double per)
+bool focus(double per)
 {
 this.cm_error=cme_none;
 if(per<0 || per>=this.items.length())
@@ -651,6 +651,18 @@ this.cm_error=cme_outrange;
 return false;
 }
 this.line=per;
+return true;
+}
+bool focus(string ref)
+{
+this.cm_error=cme_none;
+int f=this.get_menu_item(ref);
+if(f<0)
+{
+this.cm_error=cme_outrange;
+return false;
+}
+this.line=f;
 return true;
 }
 int get_error()

@@ -20,7 +20,7 @@ c.add_list("sounds","snd",true, "multilist");
 c.add_list_item_to("snd","sound1","");
 c.add_list_item_to("snd","sound2","");
 c.add("quit","q");
-c.set_position(-1);
+c.focus("t1");
 wait(1000);
 c.create("test");
 test.load("C:\\Windows\\Media\\Ring05.wav");
