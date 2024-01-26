@@ -497,7 +497,7 @@ else
 this.play_edgesound();
 }
 }
-if(this.line>0) this.line--;
+else if(this.line>0) this.line--;
 if(!is_over_value(items.length(),this.line)) this.items[this.line].on_focus();
 }
 if((!this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing()))
@@ -514,7 +514,7 @@ else
 this.play_edgesound();
 }
 }
-if(this.line<items.length()-1) this.line++;
+else if(this.line<items.length()-1) this.line++;
 if(!is_over_value(items.length(),this.line)) this.items[this.line].on_focus();
 }
 if(key_pressed(SDLK_SPACE) and !is_over_value(this.items.length(), this.line) && this.items[this.line].type == cme_type_checkbox)
