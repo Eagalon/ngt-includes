@@ -181,6 +181,11 @@ this.sidescrolling=false;
 this.allowenter=true;this.allownumpadenter=true;this.allowrightenter=true;
 this.line=-1;
 this.title="";
+this.sndclick.close();
+this.sndmove.close();
+this.sndedge.close();
+this.sndwrap.close();
+this.sndopen.close();
 return;
 }
 }
@@ -211,6 +216,75 @@ while(true)
 {
 delay(5);
 update_game_window();
+if(navtime.elapsed_millis()>1000 and multichar!="")
+multichar="";
+string c=get_input().capitalize();
+if(c!="" and multichar!=c)
+{
+navtime.restart();
+multichar+=c;
+}
+if(multichar!="" and c!="")
+{
+multichar=multichar.capitalize();
+bool found=false;
+for (uint i=cc; i<items[f].lists.length(); i++)
+{
+if(is_over_value(items[f].lists.length(),i)) continue;
+if(i==cc) continue;
+test=this.items[f].lists[i].item;
+test=test.capitalize();
+if (test.substr(0, multichar.length())==multichar)
+{
+if(this.items[f].lists[cc].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+{
+found=true;
+break;
+}
+if (cc<i)
+cc=i;
+else if (cc>i)
+cc=i;
+if(!is_over_value(items[f].lists.length(),cc))
+{
+string s;
+if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
+speak(""+this.items[f].lists[cc].item+s,false);
+}
+found=true;
+break;
+}
+}
+if (found==false)
+{
+multichar=multichar.capitalize();
+for (uint i=0; i<items[f].lists.length(); i++)
+{
+test=this.items[f].lists[i].item;
+test=test.capitalize();
+if (test.substr(0, multichar.length())==multichar)
+{
+if(!is_over_value(this.items[f].lists.length(),cc) && this.items[f].lists[cc].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+{
+found=true;
+break;
+}
+if (cc<i)
+cc=i;
+else if (cc>i)
+cc=i;
+if(!is_over_value(items[f].lists.length(),cc))
+{
+string s;
+if(this.items[f].list_multi) s=" check box "+(this.items[f].lists[cc].selected?"checked":"not checked");
+speak(""+this.items[f].lists[cc].item+s,false);
+}
+found=true;
+break;
+}
+}
+}
+}
 if(key_pressed(SDLK_UP))
 {
 if(cc>0) cc--;
