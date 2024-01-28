@@ -462,15 +462,18 @@ this.sndopen.play();
 }
 void monitor()
 {
+if(!this.running) return;
 this.clicked = "";
 if(this.title==""||this.title==" ")
 {
 this.cm_error=cme_run_title_empty;
+this.running=false;
 return;
 }
 if(!this.verify_item_references())
 {
 this.cm_error=cme_invalid_length;
+this.running=false;
 return;
 }
 if(this.tell)
@@ -645,6 +648,12 @@ if(key_pressed(SDLK_END))
 {
 this.line=items.length()-1;
 this.items[this.line].on_focus();
+}
+else if(this.escapeable && key_pressed(SDLK_ESCAPE))
+{
+this.running=false;
+this.cm_error=cme_canceled;
+return;
 }
 }//end
 string get_current_ref()
