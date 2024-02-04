@@ -22,6 +22,8 @@ c.movesound="snd/menumove.ogg";
 c.opensound="snd/menuopen.ogg";
 c.wrapsound="snd/menuwrap.ogg";
 c.edgesound="snd/menuedge.ogg";
+c.add("welcome to the menu","welcome");
+c.set_state("welcome", false);
 c.add("test1","t1");
 c.add_checkbox("allow pressing escape to quit","escape",false);
 c.add_checkbox("menu wrapping","wrap",false);

@@ -45,6 +45,7 @@ listitem@[] lists;
 int listper=-1;
 bool list_multi;
 string listtype;
+bool clickable=true;
 menu_item(const string&in name, const string&in ref, int type, custom_menu@ parent)
 {
 this.name = name;
@@ -57,7 +58,9 @@ void on_focus()
 }
 void on_click()
 {
+if(!this.clickable) return;
 this.menu_parent.clicked = this.ref;
+this.menu_parent.play_clicksound();
 }
 }
 class slider_menu_item: menu_item
@@ -114,6 +117,12 @@ string d;
 if(!is_over_value(this.lists.length(),this.listper)) d=""+this.lists[this.listper].item;
 speak(this.name+"  "+this.listtype+"  "+d,false);
 this.menu_parent.play_movesound();
+}
+void on_click()
+{
+if(!this.clickable) return;
+this.menu_parent.play_clicksound();
+this.menu_parent.list_monitor(this.ref);
 }
 }
 class text_menu_item: menu_item
@@ -205,7 +214,7 @@ this.clicked = "";
 this.play_opensound();
 return;
 }
-private void list_monitor(string ref)
+void list_monitor(string ref)
 {
 int f=this.get_menu_item(ref);
 if(f<0) return;
@@ -630,13 +639,6 @@ speak(""+this.items[this.line].sd_index);
 }//slider
 if(key_pressed(SDLK_RETURN) and this.allowenter && !is_over_value(this.items.length(), this.line))
 {
-if(this.items[this.line].type==cme_type_list)
-{
-this.play_clicksound();
-this.list_monitor(this.items[this.line].ref);
-return;
-}
-this.play_clicksound();
 this.items[this.line].on_click();
 }
 if(key_pressed(SDLK_HOME))
@@ -675,6 +677,13 @@ bool set_text_by_ref(string ref, string caption)
 double f= this.get_menu_item(ref);
 if(f<0) return false;
 this.items[f].name=caption;
+return true;
+}
+bool set_state(string ref, bool clickable)
+{
+double f= this.get_menu_item(ref);
+if(f<0) return false;
+this.items[f].clickable=clickable;
 return true;
 }
 double item_length()
