@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Monday, February 05, 2024:
+* fixed all possible bugs, do to the latest engine changes.
+
 ## changes on Sunday, February 04, 2024:
 * in `custom_menu` object, introducing state! currently supports clickable, which determine by the bool variable `clickable` in each menu item. when setting `clickable` to false, the menu item will not be clickable, thus it is probably used in the normal `text_menu_item` to disable the ability to click, more like the explanation message.
 * added `set_state` function, do to above change. `bool set_state(string ref, bool clickable)`. see test.ngt in `custom_menu` object.

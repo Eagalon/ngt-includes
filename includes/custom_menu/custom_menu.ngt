@@ -225,7 +225,7 @@ while(true)
 {
 delay(5);
 update_game_window();
-if(navtime.elapsed_millis()>1000 and multichar!="")
+if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
 string c=get_input().capitalize();
 if(c!="" and multichar!=c)
@@ -429,8 +429,8 @@ return this.items[f].sd_index;
 }
 void play_clicksound()
 {
-if(this.clicksound!="" && !this.sndclick.is_active()) this.sndclick.load(this.clicksound);
-if(!this.sndclick.is_active()) return;
+if(this.clicksound!="" && !this.sndclick.active) this.sndclick.load(this.clicksound);
+if(!this.sndclick.active) return;
 this.sndclick.stop();
 this.sndclick.set_pan(0);
 if(this.sidescrolling) this.sndclick.set_pan((this.line*100)/this.items.length());
@@ -438,8 +438,8 @@ this.sndclick.play();
 }
 void play_movesound()
 {
-if(this.movesound!="" && !this.sndmove.is_active()) this.sndmove.load(this.movesound);
-if(!this.sndmove.is_active()) return;
+if(this.movesound!="" && !this.sndmove.active) this.sndmove.load(this.movesound);
+if(!this.sndmove.active) return;
 this.sndmove.stop();
 this.sndmove.set_pan(0);
 if(this.sidescrolling) this.sndmove.set_pan((this.line*100)/this.items.length());
@@ -447,8 +447,8 @@ this.sndmove.play();
 }
 void play_edgesound()
 {
-if(this.edgesound!="" && !this.sndedge.is_active()) this.sndedge.load(this.edgesound);
-if(!this.sndedge.is_active()) return;
+if(this.edgesound!="" && !this.sndedge.active) this.sndedge.load(this.edgesound);
+if(!this.sndedge.active) return;
 this.sndedge.stop();
 this.sndedge.set_pan(0);
 if(this.sidescrolling) this.sndedge.set_pan((this.line*100)/this.items.length());
@@ -456,8 +456,8 @@ this.sndedge.play();
 }
 void play_wrapsound()
 {
-if(this.wrapsound!="" && !this.sndwrap.is_active()) this.sndwrap.load(this.wrapsound);
-if(!this.sndwrap.is_active()) return;
+if(this.wrapsound!="" && !this.sndwrap.active) this.sndwrap.load(this.wrapsound);
+if(!this.sndwrap.active) return;
 this.sndwrap.stop();
 this.sndwrap.set_pan(0);
 if(this.sidescrolling) this.sndwrap.set_pan((this.line*100)/this.items.length());
@@ -465,7 +465,7 @@ this.sndwrap.play();
 }
 void play_opensound()
 {
-if(this.opensound!="" && !this.sndopen.is_active()) this.sndopen.load(this.opensound);
+if(this.opensound!="" && !this.sndopen.active) this.sndopen.load(this.opensound);
 this.sndopen.stop();
 this.sndopen.play();
 }
@@ -490,7 +490,7 @@ if(this.tell)
 if(this.items.length()>0 && !is_over_value(items.length(),this.line)) this.items[this.line].on_focus();
 this.tell=false;
 }
-if(navtime.elapsed_millis()>1000 and multichar!="")
+if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
 string c=get_input().capitalize();
 if(c!="" and multichar!=c)

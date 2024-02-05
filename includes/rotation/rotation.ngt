@@ -12,15 +12,15 @@ const int streight_up=90;
 const int half_down=135;
 const int streight_down=180;
 double theta;
-vector move(double x, double y, double deg, double dir=0.0)
+vector@ move(double x, double y, double deg, double dir=0.0)
 {
 return move(x, y, 0, deg, 0, dir, 0);
 }
-vector move(double x, double y, double z, double deg, double dir)
+vector@ move(double x, double y, double z, double deg, double dir)
 {
 return move(x, y, z, deg, 0, dir, 0);
 }
-vector move(double x, double y, double z, double deg, double zdeg, double dir, double zdir)
+vector@ move(double x, double y, double z, double deg, double zdeg, double dir, double zdir)
 {
 if(dir!=0.0)
 {

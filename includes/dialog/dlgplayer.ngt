@@ -4,7 +4,7 @@ int dlgplay(string dlgsound, bool dlgfade=false, int fadespeed=30)
 dlgaudio.load(dlgsound);
 dlgaudio.play();
 int result = 1;
-while(dlgaudio.is_playing())
+while(dlgaudio.playing)
 {
 delay(5);
 update_game_window();

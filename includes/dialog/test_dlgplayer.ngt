@@ -4,5 +4,5 @@ show_game_window("dlg player test");
 int action = dlgplay("C:\\Windows\\Media\\Ring08.wav", true);
 wait(1000);
 alert("result", (action == 1?"You pressed return":"You pressed escape"));
-quit();
+exit();
 }

@@ -173,7 +173,7 @@ if((maximum_length>0)&&(default_text.length()>maximum_length))
 default_text=default_text.substr(0, maximum_length);
 form_error=form_error_text_too_long;
 }
-if(!capital.is_active()) capital.load("cap.ogg");
+if(!capital.active) capital.load("cap.ogg");
 c_form[control_counter].text=default_text;
 c_form[control_counter].sel_start=0;
 c_form[control_counter].sel_length=0;
@@ -353,7 +353,7 @@ if(c_form[control_index].speak_interval==0)
 form_error=form_error_invalid_value;
 return false;
 }
-if(c_form[control_index].progress_time.is_running())
+if(c_form[control_index].progress_time.running)
 {
 form_error=form_error_invalid_operation;
 return false;
@@ -384,7 +384,7 @@ if(!c_form[control_index].active)
 form_error=form_error_invalid_control;
 return false;
 }
-if(!c_form[control_index].progress_time.is_running())
+if(!c_form[control_index].progress_time.running)
 {
 form_error=form_error_invalid_operation;
 return false;
@@ -2637,7 +2637,7 @@ return;
 }
 if(focused && this.navchar)
 {
-if(fnavtime.elapsed_millis()>1000 and multichar!="")
+if(fnavtime.elapsed_millis>1000 and multichar!="")
 multichar="";
 string c=get_input().capitalize();
 if(c!="" and multichar!=c)
@@ -2806,7 +2806,7 @@ if(speak_interval==0)
 {
 return;
 }
-if(progress_time.elapsed_millis()>=speak_interval)
+if(progress_time.elapsed_millis>=speak_interval)
 {
 progress_time.restart();
 if(progress==100)

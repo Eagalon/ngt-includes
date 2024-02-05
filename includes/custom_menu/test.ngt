@@ -53,8 +53,8 @@ c.escapeable=c.is_checked("escape");
 c.sidescrolling=c.is_checked("sidescr");
 if(p!=mediaplaying) {
 mediaplaying = p;
-if(!mediaplaying and test.is_playing()) test.stop();
-else if(mediaplaying and !test.is_playing()) test.play();
+if(!mediaplaying and test.playing) test.stop();
+else if(mediaplaying and !test.playing) test.play();
 }
 double mvs=c.get_slider_val("mv");
 if(test.get_volume()!=mvs) test.set_volume(mvs);
@@ -62,7 +62,7 @@ if(c.is_clicked("q"))
 {
 speak("exiting");
 wait(1000);
-quit();
+exit();
 }
 else if(c.get_click()!="")
 {
@@ -70,5 +70,5 @@ speak("alright, you clicked the reference of the item. the ref was, "+c.get_clic
 }
 }//while
 alert("final",c.get_error_info());
-quit();
+exit();
 }//end

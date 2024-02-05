@@ -2,7 +2,7 @@ const string mapex=".map";
 const string mapparse=":";
 const string sndex=".ogg";
 tile@[] tiles(0);
-vector user;
+vector@ user;
 /*
 make sure to have rotation.ngt imported.
 make sure to have sound_pool p; is declared.
@@ -17,7 +17,7 @@ user.z=0;
 map m;
 class map
 {
-vector minimum,maximum;
+vector@ minimum,maximum;
 string name;
 timer wallt; //timer for wall bumps
 map(string&in name="")
@@ -66,7 +66,7 @@ if(get_tile_at(user.x, user.y, user.z+1)!="" and get_tile_at(user.x, user.y, use
 user.z++;
 if(get_tile_at(user.x,user.y,user.z).contains("wall"))
 {
-if(m.wallt.elapsed_millis()>=250)
+if(m.wallt.elapsed_millis>=250)
 {
 m.wallt.restart();
 p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
@@ -86,7 +86,7 @@ if(get_tile_at(user.x, user.y, user.z-1)!="" and get_tile_at(user.x, user.y, use
 user.z--;
 if(get_tile_at(user.x,user.y,user.z).contains("wall"))
 {
-if(m.wallt.elapsed_millis()>=250)
+if(m.wallt.elapsed_millis>=250)
 {
 m.wallt.restart();
 p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
@@ -103,14 +103,14 @@ if(dir=="forward")
 {
 double ox=user.x;
 double oy=user.y;
-vector ma=move(user.x, user.y, user.z, facing, north);
+vector@ ma=move(user.x, user.y, user.z, facing, north);
 if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
 user=ma;
 user.x=round(user.x, 0);
 user.y=round(user.y, 0);
 if(get_tile_at(user.x,user.y,user.z).contains("wall"))
 {
-if(m.wallt.elapsed_millis()>=250)
+if(m.wallt.elapsed_millis>=250)
 {
 m.wallt.restart();
 p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
@@ -127,14 +127,14 @@ if(dir=="backward")
 {
 double ox=user.x;
 double oy=user.y;
-vector ma=move(user.x, user.y, user.z, facing, south);
+vector@ ma=move(user.x, user.y, user.z, facing, south);
 if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
 user=ma;
 user.x=round(user.x, 0);
 user.y=round(user.y, 0);
 if(get_tile_at(user.x,user.y,user.z).contains("wall"))
 {
-if(m.wallt.elapsed_millis()>=250)
+if(m.wallt.elapsed_millis>=250)
 {
 m.wallt.restart();
 p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
@@ -151,14 +151,14 @@ if(dir=="left")
 {
 double ox=user.x;
 double oy=user.y;
-vector ma=move(user.x, user.y, user.z, facing, west);
+vector@ ma=move(user.x, user.y, user.z, facing, west);
 if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
 user=ma;
 user.x=round(user.x, 0);
 user.y=round(user.y, 0);
 if(get_tile_at(user.x,user.y,user.z).contains("wall"))
 {
-if(m.wallt.elapsed_millis()>=250)
+if(m.wallt.elapsed_millis>=250)
 {
 m.wallt.restart();
 p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
@@ -175,14 +175,14 @@ if(dir=="right")
 {
 double ox=user.x;
 double oy=user.y;
-vector ma=move(user.x, user.y, user.z, facing, east);
+vector@ ma=move(user.x, user.y, user.z, facing, east);
 if(round(ma.x, 0)<m.minimum.x or round(ma.x, 0)>m.maximum.x or round(ma.y, 0)<m.minimum.y or round(ma.y, 0)>m.maximum.y) return;
 user=ma;
 user.x=round(user.x, 0);
 user.y=round(user.y, 0);
 if(get_tile_at(user.x,user.y,user.z).contains("wall"))
 {
-if(m.wallt.elapsed_millis()>=250)
+if(m.wallt.elapsed_millis>=250)
 {
 m.wallt.restart();
 p.play_stationary(get_tile_at(user.x,user.y,user.z)+""+sndex+"",false);
@@ -197,7 +197,7 @@ playstep(user,5);
 }
 }
 //end of move
-void playstep(vector u,int max_step=5,string sndpath="sounds")
+void playstep(vector@ u,int max_step=5,string sndpath="sounds")
 {
 p.play_stationary(get_tile_at(u.x,u.y,u.z)+"step"+random(1,max_step)+sndex,false);
 }
