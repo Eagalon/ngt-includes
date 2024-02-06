@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Tuesday, February 06, 2024:
+* the sound_pool now supports rotation!
+
 ## changes on Monday, February 05, 2024:
 * fixed all possible bugs, do to the latest engine changes.
 

@@ -1,0 +1,28 @@
+#include"sound_pool.ngt"
+sound_pool p;
+double x=0,y=0,z=0;
+double face=0;
+void main()
+{
+show_game_window("test");
+wait(1000);
+speak("press the left, right, up, down, page up/down to navigate. press q and e to change directions, press f to check where you're facing, and c to check coordinates.");
+p.play_3d("music.ogg",x,y,z,5,5,0,face,true);
+
+while(true)
+{
+delay(5);
+update_game_window();
+p.update_listener_3d(x,y,z,face);
+if(key_repeat(SDLK_LEFT) && x>0) x--;
+else if(key_repeat(SDLK_RIGHT)) x++;
+else if(key_repeat(SDLK_DOWN) && y>0) y--;
+else if(key_repeat(SDLK_UP)) y++;
+else if(key_repeat(SDLK_PAGEUP)) z++;
+else if(key_repeat(SDLK_PAGEDOWN) && z>0) z--;
+if(key_pressed(SDLK_e) && face<360) face+=90;
+else if(key_pressed(SDLK_q) && face>0) face-=90;
+if(key_pressed(SDLK_f)) speak(face+"");
+if(key_pressed(SDLK_c)) speak(x+", "+y+", "+z);
+}
+}
