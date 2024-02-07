@@ -1,7 +1,12 @@
 # NGT Includes Changes
 
+## changes on Wednesday, February 07, 2024:
+* added `ngt register`!  
+
+the `ngt register` allows you to register into your `operating system`'s registry, to make the `ngt engine` be available to use from anywhere, rather than having to put `ngt build files` in the directory you want to `run` or `compile`.
+
 ## changes on Tuesday, February 06, 2024:
-* the sound_pool now supports rotation!
+* the `sound_pool` now supports `rotation`!
 
 ## changes on Monday, February 05, 2024:
 * fixed all possible bugs, do to the latest engine changes.
