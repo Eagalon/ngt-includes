@@ -1,6 +1,7 @@
 # NGT Includes Changes
 
 ## changes on Wednesday, February 07, 2024:
+* added string functions to `hip.ngt` in the `general` folder. functions are: `string stringleft(string, uint);`, `string stringright(string, uint);`, `string string_trimleft(string, uint);`, and `string string_trimright(string, uint);`
 * added `ngt register`!  
 
 the `ngt register` allows you to register into your `operating system`'s registry, to make the `ngt engine` be available to use from anywhere, rather than having to put `ngt build files` in the directory you want to `run` or `compile`.

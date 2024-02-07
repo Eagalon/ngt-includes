@@ -485,3 +485,28 @@ else if(i<ret2.length()-1) ret+=" ";
 }//length
 return ret;
 }
+/*
+string utilities
+*/
+string stringleft(string str, uint count)
+{
+return str.substr(0,count);
+}
+string stringright(string str, uint count)
+{
+if(count<1) return"";
+return str.substr(str.length()-count);
+}
+string string_trimleft(string str, uint count)
+{
+if(count>str.length()) return str;
+if(count<1) return"";
+return str.substr(count);
+}
+string string_trimright(string str, uint count)
+{
+if(count>str.length()) return str;
+if(count<1) return"";
+count=str.length()-count;
+return str.substr(0,count);
+}
