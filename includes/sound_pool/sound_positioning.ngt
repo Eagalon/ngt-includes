@@ -13,6 +13,7 @@ void position_sound_custom_1d(sound@ handle, int listener_x, int source_x, float
 {
 set_listener_position(listener_x, 0, 0);
 handle.set_sound_position(source_x, 0, 0);
+handle.volume=start_volume;handle.pan=start_pan;
 }
 void position_sound_2d(sound@ handle, float listener_x, float listener_y, float source_x, float source_y, double theta, float pan_step, float volume_step, float behind_pitch_decrease)
 {
@@ -36,6 +37,7 @@ rotational_source_y = (sin(theta) * (source_x-listener_x)) + (cos(theta) * (sour
 }
 set_listener_position(listener_x, listener_y, 0);
 handle.set_sound_position(source_x, source_y, 0);
+handle.volume=start_volume;handle.pan=start_pan;handle.pitch=start_pitch;
 }
 void position_sound_3d(sound@ handle, float listener_x, float listener_y, float listener_z, float source_x, float source_y, float source_z, double theta, float pan_step, float volume_step, float behind_pitch_decrease)
 {
@@ -62,4 +64,5 @@ source_y=rotational_source_y;
 // Next, we calculate the delta between the listener and the source.
 set_listener_position(listener_x, listener_y, listener_z);
 handle.set_sound_position(source_x, source_y, source_z);
+handle.volume=start_volume;handle.pan=start_pan;handle.pitch=start_pitch;
 }

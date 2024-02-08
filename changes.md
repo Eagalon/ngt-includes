@@ -1,6 +1,14 @@
 # NGT Includes Changes
 
 ## changes on Thursday, February 08, 2024:
+* in the `translator`, added `get_flag` function, which could detect any set flag names in the language. to add the flag, open the language file you want to edit, then add the following code to the top.
+
+```
+flag:your_language_flag_emogy
+```
+
+* fixed `quit` method unexistence in all the tests.
+* removed registration option. the exe version will be available under release, with the addition of this include packs and libraries.
 * added `translator` class. the class allows you to integrate translations into your script. go explore the `test.ngt` in the `translator` folder to explore.
 
 ## changes on Wednesday, February 07, 2024:

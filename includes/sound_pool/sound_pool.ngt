@@ -56,7 +56,7 @@ pan_step=0.0;
 volume_step=0.0;
 behind_pitch_decrease=0.0;
 start_pan=0.0;
-start_volume=0.0;
+start_volume=100.0;
 start_pitch=100.0;
 left_range=0;
 right_range=0;
@@ -102,7 +102,7 @@ if(handle.active==true)
 {
 if(start_offset>0)
 {
-//handle.seek(start_offset);
+handle.seek(start_offset);
 }
 update_listener_position(listener_x, listener_y, listener_z, rotation);
 if(paused==false)
@@ -272,7 +272,7 @@ clean_frequency=3;
 
 int play_stationary(string filename, bool looping, bool memory=false, bool persistent=false)
 {
-return play_stationary_extended(filename, looping, 0, 0, 0, 100, memory, persistent);
+return play_stationary_extended(filename, looping, 0, 0, 100, 100, memory, persistent);
 }
 
 int play_stationary_extended(string filename, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool memory=false, bool persistent=false)
@@ -313,7 +313,7 @@ if(start_pan!=0.0)
 {
 items[slot].handle.pan=start_pan;
 }
-if(start_volume<0.0)
+if(start_volume<100.0)
 {
 items[slot].handle.volume=start_volume;
 }
@@ -333,7 +333,7 @@ return slot;
 
 int play_1d(string filename, int listener_x, int sound_x, bool looping, bool memory=false, bool persistent=false)
 {
-return play_extended_1d(filename, listener_x, sound_x, 0, 0, looping, 0, 0, 0, 100, memory, persistent);
+return play_extended_1d(filename, listener_x, sound_x, 0, 0, looping, 0, 0, 100, 100, memory, persistent);
 }
 
 int play_extended_1d(string filename, int listener_x, int sound_x, int left_range, int right_range, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool memory=false, bool persistent=false)
@@ -415,7 +415,7 @@ return slot;
 int play_2d(string filename, int listener_x, int listener_y, int sound_x, int sound_y, bool looping, bool memory=false, bool persistent=false)
 {
 
-return play_extended_2d(filename, listener_x, listener_y, sound_x, sound_y, 0, 0, 0, 0, looping, 0, 0, 0, 100, memory, persistent);
+return play_extended_2d(filename, listener_x, listener_y, sound_x, sound_y, 0, 0, 0, 0, looping, 0, 0, 100, 100, memory, persistent);
 }
 
 int play_extended_2d(string filename, int listener_x, int listener_y, int sound_x, int sound_y, int left_range, int right_range, int backward_range, int forward_range, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool memory=false, bool persistent=false)
@@ -503,7 +503,7 @@ return slot;
 
 int play_3d(string filename, double listener_x, double listener_y, double listener_z, double sound_x, double sound_y, double sound_z, double rotation, bool looping, bool memory=false, bool persistent=false)
 {
-return play_extended_3d(filename, listener_x, listener_y, listener_z, sound_x, sound_y, sound_z, rotation, 0, 0, 0, 0, 0, 0, looping, 0, 0, 0, 100, memory, persistent);
+return play_extended_3d(filename, listener_x, listener_y, listener_z, sound_x, sound_y, sound_z, rotation, 0, 0, 0, 0, 0, 0, looping, 0, 0, 100, 100, memory, persistent);
 }
 
 int play_extended_3d(string filename, double listener_x, double listener_y, double listener_z, double sound_x, double sound_y, double sound_z, double rotation, int left_range, int right_range, int backward_range, int forward_range, int upper_range, int lower_range, bool looping, double offset, float start_pan, float start_volume, float start_pitch, bool memory=false, bool persistent=false)

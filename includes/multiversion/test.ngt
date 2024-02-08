@@ -10,5 +10,5 @@ if(f<s) mess+=" the first version is less than the second version";
 else if(f>s) mess+=" the first version is more than the second version";
 else mess+="no version is less or more, it's the same!";
 alert("result",mess);
-quit();
+exit();
 }

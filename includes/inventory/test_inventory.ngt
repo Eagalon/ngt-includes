@@ -25,5 +25,5 @@ alert((has_nothing?"error":"ok"), (has_nothing?"nothing selected":"You selected 
 }
 if(key_pressed(SDLK_ESCAPE)) break;
 }
-quit();
+exit();
 }
