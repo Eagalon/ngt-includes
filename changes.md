@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Thursday, February 08, 2024:
+* added `translator` class. the class allows you to integrate translations into your script. go explore the `test.ngt` in the `translator` folder to explore.
+
 ## changes on Wednesday, February 07, 2024:
 * added string functions to `hip.ngt` in the `general` folder. functions are: `string stringleft(string, uint);`, `string stringright(string, uint);`, `string string_trimleft(string, uint);`, and `string string_trimright(string, uint);`
 * added `ngt register`!  
