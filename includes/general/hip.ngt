@@ -510,3 +510,22 @@ if(count<1) return"";
 count=str.length()-count;
 return str.substr(0,count);
 }
+string var_replace(string text, string[] replacers={}, string opening="%", string closing="%")
+{
+if(replacers.length()<1) return text;
+for(uint b=0;b<replacers.length();b++)
+{
+if(text.contains(opening+""+(b+1)+""+closing)) text=text.replace(opening+""+(b+1)+""+closing,replacers[b]);
+}
+return text;
+}
+string var_replace2(string text, string[] fir={}, string[] sec={})
+{
+if(fir.length()<1) return text;
+if(fir.length()!=sec.length()) return text;
+for(uint b=0;b<fir.length();b++)
+{
+if(text.contains(fir[b])) text=text.replace(fir[b],sec[b]);
+}
+return text;
+}

@@ -1,5 +1,56 @@
 # NGT Includes Changes
 
+## changes on Friday, February 09, 2024:
+### var_replace
+
+The `var_replace` method has been added to the `hip.ngt` file in the `general` folder. This method enables dynamic variable replacement, making it useful for substituting a set of variables with specified values. Additional examples will be provided in the program, such as specifying sign messages in the map using placeholders like `%1%`, `%2%`, etc can be used.
+
+This method accepts the text to be processed, an array of values to be replaced, an opening character, and a closing character.
+
+However, this method does not accept others. It will round from 1 to the length of what you give to the array. For instance, giving 4 elements to the array, it will be replaced from `%1%` to `%4%`. Do note that the `%` character is default; you can change it to other characters. See below example.
+
+example
+
+```
+#include"hip.ngt"
+void main()
+{
+string r;
+string[] b;
+string t="{1} has just incountored {2} on {3}.";
+b={"titanic,","an iceberg","April 14, 1912 at 11:40 PM"};
+r=var_replace(t,b,"{","}");
+alert("ok",r);
+}
+```
+
+In this example, we used the left and right braces for the opening and closing variables. Copy the code below and try testing it:
+
+### var_replace2
+
+This method is similar to the `var_replace` method, but here you can specify the actual replacers instead of just using numbers like 1, 2, 3.
+
+`string var_replace2(string text, string[] fir, string[] sec);`
+
+The `text` parameter represents the text that is to be processed, `fir` is the array of replacers, and `sec` is yet another array that contains the values to be replaced. It's important to note that the `fir` and the `sec` arrays must be of the same length for the replacement to occur; otherwise, the rest of the text will be returned without any replacements. Additionally, the order of elements in both the `fir` and `sec` arrays should be the same; otherwise, incorrect replacements may occur.
+
+example
+
+```
+#include"hip.ngt"
+void main()
+{
+string r;
+string[] a;
+string[] b;
+string t="%name% has just incountored %object% on %date%.";
+a={"%name%","%object%","%date%"};
+b={"titanic,","an iceberg","April 14, 1912 at 11:40 PM"};
+r=var_replace2(t,a,b,"{","}");
+alert("ok",r);
+}
+```
+
 ## changes on Thursday, February 08, 2024:
 * in the `translator`, added `get_flag` function, which could detect any set flag names in the language. to add the flag, open the language file you want to edit, then add the following code to the top.
 
