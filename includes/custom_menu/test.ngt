@@ -10,8 +10,6 @@ this is the test script for the custom_menu object. this script is always being 
 custom_menu c;
 //sound for the music.
 sound test;
-//media playing variable.
-bool mediaplaying = false;
 void main()
 {
 show_game_window("ngt menu test");
@@ -28,36 +26,26 @@ c.add("test1","t1");
 c.add_checkbox("allow pressing escape to quit","escape",false);
 c.add_checkbox("menu wrapping","wrap",false);
 c.add_checkbox("menu sidescrolling","sidescr",false);
-c.add_checkbox("enable music playback", "playback", true);
-c.add_slider("music volume", "mv", 0, -100, 0);
+c.add_slider("music volume", "mv", 100, 0, 100);
 c.add_list("sounds","snd",true, "multilist");
 c.add_list_item_to("snd","sound1","");
 c.add_list_item_to("snd","sound2","");
 c.add("quit","q");
 c.focus("t1");
 wait(1000);
+c.set_music("snd/msic.ogg");
 c.create("test");
-test.load("C:\\Windows\\Media\\Ring05.wav");
-test.set_volume(0);
-test.play_looped();
-mediaplaying = true;
 //use is_running method in while loop to insure no false information can be passed through.
 while(c.is_running())
 {
 delay(5); //for CPU / FAN optimization
 update_game_window();
 c.monitor(); //the monitor function.
-bool p = c.is_checked("playback");
 c.wrap=c.is_checked("wrap");
 c.escapeable=c.is_checked("escape");
 c.sidescrolling=c.is_checked("sidescr");
-if(p!=mediaplaying) {
-mediaplaying = p;
-if(!mediaplaying and test.playing) test.stop();
-else if(mediaplaying and !test.playing) test.play();
-}
 double mvs=c.get_slider_val("mv");
-if(test.get_volume()!=mvs) test.set_volume(mvs);
+if(c.musicvol!=mvs) c.musicvol=mvs;
 if(c.is_clicked("q"))
 {
 speak("exiting");

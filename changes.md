@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Saturday, February 10, 2024:
+* added music on the `custom_menu` object class. warning! you'll need to wait the next build to work music as the `play_looped` function is fixed. music functions : `void set_music(string path)`. music variables : `musicvol` the volume of the music which is 0 by default, and `musicpitch` the pitch of the music which is 100 by default.
+
 ## changes on Friday, February 09, 2024:
 ### var_replace
 

@@ -170,6 +170,8 @@ private bool tell=true;
 string clicked = "";
 private string char,multichar,test;
 private sound sndclick, sndedge, sndwrap, sndopen, sndmove;
+private sound musical;
+double musicvol=0, musicpitch=100;
 custom_menu()
 {
 this.clicked = "";
@@ -195,6 +197,9 @@ this.sndmove.close();
 this.sndedge.close();
 this.sndwrap.close();
 this.sndopen.close();
+this.musical.close();
+this.musicvol=0;
+this.musicpitch=100;
 return;
 }
 }
@@ -213,6 +218,24 @@ speak(this.title+d,false);
 this.clicked = "";
 this.play_opensound();
 return;
+}
+void set_music(string path)
+{
+if(this.musical.active) this.musical.close();
+this.musical.load(path);
+this.musical.volume=this.musicvol;
+this.musical.pitch=this.musicpitch;
+this.play_music();
+}
+void play_music()
+{
+if(!this.musical.active) return;
+if(!this.musical.playing) this.musical.play_looped();
+}
+void stop_music()
+{
+this.musical.stop();
+this.musical.close();
 }
 void list_monitor(string ref)
 {
@@ -471,18 +494,29 @@ this.sndopen.play();
 }
 void monitor()
 {
-if(!this.running) return;
+if(!this.running)
+{
+this.stop_music();
+return;
+}
 this.clicked = "";
+if(this.musical.active)
+{
+if(this.musical.volume!=this.musicvol) this.musical.volume=this.musicvol;
+if(this.musical.pitch!=this.musicpitch) this.musical.pitch=this.musicpitch;
+}
 if(this.title==""||this.title==" ")
 {
 this.cm_error=cme_run_title_empty;
 this.running=false;
+this.stop_music();
 return;
 }
 if(!this.verify_item_references())
 {
 this.cm_error=cme_invalid_length;
 this.running=false;
+this.stop_music();
 return;
 }
 if(this.tell)
@@ -655,6 +689,7 @@ else if(this.escapeable && key_pressed(SDLK_ESCAPE))
 {
 this.running=false;
 this.cm_error=cme_canceled;
+this.stop_music();
 return;
 }
 }//end
