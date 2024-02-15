@@ -1,0 +1,44 @@
+#include"hip.ngt"
+void main()
+{
+//manual
+bool manual=inrange(2,3,1,0,50,0,50,0,50);
+print(manual);
+manual=inrange(2,3,500,0,50,0,50,0,50);
+print(manual);
+
+//use vectors for min and max;
+vector min,max;
+min.x=0;
+min.y=0;
+min.z=0;
+max.x=100;
+max.y=50;
+max.z=10;
+bool v=inrange(10,10,0,min,max);
+print(v);
+v=inrange(500,200,10,min,max);
+print(v);
+
+//use all as vectors.
+vector user;
+min.x=0;
+min.y=0;
+min.z=0;
+max.x=100;
+max.y=50;
+max.z=10;
+user.x=10;
+user.y=30;
+user.z=10;
+bool us=inrange(user,min,max);
+print(us);
+user.z=10000;
+us=inrange(user,min,max);
+print(us);
+}
+void print(bool what)
+{
+if(what) alert("yes","in range");
+else alert("no","out of range");
+}
