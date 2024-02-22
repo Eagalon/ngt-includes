@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Wednesday, February 21, 2024:
+* added savedata class. view on documentation repository for usage. the save data class object is useful to save and load game progresses without writing complex coding. this class supports multiple types to save.
+
 ## changes on Thursday, February 15, 2024:
 
 ### inrange

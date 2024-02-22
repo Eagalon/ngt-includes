@@ -259,7 +259,7 @@ if(filemode==FILE_WRITE) ret=tempfile.open(filename,"w");
 else if(filemode==FILE_APPEND) ret=tempfile.open(filename,"a");
 else return false;
 if(ret==-1) return false;
-int ret2=tempfile.write_string(contents);
+int ret2=tempfile.write(contents);
 tempfile.close();
 if(ret2==-1) ret=-1;
 else ret=0;
@@ -270,7 +270,7 @@ string file_get_contents(string filename)
 {
 file tempfile;
 tempfile.open(filename,"r");
-string r=tempfile.read_string(-1);
+string r=tempfile.read(tempfile.get_size());
 tempfile.close();
 return r;
 }
