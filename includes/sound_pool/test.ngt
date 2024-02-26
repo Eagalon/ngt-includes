@@ -1,18 +1,20 @@
 #include"sound_pool.ngt"
-sound_pool p;
+string mapname="main";
+sound_pool p,sourcepool;
 double x=0,y=0,z=0;
 double face=0;
 void main()
 {
 show_game_window("test");
 wait(1000);
-speak("press the left, right, up, down, page up/down to navigate. press q and e to change directions, press f to check where you're facing, and c to check coordinates.");
+speak("press the left, right, up, down, page up/down to navigate. press q and e to change directions, press f to check where you're face, and c to check coordinates.");
 p.play_3d("music.ogg",x,y,z,5,5,0,face,true);
-
 while(true)
 {
 delay(5);
 update_game_window();
+
+//sourcecheckloop();
 p.update_listener_3d(x,y,z,face);
 if(key_repeat(SDLK_LEFT) && x>0) x--;
 else if(key_repeat(SDLK_RIGHT)) x++;

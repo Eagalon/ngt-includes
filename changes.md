@@ -1,5 +1,9 @@
 # NGT Includes Changes
 
+## changes on Monday, February 26, 2024:
+* fixed the volume and pitch system in sound_pool.
+* fixed the rotation in sound_pool with the positioning.
+
 ## changes on Wednesday, February 21, 2024:
 * added savedata class. view on documentation repository for usage. the save data class object is useful to save and load game progresses without writing complex coding. this class supports multiple types to save.
 
