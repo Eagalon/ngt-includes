@@ -1929,19 +1929,20 @@ c_form[counter].speech_output=speech_output;
 }
 private void check_shortcuts()
 {
-for(int counter=0; counter<c_form.length(); counter++)
+for(uint counter=0; counter<c_form.length(); counter++)
 {
 if(c_form[counter].hotkey_letter=="")
 {
 continue;
 }
-if(letter_to_key(""+c_form[counter].hotkey_letter)!=c_form[counter].hotkey)
+if(letter_to_key(c_form[counter].hotkey_letter)!=c_form[counter].hotkey)
 {
 c_form[counter].hotkey_letter="";
 c_form[counter].hotkey=-1;
 continue;
 }
-if((key_down(SDLK_LALT) or key_down(SDLK_RALT))&&(key_pressed(c_form[counter].hotkey)))
+if(get_current_focus()==counter) continue;
+if((key_down(SDLK_LALT) || key_down(SDLK_RALT)) and key_pressed(c_form[counter].hotkey))
 {
 if(c_form[counter].autopress) c_form[counter].just_activate();
 if(get_current_focus()!=counter) focus(counter, true);
@@ -1950,9 +1951,9 @@ if(get_current_focus()!=counter) focus(counter, true);
 }
 private int shortcut(string caption_text)
 {
-for(int counter=0; counter<caption_text.length(); counter++)
+for(uint counter=0; counter<caption_text.length(); counter++)
 {
-if(""+caption_text[counter]!="&")
+if(caption_text[counter]!="&")
 {
 continue;
 }
@@ -1960,10 +1961,7 @@ if(counter==caption_text.length()-1)
 {
 return -1;
 }
-else
-{
-return letter_to_key(""+caption_text[counter+1]);
-}
+return letter_to_key(caption_text[(counter+1)]);
 }
 return -1;
 }
@@ -1991,9 +1989,9 @@ return true;
 }
 private string shortcut_letter(string caption_text)
 {
-for(int counter=0; counter<caption_text.length(); counter++)
+for(uint counter=0; counter<caption_text.length(); counter++)
 {
-if(""+caption_text[counter]!="&")
+if(caption_text[counter]!="&")
 {
 continue;
 }
@@ -2003,14 +2001,14 @@ return "";
 }
 else
 {
-return ""+caption_text[counter+1];
+return caption_text[counter+1];
 }
 }
 return "";
 }
-private int letter_to_key(string char)
+private int letter_to_key(string char_a)
 {
-char=char.capitalize();
+string char=char_a.capitalize();
 if(char=="A")
 {
 return SDLK_a;
@@ -2155,7 +2153,7 @@ if(char=="9")
 {
 return SDLK_9;
 }
-return -1;
+else return -1;
 }
 //internal properties
 private int speech_output;
@@ -2496,7 +2494,11 @@ if(key_pressed(SDLK_UP))
 if(multiline==false)
 {
 if(text!="")
-speak(""+text);
+{
+if(password_mask!="" && !show_password)
+speak(text.length()+" "+password_mask);
+else speak(""+text);
+}
 else
 speak("blank");
 return;
@@ -2515,7 +2517,11 @@ if(key_pressed(SDLK_DOWN))
 if(multiline==false)
 {
 if(text!="")
-speak(""+text);
+{
+if(password_mask!="" && !show_password)
+speak(text.length()+" "+password_mask);
+else speak(""+text);
+}
 else
 speak("blank");
 return;
@@ -3697,7 +3703,7 @@ checked=true;
 }
 string find_appropriate_character(string original_character)
 {
-if(password_mask=="")
+if(password_mask=="" or show_password)
 {
 return original_character;
 }

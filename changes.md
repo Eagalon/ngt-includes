@@ -1,5 +1,9 @@
 # NGT Includes Changes
 
+## changes on Sunday, March 03, 2024:
+* fixed password speaking in audioform
+* fixed sound pool not cutting off the sound's playback, thanks to latest update.
+
 ## changes on Monday, February 26, 2024:
 * fixed the volume and pitch system in sound_pool.
 * fixed the rotation in sound_pool with the positioning.

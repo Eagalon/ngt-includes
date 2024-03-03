@@ -1,21 +1,21 @@
 #include"form.ngt"
 #include"key_hold.ngt"
 double musicv=21;
-// Make a simple form with a few buttons and a dummy progress bar.
-
-//audio_form form;
 void main()
 {
 show_game_window("ok?");
 wait(500);
-form.create_window("test form",false);
-int a=form.create_input_box("type the username","","",100);
+form.reset();
+form.create_window("test form");
+int a=form.create_input_box("type the &username","","",100);
 form.set_description(a,"required");
-int b=form.create_button("ok",true);
+int pas=form.create_input_box("&password","","*");
+int b=form.create_button("&ok",true);
 while(true)
 {
-form.monitor();
+delay(5);
 update_game_window();
+form.monitor();
 if(form.is_pressed(b))
 {
 string l=form.get_text(a);
