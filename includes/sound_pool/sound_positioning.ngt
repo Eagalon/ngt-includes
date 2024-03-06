@@ -29,7 +29,7 @@ float final_pitch=start_pitch;
 float rotational_source_x=source_x;
 float rotational_source_y=source_y;
 // First, we calculate the x and y based on the theta the listener is facing. 
-if(theta > 0.0)
+if(theta > 0)
 {
 rotational_source_x = (cos(theta) * (source_x-listener_x)) - (sin(theta) * (source_y-listener_y)) + listener_x;
 rotational_source_y = (sin(theta) * (source_x-listener_x)) + (cos(theta) * (source_y-listener_y)) + listener_y;
@@ -52,7 +52,7 @@ float final_pitch=start_pitch;
 float rotational_source_x=source_x;
 float rotational_source_y=source_y;
 // First, we calculate the x and y based on the theta the listener is facing. 
-if(theta > 0.0)
+if(theta > 0)
 {
 rotational_source_x = (cos(theta) * (source_x-listener_x)) - (sin(theta) * (source_y-listener_y)) + listener_x;
 rotational_source_y = (sin(theta) * (source_x-listener_x)) + (cos(theta) * (source_y-listener_y)) + listener_y;

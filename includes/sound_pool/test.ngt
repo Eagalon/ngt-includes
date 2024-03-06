@@ -13,8 +13,6 @@ while(true)
 {
 delay(5);
 update_game_window();
-
-//sourcecheckloop();
 p.update_listener_3d(x,y,z,face);
 if(key_repeat(SDLK_LEFT) && x>0) x--;
 else if(key_repeat(SDLK_RIGHT)) x++;
