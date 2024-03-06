@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Wednesday, March 06, 2024:
+* fixed translator
+
 ## changes on Sunday, March 03, 2024:
 * fixed password speaking in audioform
 * fixed sound pool not cutting off the sound's playback, thanks to latest update.
