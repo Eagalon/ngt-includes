@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Sunday, March 10, 2024:
+* changed back to the non 3d sound system in sound pool because the sound does not stop even the coordinates are many range. If you want to still use the old one, use `not_prepared_3dsound_positioning.ngt` in the sound_pool directory.
+
 ## changes on Wednesday, March 06, 2024:
 * fixed translator
 

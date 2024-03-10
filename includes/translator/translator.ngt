@@ -20,6 +20,7 @@ if(ex=="") ex=this.lex;
 if(l=="") return;
 if(this.lfolder!=folder) this.lfolder=folder;
 if(this.lex!=ex) this.lex=ex;
+this.langdata="";
 if(l!="english" && l!="eng")
 {
 file f;

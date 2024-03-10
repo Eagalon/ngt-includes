@@ -8,13 +8,12 @@ this is the test script for the custom_menu object. this script is always being 
 #include"custom_menu.ngt"
 //global custom_menu object.
 custom_menu c;
-//sound for the music.
-sound test;
 void main()
 {
 show_game_window("ngt menu test");
 //reset with the parameter true is necessary before doing things in the menu.
 c.reset(true);
+//set menu sounds.
 c.clicksound="snd/menuclick.ogg";
 c.movesound="snd/menumove.ogg";
 c.opensound="snd/menuopen.ogg";
@@ -26,14 +25,14 @@ c.add("test1","t1");
 c.add_checkbox("allow pressing escape to quit","escape",false);
 c.add_checkbox("menu wrapping","wrap",false);
 c.add_checkbox("menu sidescrolling","sidescr",false);
-c.add_slider("music volume", "mv", 100, 0, 100);
+c.add_slider("music volume", "mv", 0, -100, 0);
 c.add_list("sounds","snd",true, "multilist");
 c.add_list_item_to("snd","sound1","");
 c.add_list_item_to("snd","sound2","");
 c.add("quit","q");
 c.focus("t1");
 wait(1000);
-c.set_music("snd/msic.ogg");
+c.set_music("snd/music.ogg");
 c.create("test");
 //use is_running method in while loop to insure no false information can be passed through.
 while(c.is_running())

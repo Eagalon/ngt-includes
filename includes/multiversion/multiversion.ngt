@@ -6,7 +6,7 @@ multiversion(string input)
 string[] split=input.split(".");
 for(uint i=0; i<split.length(); i++)
 {
-vers.insert_last(parseInt(split[i]));
+vers.insert_last(string_to_number(split[i]));
 }
 }
 int opIndex(uint n)
