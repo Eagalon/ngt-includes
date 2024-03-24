@@ -9,7 +9,7 @@ form.reset();
 form.create_window("test form");
 int a=form.create_input_box("type the &username","","",100);
 form.set_description(a,"required");
-int pas=form.create_input_box("&password","","*");
+int pas=form.create_input_box("&Password","","*");
 int b=form.create_button("&ok",true);
 while(true)
 {

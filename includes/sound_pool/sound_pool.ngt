@@ -51,12 +51,12 @@ x=0;
 y=0;
 z=0;
 looping=false;
-pan_step=1.0;
-volume_step=1.0;
+pan_step=0.0;
+volume_step=0.0;
 behind_pitch_decrease=0.0;
 start_pan=0.0;
 start_volume=0.0;
-start_pitch=100.0;
+start_pitch=1.0;
 left_range=0;
 right_range=0;
 backward_range=0;
@@ -235,7 +235,7 @@ float pan_step;
 float volume_step;
 float behind_pitch_decrease;
 bool use_hrtf;
-
+string global_fx;
 // Default constructor, where we give the user 100 sounds.
 sound_pool()
 {
@@ -298,6 +298,8 @@ else
 items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
+
+items[slot].handle.set_fx(global_fx);
 if(items[slot].handle.active==false)
 {
 items[slot].reset();
@@ -384,6 +386,10 @@ else
 items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
+
+
+items[slot].handle.set_fx(global_fx);
+
 if(items[slot].handle.active==false)
 {
 items[slot].reset();
@@ -464,12 +470,14 @@ else
 items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
+
+items[slot].handle.set_fx(global_fx);
+items[slot].handle.set_hrtf(use_hrtf);
 if(items[slot].handle.active==false)
 {
 items[slot].reset();
 return -1;
 }
-items[slot].handle.set_hrtf(use_hrtf);
 if(items[slot].start_offset>0)
 {
 items[slot].handle.seek(items[slot].start_offset);
@@ -550,12 +558,14 @@ else
 items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
+
+items[slot].handle.set_fx(global_fx);
+items[slot].handle.set_hrtf(use_hrtf);
 if(items[slot].handle.active==false)
 {
 items[slot].reset();
 return -1;
 }
-items[slot].handle.set_hrtf(use_hrtf);
 if(items[slot].start_offset>0)
 {
 items[slot].handle.seek(items[slot].start_offset);
@@ -577,7 +587,9 @@ if(slot>highest_slot)
 highest_slot=slot;
 return slot;
 }
-
+void set_global_fx(string fx){
+global_fx=fx;
+}
 bool sound_active(int slot)
 {
 /*

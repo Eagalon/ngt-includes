@@ -1,5 +1,5 @@
 #include"savedata.ngt"
-savedata sd("config.ini","",savedata_ini);
+savedata sd("config.ini","testinikey",savedata_ini);
 double s=-1;
 timer f;
 void main()

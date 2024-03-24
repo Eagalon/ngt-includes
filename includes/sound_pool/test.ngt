@@ -9,6 +9,7 @@ show_game_window("test");
 wait(1000);
 speak("press the left, right, up, down, page up/down to navigate. press q and e to change directions, press f to check where you're face, and c to check coordinates.");
 p.play_3d("music.ogg",x,y,z,5,5,0,face,true);
+p.global_fx="reverb";
 while(true)
 {
 delay(5);
