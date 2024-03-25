@@ -1,5 +1,6 @@
 #include"inventory.ngt"
-void main() {
+void main()
+{
 inventory inv;
 show_game_window("Inventory test");
 string[] items = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"};
@@ -8,7 +9,8 @@ wait(500);
 inv.speak_item();
 speak("press tab and shift tab to select items and press return to activate the selected item", false);
 speak("press escape when finished", false);
-while(true) {
+while(true)
+{
 delay(5);
 update_game_window();
 if(key_pressed(SDLK_TAB)) {
@@ -19,7 +21,7 @@ inv.cycle(dir);
 inv.speak_item();
 }
 if(key_pressed(SDLK_RETURN)) {
-string itemname = inv.get_current_item_string();
+string itemname = inv.current_item_str;
 bool has_nothing = itemname == "";
 alert((has_nothing?"error":"ok"), (has_nothing?"nothing selected":"You selected "+itemname));
 }

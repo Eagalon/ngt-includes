@@ -1,5 +1,17 @@
 # NGT Includes Changes
 
+## changes on Monday, March 25, 2024
+
+this update introduces the property accesser in NGT. the property accesser can be used to make function as property which returns set or get. this is useful If your class has a property but the property's value can depend.
+
+* in custom_menu` object, you can now directly used the following as properties. `running`, `position`. note these cannot be used to set values. this is because the properties are read only. the `get_error` and `get_error_info` can now be used as properties, `error` and `error_info`. the `set_music` method can also be used as property `music`.
+* in translator class, you can now use the `langname` variable to retrieve the currently set language. again, this is read only. you can also use the `flag` read only property to return the flag of currently set language, while the `get_flag`(language)` method is to get flag from other available languages. see on test.ngt in the translator.
+* the `canceled` property in text_input` class is also now read only.
+* inventory class updated, as well with some read only properties. `current_item_str`. these can still be used as methods, with adding `get_` first. the amount of inventory item has been changed to double because we don't know how much amount an item would be.
+* in hip.ngt, added new global properties: `control_down`, `shift_down`, and `alt_down`. these will return true or false whether the respective keys (control, shift, and alt) is held down.
+* the `ms_to_readable_time` function has been changed and added next 7 parameters. these are round values specifying the number to be round. the 7 parameters are, year, month, week, day, hour, minute, second.
+
+
 ## changes on Sunday, March 24, 2024
 * fixed the word variable in text input, as it is not legal anymore.
 * added new functions in savedata class.

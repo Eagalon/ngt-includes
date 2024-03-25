@@ -5,7 +5,7 @@ void main()
 {
 tr.refresh(lang); //refreshes the selected language.
 alert("main string","hello");
-alert("translation language",tr.get_flag(lang));
+alert("translation language","from english ("+tr.get_flag("english")+") to "+tr.langname+"("+tr.flag+")");
 alert("hello is translated",tr.translate(lang,"hello"));
 string t="hello";
 alert("main string",t+" length is "+t.length());

@@ -21,7 +21,7 @@ private string[] nochars;
 private string[] onlychars;
 private string nochardes="";
 //Constructor.
-bool canceled=false;
+private bool m_canceled=false;
 text_input()
 {
 reset();
@@ -38,7 +38,11 @@ this.pasteable=true;this.copyable=true;
 this.nochars.resize(0);
 this.onlychars.resize(0);
 this.nochardes="";
-this.canceled=false;
+this.m_canceled=false;
+}
+bool get_canceled() property
+{
+return this.m_canceled;
 }
 bool is_only_allowed_char(string char)
 {
@@ -355,7 +359,7 @@ cursor--;
 }
 if(key_pressed(SDLK_ESCAPE))
 {
-this.canceled=true;
+this.m_canceled=true;
 break;
 }
 }

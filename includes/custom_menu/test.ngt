@@ -32,10 +32,10 @@ c.add_list_item_to("snd","sound2","");
 c.add("quit","q");
 c.focus("t1");
 wait(1000);
-c.set_music("snd/music.ogg");
+c.music="snd/music.ogg";
 c.create("test");
 //use is_running method in while loop to insure no false information can be passed through.
-while(c.is_running())
+while(c.running)
 {
 delay(5); //for CPU / FAN optimization
 update_game_window();
@@ -56,6 +56,6 @@ else if(c.get_click()!="")
 speak("alright, you clicked the reference of the item. the ref was, "+c.get_click());
 }
 }//while
-alert("final",c.get_error_info());
+alert("final",c.error_info);
 exit();
 }//end
