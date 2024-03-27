@@ -413,6 +413,8 @@ return;
 }
 if(cursor<=0)
 {
+cursor=0;
+speak(speak_word(cursor),true);
 return;
 }
 for(counter=cursor; counter>=0; counter--)
@@ -458,7 +460,7 @@ break;
 }
 }
 }
-if((counter<=0)||(counter>entry.length()))
+if((counter<=0)||(counter>=entry.length()))
 {
 cursor=0;
 speak(speak_word(cursor),true);
@@ -470,6 +472,7 @@ string wordd;
 for(uint i=p; i<entry.length(); i++)
 {
 if(entry[i]!=" ") wordd+=""+entry[i];
+else break;
 }
 return wordd;
 }

@@ -1,5 +1,8 @@
 # NGT Includes Changes
 
+## changes on Wednesday, March 27, 2024
+* fixed word reading in text_input class, thanks to **Eray**.
+
 ## changes on Monday, March 25, 2024
 
 this update introduces the property accesser in NGT. the property accesser can be used to make function as property which returns set or get. this is useful If your class has a property but the property's value can depend.
