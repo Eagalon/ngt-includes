@@ -144,30 +144,30 @@ return list;
 }
 }//end of lister.
 
-string convert_size(double size)
+string convert_size(double size, int round_to=2)
 {
 if(size<1) return"0 B";
 if (size<1024)
 {
-return round(size,2)+" B";
+return round(size,round_to)+" B";
 }
 size=size/1024;
 if (size<1024)
 {
-return round(size,2)+" KB";
+return round(size,round_to)+" KB";
 }
 size=size/1024;
 if (size<1024)
 {
-return round(size,2)+" MB";
+return round(size,round_to)+" MB";
 }
 size=size/1024;
 if (size<1024)
 {
-return round(size,2)+" GB";
+return round(size,round_to)+" GB";
 }
 size=size/1024;
-return round(size,2)+" TB";
+return round(size,round_to)+" TB";
 }
 string convert_month_name(double value)
 {

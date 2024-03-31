@@ -1,5 +1,18 @@
 # NGT Includes Changes
 
+## changes on Sunday, March 31, 2024
+* the `convert_size` method has been updated in hip, and added round parameter. the round parameter is the number of points to round, which is 2 by default. `string convert_size(double size,int round_to=2);`
+* in keyhold class, you can now use the property `is_pressing` to return the state of the key is pressing. the `pressing()` method can still be used.
+* in audioform object, introducing new properties. note that the old methods can still be used as alternative. properties are:
+	* `current_focus` which returns the control ID of the current focus.
+	* `default_button` which returns the control ID of the default button.
+	* `cancel_button` which returns the control ID of the cancel button.
+	* `control_count` which returns the number of controls on the form.
+
+* in savedata class, you can now use `type` and `keys` properties to return the type and the list of keys on the dictionary. the type is an int, and keys is an array.
+* in custom_menu` object, added a new property called `ttkey` which sets the key for repeating the title of the menu. If set to -1, it will asume that there's no key and therefore the title will not be spoken by pressing the key. the default value of it is `SDLK_TAB`
+
+
 ## changes on Wednesday, March 27, 2024
 * fixed word reading in text_input class, thanks to **Eray**.
 
@@ -53,55 +66,6 @@ this method is overloaded, meaning you can use the default, or by vectors to min
 * `bool inrange(double x, double y, double z, vector@ min, vector@ max)` : give 3 current coordinates as variables, vectors for minimum and maximum coordinate range.
 * `bool inrange(vector@ current, vector@ min, vector@ max)` : use vectors for all the variables, thus you will declare the 3 vectors to use this one.
 
-#### example
-
-```
-#include"hip.ngt"
-void main()
-{
-//manual
-bool manual=inrange(2,3,1,0,50,0,50,0,50);
-print(manual);
-manual=inrange(2,3,500,0,50,0,50,0,50);
-print(manual);
-
-//use vectors for min and max;
-vector min,max;
-min.x=0;
-min.y=0;
-min.z=0;
-max.x=100;
-max.y=50;
-max.z=10;
-bool v=inrange(10,10,0,min,max);
-print(v);
-v=inrange(500,200,10,min,max);
-print(v);
-
-//use all as vectors.
-vector user;
-min.x=0;
-min.y=0;
-min.z=0;
-max.x=100;
-max.y=50;
-max.z=10;
-user.x=10;
-user.y=30;
-user.z=10;
-bool us=inrange(user,min,max);
-print(us);
-user.z=10000;
-us=inrange(user,min,max);
-print(us);
-}
-}
-void print(bool what)
-{
-if(what) alert("yes","in range");
-else alert("no","out of range");
-}
-```
 
 ## changes on Saturday, February 10, 2024
 * added music on the `custom_menu` object class. warning! you'll need to wait the next build to work music as the `play_looped` function is fixed. music functions : `void set_music(string path)`. music variables : `musicvol` the volume of the music which is 0 by default, and `musicpitch` the pitch of the music which is 100 by default.
@@ -113,24 +77,8 @@ The `var_replace` method has been added to the `hip.ngt` file in the `general` f
 
 This method accepts the text to be processed, an array of values to be replaced, an opening character, and a closing character.
 
-However, this method does not accept others. It will round from 1 to the length of what you give to the array. For instance, giving 4 elements to the array, it will be replaced from `%1%` to `%4%`. Do note that the `%` character is default; you can change it to other characters. See below example.
+However, this method does not accept others. It will round from 1 to the length of what you give to the array. For instance, giving 4 elements to the array, it will be replaced from `%1%` to `%4%`. Do note that the `%` character is default; you can change it to other characters. read their respective documentations for usage.
 
-example
-
-```
-#include"hip.ngt"
-void main()
-{
-string r;
-string[] b;
-string t="{1} has just incountored {2} on {3}.";
-b={"titanic,","an iceberg","April 14, 1912 at 11:40 PM"};
-r=var_replace(t,b,"{","}");
-alert("ok",r);
-}
-```
-
-In this example, we used the left and right braces for the opening and closing variables. Copy the code below and try testing it:
 
 ### var_replace2
 
@@ -138,31 +86,16 @@ This method is similar to the `var_replace` method, but here you can specify the
 
 `string var_replace2(string text, string[] fir, string[] sec);`
 
-The `text` parameter represents the text that is to be processed, `fir` is the array of replacers, and `sec` is yet another array that contains the values to be replaced. It's important to note that the `fir` and the `sec` arrays must be of the same length for the replacement to occur; otherwise, the rest of the text will be returned without any replacements. Additionally, the order of elements in both the `fir` and `sec` arrays should be the same; otherwise, incorrect replacements may occur.
+The `text` parameter represents the text that is to be processed, `fir` is the array of replacers, and `sec` is yet another array that contains the values to be replaced. It's important to note that the `fir` and the `sec` arrays must be of the same length for the replacement to occur; otherwise, the rest of the text will be returned without any replacements. Additionally, the order of elements in both the `fir` and `sec` arrays should be the same; otherwise, incorrect replacements may occur. read their respective documentations for usage.
 
-example
-
-```
-#include"hip.ngt"
-void main()
-{
-string r;
-string[] a;
-string[] b;
-string t="%name% has just incountored %object% on %date%.";
-a={"%name%","%object%","%date%"};
-b={"titanic,","an iceberg","April 14, 1912 at 11:40 PM"};
-r=var_replace2(t,a,b,"{","}");
-alert("ok",r);
-}
-```
 
 ## changes on Thursday, February 08, 2024
 * in the `translator`, added `get_flag` function, which could detect any set flag names in the language. to add the flag, open the language file you want to edit, then add the following code to the top.
-
-```
+	
+	```
 flag:your_language_flag_emogy
 ```
+	
 
 * fixed `quit` method unexistence in all the tests.
 * removed registration option. the exe version will be available under release, with the addition of this include packs and libraries.
@@ -171,8 +104,9 @@ flag:your_language_flag_emogy
 ## changes on Wednesday, February 07, 2024
 * added string functions to `hip.ngt` in the `general` folder. functions are: `string stringleft(string, uint);`, `string stringright(string, uint);`, `string string_trimleft(string, uint);`, and `string string_trimright(string, uint);`
 * added `ngt register`!  
-
-the `ngt register` allows you to register into your `operating system`'s registry, to make the `ngt engine` be available to use from anywhere, rather than having to put `ngt build files` in the directory you want to `run` or `compile`.
+	
+	the `ngt register` allows you to register into your `operating system`'s registry, to make the `ngt engine` be available to use from anywhere, rather than having to put `ngt build files` in the directory you want to `run` or `compile`.
+	
 
 ## changes on Tuesday, February 06, 2024
 * the `sound_pool` now supports `rotation`!
@@ -212,7 +146,7 @@ the `ngt register` allows you to register into your `operating system`'s registr
 
 ## Changes on Wednesday, January 24, 2024
 
-* Added `multiversion` class, which will allow you to manage string versions within your game, for instance, 1.4.3.2, which the integer / floating-point cannot handle.
+* Added `multiversion` class, which will allow you to manage string versions within your game, for instance, 1.4.3.2, which is the integer / floating-point cannot handle.
 * Fixed missing right brace in `dlg.ngt`, class as dialog.
 * `custom_menu` now supports fully functional multiletter navigation. Previously, the code had slight issues within access variables within the monitor function, but those are now fixed, and you can use the fully yet functional multiletter navigation.
 
@@ -228,17 +162,21 @@ the `ngt register` allows you to register into your `operating system`'s registr
 ## Changes on Wednesday, January 17, 2024
 
 * Added the ability to set not allowed characters or only certain characters in `text_input` class. See `test.ngt` for example. The functions are:
-  * `bool is_allowed_char(string&in);`
-  * `bool is_only_allowed_char(string&in);`
-  * `bool set_only_allowed_chars(string&in);`
-  * `bool set_not_allowed_chars(string&in)`.
-  The set functions can be cleared by passing none (in lowercase).
+	* `bool is_allowed_char(string&in);`
+	* `bool is_only_allowed_char(string&in);`
+	* `bool set_only_allowed_chars(string&in);`
+	* `bool set_not_allowed_chars(string&in)`.
+	
+	The set functions can be cleared by passing none (in lowercase).
+	
 * Added the ability to check whether the user presses escape to quit the input, the canceled bool. See `test.ngt`.
 * Added properties `pasteable` and `copyable` to set whether the input can be pasted or copied. Test in `test.ngt`.
 * Added slider menu in `custom_menu` object. Functions are:
-  * `bool add_slider(string name, string reference, double slider_index, double slider_minimum, double slider_maximum);`
-  * `double get_slider_val(string reference);`.
-  When you are on a slider, press left and right arrow keys to change. Combine with control will change by 10 percent.
+	* `bool add_slider(string name, string reference, double slider_index, double slider_minimum, double slider_maximum);`
+* `double get_slider_val(string reference);`.
+	
+	When you are on a slider, press left and right arrow keys to change. Combine with control will change by 10 percent.
+	
 
 ## Changes on Tuesday, January 16, 2024
 
@@ -249,7 +187,7 @@ the `ngt register` allows you to register into your `operating system`'s registr
 ## Changes on Sunday, January 14, 2024
 
 * Fixed the spoken of capital letters.
-* Added `rotation` class. Warning! Round function is still not available, and it may have slight issues, especially the direction calculations, currently using `ceil` function.
+* Added `rotation` class.
 
 ## Changes on Saturday, January 13, 2024
 

@@ -233,7 +233,7 @@ if(c!="" and c.length()==1){
 if(input_character(c)) cursor++;
 }
 if(key_pressed(SDLK_TAB))speak(title,true);
-if(control_down())
+if(controldown())
 {
 if(key_pressed(SDLK_v))
 {
@@ -328,7 +328,7 @@ speak(fulltext,true);
 }
 if(rarrow.pressing() and cursor<entry.length())
 {
-if(control_down()) nextword();
+if(controldown()) nextword();
 else{
 cursor++;
 speak_character_at(cursor);
@@ -337,7 +337,7 @@ speak_character_at(cursor);
 
 if(larrow.pressing() and cursor>0)
 {
-if(control_down()) prevword();
+if(controldown()) prevword();
 else{ 
 cursor--;
 speak_character_at(cursor);
@@ -345,7 +345,7 @@ speak_character_at(cursor);
 }
 if((back.pressing() or back2.pressing()) and cursor>0)
 {
-if(control_down() and entry.length()>0)
+if(controldown() and entry.length()>0)
 {
 speak("Cleared text.");
 entry.resize(0);
@@ -477,7 +477,7 @@ else break;
 return wordd;
 }
 }
-bool control_down()
+bool controldown()
 {
 if(key_down(SDLK_LCTRL) or key_down(SDLK_RCTRL)) return true;
 return false;

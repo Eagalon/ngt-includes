@@ -154,6 +154,7 @@ bool wrap=false, sidescrolling=false;
 bool allowenter=true,allownumpadenter=true,allowrightenter=true;
 bool escapeable=true;
 string clicksound, edgesound, wrapsound, opensound, movesound;
+int ttkey=SDLK_TAB; //the key for repeating title, default is tab key, set to -1 on no key.
 //private variables and therefore they should not be modified.
 key_hold ckeyup(SDLK_UP,300,50);
 key_hold ckeydown(SDLK_DOWN,300,60);
@@ -384,6 +385,11 @@ bool add_list_item_to(string ref,string item, string list_ref="", int per=-1, bo
 this.cm_error=cme_none;
 int f=this.get_menu_item(ref);
 if(f<0) return false;
+if(this.items[f].type!=cme_type_list)
+{
+this.cm_error=cme_invalid_type;
+return false;
+}
 if(list_ref=="") list_ref=item;
 listitem l;
 l.item=item;
@@ -398,7 +404,11 @@ bool remove_list_item_from(string ref, int per)
 this.cm_error=cme_none;
 int f=this.get_menu_item(ref);
 if(f<0) return false;
-if(this.items[f].type!=cme_type_list) return false;
+if(this.items[f].type!=cme_type_list)
+{
+this.cm_error=cme_invalid_type;
+return false;
+}
 if(is_over_value(this.items[f].lists.length(),per)) return false;
 @this.items[f].lists[per]=null;
 this.items[f].lists.remove_at(per);
@@ -593,7 +603,7 @@ this.m_running=false;
 this.cm_error=cme_invalid_length;
 return;
 }
-if(key_pressed(SDLK_TAB)) speak(this.title);
+if(this.ttkey!=-1 && key_pressed(this.ttkey)) speak(this.title);
 if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing())
 {
 this.line-=10;

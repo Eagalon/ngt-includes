@@ -1,7 +1,7 @@
 /*savedata class.
 this class provides saving and loading data, probably used on games to save the progress.
 this class supports multiple save types.
-by default, the savedata_def type is used.
+by default, the savedata_def m_type is used.
 it is however not advised to use INI for saving many data, for example in game messages, because INI is used new line and = seperater.
 */
 enum savedatatypes
@@ -14,14 +14,18 @@ class savedata
 //internal variables for the class.
 string key;
 string fn;
-dictionary d;
-private int type=savedata_def;
+private dictionary d;
+private int m_type=savedata_def;
 //the constructor
 savedata(string filename, string enckey="", int tt=savedata_def)
 {
 fn=filename;
 key=enckey;
-this.type=tt;
+this.m_type=tt;
+}
+int get_type() property
+{
+return this.m_type;
 }
 //the function to load the saved data into the dictionary.
 void load()
@@ -49,7 +53,7 @@ d.set(name,value);
 //function to read a number.
 double readn(string name)
 {
-if(this.type==savedata_ini) return string_to_number(this.read(name));
+if(this.m_type==savedata_ini) return string_to_number(this.read(name));
 double tmp;
 d.get(name,tmp);
 return tmp;
@@ -66,6 +70,10 @@ string tmp;
 d.get(name,tmp);
 return tmp;
 }
+string[] get_keys() property
+{
+return this.d.get_keys();
+}
 bool exists(string k)
 {
 return this.d.exists(k);
@@ -79,15 +87,15 @@ private dictionary loaddict(string data)
 //this function loads the data to the dictionary.
 if(this.key!="") data=string_decrypt(data,this.key);
 dictionary d;
-if(this.type==savedata_ini) d=this.inidict(data);
-else if(this.type==savedata_def) d=deserialize(data);
+if(this.m_type==savedata_ini) d=this.inidict(data);
+else if(this.m_type==savedata_def) d=deserialize(data);
 return d;
 }
 private string savedict(dictionary@ d)
 {
 string fa;
-if(this.type==savedata_ini) fa=this.dictini(d);
-else if(this.type==savedata_def) fa=serialize(d);
+if(this.m_type==savedata_ini) fa=this.dictini(d);
+else if(this.m_type==savedata_def) fa=serialize(d);
 if(this.key!="") fa=string_encrypt(fa,this.key);
 return fa;
 }
@@ -108,16 +116,16 @@ return d;
 }//ini dict.
 private string dictini(dictionary@ d)
 {
-string[] keys=d.get_keys();
-if(keys.length()<1) return"";
+string[] vals=this.keys;
+if(vals.length()<1) return"";
 string final="";
-for(uint i=0;i<keys.length();i++)
+for(uint i=0;i<vals.length();i++)
 {
 string x;
 double n;
-if(d.get(keys[i],x)) final+=keys[i]+"="+x;
-else if(d.get(keys[i],n)) final+=keys[i]+"="+n;
-if(i<keys.length()-1) final+="\r\n";
+if(d.get(vals[i],x)) final+=vals[i]+"="+x;
+else if(d.get(vals[i],n)) final+=vals[i]+"="+n;
+if(i<vals.length()-1) final+="\r\n";
 }
 return final;
 }//dictini.
