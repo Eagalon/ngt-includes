@@ -94,8 +94,7 @@ The `text` parameter represents the text that is to be processed, `fir` is the a
 	
 	```
 flag:your_language_flag_emogy
-```
-	
+	```
 
 * fixed `quit` method unexistence in all the tests.
 * removed registration option. the exe version will be available under release, with the addition of this include packs and libraries.
