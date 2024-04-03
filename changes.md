@@ -1,6 +1,7 @@
 # NGT Includes Changes
 
 ## Changes on Wednesday, April 03, 2024
+* Audioform is now changed. it now supports tab controls, more like categories. You can view tests.
 * Fixed multiletter navigation in form and custom_menu`, using lower method to insure all cases can be typed. This was done as of the recent implementation.
 * The translator class can now process both upper and lowercase texts. In short, the translation source texts can be either lower or uppercase.
 

@@ -14,6 +14,10 @@ setting_1=_setting_1;
 setting_2=_setting_2;
 repeat_time=setting_1;
 }
+bool get_is_pressing() property
+{
+return this.pressing();
+}
 bool pressing()
 {
 status=key_down(key_code);
@@ -44,4 +48,3 @@ return true;
 return false;
 }
 }
-
