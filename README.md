@@ -1,72 +1,72 @@
-# ngt includes
+# NGT includes
 
-this is the list of include packs, custom classes, for ngt, the new game toolkit
+This is the list of include packs, custom classes, for ngt, the new game toolkit
 
 [Visit this repository to get documentations](https://github.com/harrymkt/ngt-docs)
 
-[read changes here](changes.md)
+[Read changes here](changes.md)
 
-## download
+## Download
 
-to download the zip.
+To download the zip.
 
-* click on the code menu.
-* click on download zip.
+* Click on the code menu.
+* Click on download zip.
 
-## discussion
+## Discussion
 
-discussion is a place to talk and share knowledge. join the discussions to help improve the scripts!
+Discussion is a place to talk and share knowledge. Join the discussions to help improve the scripts!
 
-[join the discussion!](https://github.com/harrymkt/ngt-includes/discussions)
+[Join the discussion!](https://github.com/harrymkt/ngt-includes/discussions)
 
-## issues
+## Issues
 
-issue is a place where you can submit issues. it is as the discussionboard.
+Issue is a place where you can submit issues. It is as the discussionboard.
 
-[join the issues!](https://github.com/harrymkt/ngt-includes/issues)
+[Join the issues!](https://github.com/harrymkt/ngt-includes/issues)
 
-## contributing
+## Contributing
 
-you can help improve the scripts by contributing. not enough github / engine knowledge to contribute? don't worry. you can improve the scripts by starting discussions and issues to tell other contributors what need to be fixed or added. every contribution counts and helps.
+You can help improve the scripts by contributing. Not enough github / engine knowledge to contribute? Don't worry. You can improve the scripts by starting discussions and issues to tell other contributors what need to be fixed or added. Every contribution counts and helps.
 
-### fork
+### Fork
 
-your first step to be a contributor would be forking the repository.
+Your first step to be a contributor would be forking the repository.
 
-just click on `fork` icon and fork into your account.
+Just click on `fork` icon and fork into your account.
 
-### clone the forked repository
+### Clone the forked repository
 
-your next step is to clone your forked repository into your local device so it is easyer to write things.
+Your next step is to clone your forked repository into your local device so it is easyer to write things.
 
-it is recommended to use github desktop If you are using from the pc.
+It is recommended to use Github Desktop if you are using from the PC.
 
-copy the link of your forked repository that you did earlyer.
+Copy the link of your forked repository that you did earlyer.
 
 ```
 https://<username>/ngt-includes.git
 ```
 
-replace `<username>` with your github username.
+Replace `<username>` with your github username.
 
-next, open your github desktop. choose the option to clone the repository, and paste the link of your forked repository into the box and you're good to go.
+Next, open your github desktop. Choose the option to clone the repository, and paste the link of your forked repository into the box and you're good to go.
 
-### make changes
+### Make changes
 
-the final step is to make changes in your local repository folder. you write the files.
+The final step is to make changes in your local repository folder. You write the files.
 
-then, commit your changes with helpful descriptive message.
+Then, commit your changes with helpful descriptive message.
 
-next, push the changes into your forked repository by clicking `push` icon within your github environment.
+Next, push the changes into your forked repository by clicking `push` icon within your github environment.
 
-go back to your forked repository on your browser. then, click on contribute submenu.
+Go back to your forked repository on your browser. Then, click on contribute submenu.
 
-then, click on `create new pull request`. next, write helpful description of what you've just made changes and click on `create pull request` button or something similar.
+Then, click on `create new pull request`. Next, write helpful description of what you've just made changes and click on `create pull request` button or something similar.
 
-### updates
+### Updates
 
-it is important to know that you should update your forked repository so that anything would be correct as it should be.
+It is important to know that you should update your forked repository so that anything would be correct as it should be.
 
-to do that, go back to your forked repository in your browser.
+To do that, go back to your forked repository in your browser.
 
-next, click on `synk fork` submenu. at the bottom, click on `update branch` button. If you can't see the button, meaning you're up to date. it will also indicate with the message that is up to date or not.
+Next, click on `synk fork` submenu. at the bottom, click on `update branch` button. If you can't see the button, meaning you're up to date. It will also indicate with the message that is up to date or not.

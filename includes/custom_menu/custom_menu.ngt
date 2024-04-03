@@ -2,13 +2,15 @@
 #include"key_hold.ngt"
 timer navtime;
 /*
-* custom menu
-by harry min khant
-*
-* this class requires the helpful includes pack of harry min khant.
-* this class requires the timer object called navtime, which was already declared in this script. If you have multiple navtime timer though, don't forget to change others to the new!
+Custom menu
+
+By Harry Min Khant
+
+This class requires the Helpful Includes pack (HIP).
+
+This class requires the timer object called navtime, which was already declared in this script. If you have multiple navtime timer though, don't forget to change others to the new!
 */
-//error codes
+//Error codes
 enum custommenuerrorcodes
 {
 cme_none=0,
@@ -21,10 +23,6 @@ cme_outrange,
 cme_invalid_length,
 cme_invalid_type
 }
-/*
-* declare the class, which will store variables, functions, and methods.
-* everything is handled by custom error rather than the default error of which the NGT provides.
-*/
 enum cmenu_types
 {
 cme_type_text = 0,
@@ -148,6 +146,11 @@ this.selected=false;
 this.ref=this.item;
 }
 }
+/*
+Declare the class, which will store variables, functions, and methods.
+
+Everything is handled by custom error rather than the default error of which the NGT provides.
+*/
 class custom_menu
 {
 bool wrap=false, sidescrolling=false;
@@ -255,7 +258,7 @@ delay(5);
 update_game_window();
 if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
-string c=get_input().capitalize();
+string c=get_input().lower();
 if(c!="" and multichar!=c)
 {
 navtime.restart();
@@ -263,17 +266,17 @@ multichar+=c;
 }
 if(multichar!="" and c!="")
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 bool found=false;
 for (uint i=cc; i<items[f].lists.length(); i++)
 {
 if(is_over_value(items[f].lists.length(),i)) continue;
 if(i==cc) continue;
 test=this.items[f].lists[i].item;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(this.items[f].lists[cc].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(this.items[f].lists[cc].item.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -294,14 +297,14 @@ break;
 }
 if (found==false)
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 for (uint i=0; i<items[f].lists.length(); i++)
 {
 test=this.items[f].lists[i].item;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(!is_over_value(this.items[f].lists.length(),cc) && this.items[f].lists[cc].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(!is_over_value(this.items[f].lists.length(),cc) && this.items[f].lists[cc].item.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -540,7 +543,7 @@ this.tell=false;
 }
 if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
-string c=get_input().capitalize();
+string c=get_input().lower();
 if(c!="" and multichar!=c)
 {
 navtime.restart();
@@ -548,17 +551,17 @@ multichar+=c;
 }
 if(multichar!="" and c!="")
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 bool found=false;
 for (uint i=this.line; i<items.length(); i++)
 {
 if(is_over_value(items.length(),i)) continue;
 if(i==this.line) continue;
 test=this.items[i].name;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(this.items[this.line].name.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(this.items[this.line].name.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -574,14 +577,14 @@ break;
 }
 if (found==false)
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 for (uint i=0; i<items.length(); i++)
 {
 test=this.items[i].name;
-test=test.capitalize();
+test=test.lower();
 if (test.substr(0, multichar.length())==multichar)
 {
-if(!is_over_value(this.items.length(),this.line) && this.items[this.line].name.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(!is_over_value(this.items.length(),this.line) && this.items[this.line].name.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;

@@ -1,7 +1,7 @@
 /*
 Sound Pool Class
 
-This class provides a convenient way of managing sounds in an environment, both with 1 and 2 dimensions. It uses the functions found in sound_positioning.ngt to do the actual sound adjustments, so modifying these functions will affect the entire system. The sound_pool_item class holds all the information necessary for one single sound in the game world. Note that you should not make instances of the sound_pool_item class directly but always use the methods and properties provided in the sound_pool class.
+This class provides a convenient way of managing sounds in an environment, with 1, 2 and 3 dimensions. It uses the functions found in sound_positioning.ngt to do the actual sound adjustments, so modifying these functions will affect the entire system. The sound_pool_item class holds all the information necessary for one single sound in the game world. Note that you should not make instances of the sound_pool_item class directly but always use the methods and properties provided in the sound_pool class.
 */
 
 #include "sound_positioning.ngt"

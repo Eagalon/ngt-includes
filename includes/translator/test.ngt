@@ -1,15 +1,15 @@
 #include"translator.ngt"
 translator tr;
-string lang="burmese"; //the language to test.
+string lang="burmese"; //The language to test.
 void main()
 {
-tr.refresh(lang); //refreshes the selected language.
-alert("main string","hello");
-alert("translation language","from english ("+tr.get_flag("english")+") to "+tr.langname+"("+tr.flag+")");
-alert("hello is translated",tr.translate(lang,"hello"));
+tr.refresh(lang); //Refreshes the selected language.
+alert("main string","Hello");
+alert("translation language","From english ("+tr.get_flag("english")+") to "+tr.langname+"("+tr.flag+")");
+alert("Hello is translated",tr.translate(lang,"hello"));
 string t="hello";
 alert("main string",t+" length is "+t.length());
-//when specifying the contents for percentages, you seperet with ```=```, that is, 3backquotes, then equal sign, then another 3backquotes.
+//When specifying the contents for percentages, you seperet with ```=```, that is, 3backquotes, then equal sign, then another 3backquotes.
 alert("translated string",tr.translate(lang,"%1% length is %2%","%1% %2%",t+"```=```"+t.length()));
 t="welcome";
 alert("main string",t+" length is "+t.length());

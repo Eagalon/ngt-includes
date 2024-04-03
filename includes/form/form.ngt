@@ -2008,7 +2008,7 @@ return "";
 }
 private int letter_to_key(string char_a)
 {
-string char=char_a.capitalize();
+string char=char_a.lower();
 if(char=="A")
 {
 return SDLK_a;
@@ -2645,7 +2645,7 @@ if(focused && this.navchar)
 {
 if(fnavtime.elapsed_millis>1000 and multichar!="")
 multichar="";
-string c=get_input().capitalize();
+string c=get_input().lower();
 if(c!="" and multichar!=c)
 {
 fnavtime.restart();
@@ -2653,7 +2653,7 @@ multichar+=c;
 }
 if(multichar!="" and c!="")
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 bool found=false;
 for (uint i=list_position; i<=list_length; i++)
 {
@@ -2663,10 +2663,10 @@ if(lpnf<0) lpnf=0;
 if(lpnf>list_length) lpnf=list_length;
 if(i==list_position) continue;
 testchar=""+list[i].item;
-testchar=testchar.capitalize();
+testchar=testchar.lower();
 if (testchar.substr(0, multichar.length())==multichar)
 {
-if(list[lpnf].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(list[lpnf].item.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
@@ -2682,17 +2682,17 @@ break;
 }
 if (found==false)
 {
-multichar=multichar.capitalize();
+multichar=multichar.lower();
 for (uint i=0; i<=list_length; i++)
 {
 int lpnf=list_position;
 if(lpnf<0) lpnf=0;
 if(lpnf>list_length) lpnf=list_length;
 testchar=""+list[i].item;
-testchar=testchar.capitalize();
+testchar=testchar.lower();
 if (testchar.substr(0, multichar.length())==multichar)
 {
-if(list[lpnf].item.capitalize().substr(0, multichar.length())==multichar and multichar.length()>1)
+if(list[lpnf].item.lower().substr(0, multichar.length())==multichar and multichar.length()>1)
 {
 found=true;
 break;
