@@ -1,8 +1,8 @@
 /*savedata class.
-this class provides saving and loading data, probably used on games to save the progress.
-this class supports multiple save types.
-by default, the savedata_def m_type is used.
-it is however not advised to use INI for saving many data, for example in game messages, because INI is used new line and = seperater.
+This class provides saving and loading data, probably used on games to save the progress.
+This class supports multiple save types.
+By default, the savedata_def type is used.
+It is however not advised to use INI for saving many data, for example in game messages, because INI is used new line and = seperater.
 */
 enum savedatatypes
 {
@@ -11,12 +11,12 @@ savedata_ini
 }
 class savedata
 {
-//internal variables for the class.
+//Internal variables for the class.
 string key;
 string fn;
 private dictionary d;
 private int m_type=savedata_def;
-//the constructor
+//The constructor
 savedata(string filename, string enckey="", int tt=savedata_def)
 {
 fn=filename;
@@ -25,45 +25,48 @@ this.m_type=tt;
 }
 int get_type() property
 {
+//Returns the type number.
 return this.m_type;
 }
-//the function to load the saved data into the dictionary.
+//The function to load the saved data into the dictionary.
 void load()
 {
 file f;
 //fn is our previously declared filename string, so use that.
 f.open(fn,"r");
 d=loaddict(f.read(f.get_size()));
-//close the file
+//Close the file
 f.close();
 }
-//function to save the data into the file.
+//Function to save the data into the file.
 void save()
 {
 file f;
-//again, use the FN string
 f.open(fn,"w");
 f.write(savedict(d));
 }
-//function to add a value.
+//Function to add a value.
 void add(string name, double value)
 {
 d.set(name,value);
 }
-//function to read a number.
+//Function to read a number.
 double readn(string name)
 {
 if(this.m_type==savedata_ini) return string_to_number(this.read(name));
+else
+{
 double tmp;
-d.get(name,tmp);
+if(!d.get(name,tmp)) tmp=-1;
 return tmp;
 }
-//overloaded function of add to add a string.
+}
+//Overloaded function of add to add a string.
 void add(string name, string value)
 {
 d.set(name,value);
 }
-//function to read a string
+//Function to read a string
 string read(string name)
 {
 string tmp;
@@ -84,7 +87,7 @@ this.d.delete_all();
 }
 private dictionary loaddict(string data)
 {
-//this function loads the data to the dictionary.
+//This function loads the data to the dictionary.
 if(this.key!="") data=string_decrypt(data,this.key);
 dictionary d;
 if(this.m_type==savedata_ini) d=this.inidict(data);
@@ -109,7 +112,7 @@ for(uint i=0;i<lines.length();i++)
 int fa=lines[i].find_first("=");
 if(fa<0) continue;
 string k=lines[i].substr(0,fa);
-string val=lines[i].substr(fa+1,-1);
+string val=lines[i].substr(fa+1);
 if(k!="" && val!="") d.set(k,val);
 }//i
 return d;

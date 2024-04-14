@@ -21,7 +21,7 @@ Discussion is a place to talk and share knowledge. Join the discussions to help 
 
 ## Issues
 
-Issue is a place where you can submit issues. It is as the discussionboard.
+Issue is a place where you can submit issues, feature requests, and bug reports. It is as the discussionboard.
 
 [Join the issues!](https://github.com/harrymkt/ngt-includes/issues)
 

@@ -9,10 +9,11 @@ class translator
 {
 //The languages folder.
 string lfolder="lang";
-
+string base_lang="english";
+string base_lang_flag="🇺🇸";
 //The language extention.
 string lex=".lng";
-private string langdata, m_langname="english";
+private string langdata, m_langname=this.base_lang;
 string get_langname() property
 {
 return this.m_langname;
@@ -22,11 +23,11 @@ void refresh(string l, string folder="", string ex="")
 if(folder=="") folder=this.lfolder;
 if(ex=="") ex=this.lex;
 if(l=="") l=this.m_langname;
-if(l=="") l="english";
+if(l=="") l=this.base_lang;
 if(this.lfolder!=folder) this.lfolder=folder;
 if(this.lex!=ex) this.lex=ex;
 this.langdata="";
-if(l!="english" && l!="eng")
+if(l!=this.base_lang)
 {
 file f;
 f.open(this.lfolder+"/"+l+""+this.lex+"","r");
@@ -64,8 +65,9 @@ return text;
 string get_flag(string l)
 {
 if(l=="") l=this.m_langname;
+if(l=="") l=this.base_lang;
 if(l=="") return"";
-if(l=="eng"||l=="english") return"🇺🇸";
+if(l==this.base_lang) return this.base_lang_flag;
 string[] lines;
 if(this.m_langname!=l)
 {

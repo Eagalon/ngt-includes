@@ -1,12 +1,17 @@
 # NGT Includes Changes
 
+## Changes on Sunday, April 14, 2024
+* introducing 2 new variables in translation class. The `base_lang` and `base_lang_flag`. These can be used to set what it calls the language to base. Default is english, setting base_lang_flag to united state. The test.ngt in the translator has also been updated to test these variables.
+* Fixed the bug in the savedata test files which appeared to be accessing private dictionary, thanks **Eray** for the issue report!
+* Fixed the audioform bug which the is_pressed method does not work properly when the control is disabled.
+
 ## Changes on Wednesday, April 03, 2024
 * Audioform is now changed. it now supports tab controls, more like categories. You can view tests.
-* Fixed multiletter navigation in form and custom_menu`, using lower method to insure all cases can be typed. This was done as of the recent implementation.
+* Fixed multiletter navigation in form and custom_menu, using lower method to insure all cases can be typed. This was done as of the recent implementation.
 * The translator class can now process both upper and lowercase texts. In short, the translation source texts can be either lower or uppercase.
 
 
-## changes on Sunday, March 31, 2024
+## Changes on Sunday, March 31, 2024
 * The `convert_size` method has been updated in hip, and added round parameter. The round parameter is the number of points to round, which is 2 by default. `string convert_size(double size,int round_to=2);`
 * In keyhold class, you can now use the property `is_pressing` to return the state of the key is pressing. The `pressing()` method can still be used.
 * In audioform object, introducing new properties. Note that the old methods can still be used as alternative. Properties are:
@@ -105,14 +110,14 @@ flag:your_language_flag_emogy
 	
 
 * Fixed `quit` method unexistence in all the tests.
-* Removed registration option. The exe version will be available under release, with the addition of this include packs and libraries.
+* Removed registration option. The EXE version will be available under release, with the addition of this include packs and libraries.
 * Added `translator` class. The class allows you to integrate translations into your script. Go explore the `test.ngt` in the `translator` folder to explore.
 
 ## Changes on Wednesday, February 07, 2024
 * Added string functions to `hip.ngt` in the `general` folder. Functions are: `string stringleft(string, uint);`, `string stringright(string, uint);`, `string string_trimleft(string, uint);`, and `string string_trimright(string, uint);`
 * Added `NGT register`!  
 	
-	The `ngt register` allows you to register into your `operating system`'s registry, to make the `ngt engine` be available to use from anywhere, rather than having to put `ngt build files` in the directory you want to `run` or `compile`.
+	The `NGT register` allows you to register into your `operating system`'s registry, to make the `NGT Engine` be available to use from anywhere, rather than having to put `NGT build files` in the directory you want to `run` or `compile`.
 	
 
 ## Changes on Tuesday, February 06, 2024

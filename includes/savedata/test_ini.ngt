@@ -1,5 +1,5 @@
 #include"savedata.ngt"
-savedata sd("config.ini","testinikey",savedata_ini);
+savedata sd("config.ini","",savedata_ini);
 double s=-1;
 timer f;
 void main()
@@ -7,7 +7,7 @@ void main()
 s=-1;
 loadsd();
 if(s>-1) alert("previously","the timer is "+s);
-show_game_window("test data",600,400,false);
+show_game_window("test data",600,400);
 wait(2000);
 speak("press escape to exit");
 while(true)
@@ -30,7 +30,7 @@ s=sd.readn("time");
 }
 void savesd()
 {
-sd.d.delete_all();
+sd.clear();
 sd.add("time",f.elapsed_seconds);
 sd.save();
 }

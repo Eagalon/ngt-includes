@@ -1,5 +1,5 @@
 #include"savedata.ngt"
-savedata sd("config.dat","testkey",savedata_def);
+savedata sd("config.dat","",savedata_def);
 double s=-1;
 timer f;
 void main()
@@ -30,7 +30,7 @@ s=sd.readn("time");
 }
 void savesd()
 {
-sd.d.delete_all();
+sd.clear();
 sd.add("time",f.elapsed_seconds);
 sd.save();
 }

@@ -39,12 +39,12 @@ int type = -1;
 custom_menu@menu_parent;
 bool checked;
 double sd_min,sd_max,sd_index;
-listitem@[] lists;
+listitem@[] lists(0);
 int listper=-1;
 bool list_multi;
 string listtype;
 bool clickable=true;
-menu_item(const string&in name, const string&in ref, int type, custom_menu@ parent)
+menu_item(string name, string ref, int type, custom_menu@ parent)
 {
 this.name = name;
 this.ref = ref;
@@ -63,7 +63,7 @@ this.menu_parent.play_clicksound();
 }
 class slider_menu_item: menu_item
 {
-slider_menu_item(const string&in name, const string&in ref, double indexval, double min, double max, custom_menu@parent)
+slider_menu_item(string name, string ref, double indexval, double min, double max, custom_menu@parent)
 {
 super(name, ref, cme_type_slider, parent);
 this.sd_min=min;
@@ -78,7 +78,7 @@ this.menu_parent.play_movesound();
 }
 class checkbox_menu_item: menu_item
 {
-checkbox_menu_item(const string&in name, const string&in ref, bool checked, custom_menu@parent)
+checkbox_menu_item(string name, string ref, bool checked, custom_menu@parent)
 {
 super(name, ref, cme_type_checkbox, parent);
 this.checked = checked;
@@ -91,7 +91,7 @@ this.menu_parent.play_movesound();
 }
 class list_menu_item: menu_item
 {
-list_menu_item(const string&in name, const string&in ref, bool mulsel, string ltype, custom_menu@parent)
+list_menu_item(string name, string ref, bool mulsel, string ltype, custom_menu@parent)
 {
 super(name, ref, cme_type_list, parent);
 this.list_multi = mulsel;
@@ -125,7 +125,7 @@ this.menu_parent.list_monitor(this.ref);
 }
 class text_menu_item: menu_item
 {
-text_menu_item(const string&in name, const string&in ref, custom_menu@parent)
+text_menu_item(string name, string ref, custom_menu@parent)
 {
 super(name, ref, cme_type_text, parent);
 }
@@ -157,8 +157,8 @@ bool wrap=false, sidescrolling=false;
 bool allowenter=true,allownumpadenter=true,allowrightenter=true;
 bool escapeable=true;
 string clicksound, edgesound, wrapsound, opensound, movesound;
-int ttkey=SDLK_TAB; //the key for repeating title, default is tab key, set to -1 on no key.
-//private variables and therefore they should not be modified.
+int ttkey=SDLK_TAB; //The key for repeating title, default is tab key, set to -1 on no key.
+//Private variables and therefore they should not be modified.
 key_hold ckeyup(SDLK_UP,300,50);
 key_hold ckeydown(SDLK_DOWN,300,60);
 key_hold ckeyleft(SDLK_LEFT,300,50);
@@ -436,7 +436,7 @@ bool verify_item_references()
 {
 return this.items.length()>0;
 }
-bool is_clicked(const string&in ref)
+bool is_clicked(string ref)
 {
 if(ref == "") return false;
 int f = this.get_menu_item(ref);
@@ -774,7 +774,7 @@ if(this.items[f].type!=cme_type_list) return "";
 if(is_over_value(this.items[f].lists.length(), per)) return"";
 return this.items[f].lists[per].item;
 }
-int get_menu_item(const string&in ref)
+int get_menu_item(string ref)
 {
 for(uint i=0;i<this.items.length();i+=1)
 {

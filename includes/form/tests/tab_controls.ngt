@@ -31,6 +31,7 @@ if(form.is_pressed(cm2)) exit();
 if(form.is_pressed(cm1))
 {
 alert("ok",form.get_text(ct1));
+alert("ok tab2 box",tab2.get_text(ct21));
 exit();
 }
 }

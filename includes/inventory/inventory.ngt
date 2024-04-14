@@ -6,7 +6,8 @@ class inventory
 inventory_item@[]items(0);
 int invpos;
 //constructor.
-inventory() {
+inventory()
+{
 reset();
 }
 int get_item_index(const string a)
@@ -27,7 +28,6 @@ return null;
 }
 string get_current_item_str() property
 {
-inventory_item@current_item = this.get_current_item();
 if(current_item != null)
 {
 return current_item.name;
@@ -36,7 +36,6 @@ return "";
 }
 void speak_item(bool speak_position = true)
 {
-inventory_item@current_item = this.get_current_item();
 if(@current_item != null)
 {
 speak(current_item.name+", you have "+current_item.amount);

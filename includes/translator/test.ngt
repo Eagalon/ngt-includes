@@ -3,9 +3,11 @@ translator tr;
 string lang="burmese"; //The language to test.
 void main()
 {
+tr.base_lang="english(UK)";
+tr.base_lang_flag="🇬🇧";
 tr.refresh(lang); //Refreshes the selected language.
 alert("main string","Hello");
-alert("translation language","From english ("+tr.get_flag("english")+") to "+tr.langname+"("+tr.flag+")");
+alert("translation language","From "+tr.base_lang+" ("+tr.get_flag(tr.base_lang)+") to "+tr.langname+"("+tr.flag+")");
 alert("Hello is translated",tr.translate(lang,"hello"));
 string t="hello";
 alert("main string",t+" length is "+t.length());
