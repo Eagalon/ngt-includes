@@ -1,7 +1,7 @@
 # NGT Includes Changes
 
 ## Changes on Saturday, April 20, 2024
-* Fixed sound pool and its positioner. The old unprepared sound positioning script has been finished along with the rotation support.
+* Fixed sound pool and its positioner. The old unprepared sound positioning script has been finished along with the rotation support. Now, the positioner uses the engine's default positioning.
 
 ## Changes on Sunday, April 14, 2024
 * introducing 2 new variables in translation class. The `base_lang` and `base_lang_flag`. These can be used to set what it calls the language to base. Default is english, setting base_lang_flag to united state. The test.ngt in the translator has also been updated to test these variables.
