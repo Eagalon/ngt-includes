@@ -326,7 +326,7 @@ for(uint i=0; i<entry.length(); i++) fulltext+=""+entry[i];
 if(fulltext.length()==0) continue;
 speak(fulltext,true);
 }
-if(rarrow.pressing() and cursor<entry.length())
+if(rarrow.pressing and cursor<entry.length())
 {
 if(controldown()) nextword();
 else{
@@ -335,7 +335,7 @@ speak_character_at(cursor);
 }
 }
 
-if(larrow.pressing() and cursor>0)
+if(larrow.pressing and cursor>0)
 {
 if(controldown()) prevword();
 else{ 
@@ -343,7 +343,7 @@ cursor--;
 speak_character_at(cursor);
 }
 }
-if((back.pressing() or back2.pressing()) and cursor>0)
+if((back.pressing or back2.pressing) and cursor>0)
 {
 if(controldown() and entry.length()>0)
 {

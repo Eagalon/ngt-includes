@@ -2983,23 +2983,23 @@ pressed=true;
 }
 if(type==ct_slider)
 {
-if((fkup.pressing() || fkright.pressing() ) && sdindex<sdmax)
+if((fkup.pressing || fkright.pressing ) && sdindex<sdmax)
 {
 sdindex++;
 speak(""+sdindex,readerinterrupt);
 }
-if((fkdown.pressing() || fkleft.pressing() ) && sdindex>sdmin)
+if((fkdown.pressing || fkleft.pressing ) && sdindex>sdmin)
 {
 sdindex--;
 speak(""+sdindex,readerinterrupt);
 }
-if(fkpgup.pressing())
+if(fkpgup.pressing)
 {
 sdindex+=sdfastmove;
 if(sdindex>sdmax) sdindex=sdmax;
 speak(""+sdindex,readerinterrupt);
 }
-if(fkpgdn.pressing())
+if(fkpgdn.pressing)
 {
 sdindex-=sdfastmove;
 if(sdindex<sdmin) sdindex=sdmin;
@@ -3115,7 +3115,7 @@ list[counter].checked=true;
 }
 speak("All items selected");
 }
-if(fkup.pressing())
+if(fkup.pressing)
 {
 if(list_position<=0)
 {
@@ -3128,7 +3128,7 @@ if(list[list_position].checked)
 speak("Checked");
 }
 }
-if(fkpgup.pressing())
+if(fkpgup.pressing)
 {
 list_position-=list_fm;
 if(list_position<0) list_position=0;
@@ -3138,7 +3138,7 @@ if(list[list_position].checked)
 speak("Checked");
 }
 }
-if(fkpgdn.pressing())
+if(fkpgdn.pressing)
 {
 list_position+=list_fm;
 if(list_position>list_length) list_position=list_length;
@@ -3166,7 +3166,7 @@ if(list[list_position].checked)
 speak("Checked");
 }
 }
-if(fkdown.pressing())
+if(fkdown.pressing)
 {
 if(list_position>=list_length)
 {

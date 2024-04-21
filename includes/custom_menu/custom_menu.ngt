@@ -607,19 +607,19 @@ this.cm_error=cme_invalid_length;
 return;
 }
 if(this.ttkey!=-1 && key_pressed(this.ttkey)) speak(this.title);
-if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing())
+if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing)
 {
 this.line-=10;
 if(this.line<0) this.line=0;
 this.items[this.line].on_focus();
 }
-if(!key_pressed(SDLK_PAGEDOWN) && ckpagedown.pressing())
+if(!key_pressed(SDLK_PAGEDOWN) && ckpagedown.pressing)
 {
 this.line+=10;
 if(this.line>items.length()-1) this.line=items.length()-1;
 this.items[this.line].on_focus();
 }
-if((!this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing ) or (this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing))
 {
 if(this.line<0) this.line=this.items.length()-1;
 else if(this.line<=0)
@@ -637,7 +637,7 @@ this.play_edgesound();
 else if(this.line>0) this.line--;
 if(!is_over_value(items.length(),this.line)) this.items[this.line].on_focus();
 }
-if((!this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing ) or (this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing))
 {
 if(this.line>=items.length()-1)
 {
@@ -661,7 +661,7 @@ speak((this.items[this.line].checked?"checked":"not checked"));
 }
 else if(!is_over_value(this.items.length(), this.line) && this.items[this.line].type == cme_type_slider)
 {
-if((!this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_LEFT) && ckeyleft.pressing ) or (this.sidescrolling && !key_pressed(SDLK_UP) && ckeyup.pressing))
 {
 if(control_is_down())
 {
@@ -674,7 +674,7 @@ this.items[this.line].sd_index--;
 if(this.items[this.line].sd_index<this.items[this.line].sd_min) this.items[this.line].sd_index=this.items[this.line].sd_min;
 speak(""+this.items[this.line].sd_index);
 }
-if((!this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing() ) or (this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing()))
+if((!this.sidescrolling && !key_pressed(SDLK_RIGHT) && ckeyright.pressing ) or (this.sidescrolling && !key_pressed(SDLK_DOWN) && ckeydown.pressing))
 {
 if(control_is_down())
 {

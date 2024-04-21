@@ -1,5 +1,10 @@
 # NGT Includes Changes
 
+## Changes on Sunday, April 21, 2024
+* The keyhold object has been changed. The method called pressing is no longer available. Instead, you use the method `get_pressing()`, or use property `pressing`. All the scripts using keyhold has been updated with this change.
+* The sound pool is now uses stream rather than load.
+* Fixed rotation.
+
 ## Changes on Saturday, April 20, 2024
 * Fixed sound pool and its positioner. The old unprepared sound positioning script has been finished along with the rotation support. Now, the positioner uses the engine's default positioning.
 

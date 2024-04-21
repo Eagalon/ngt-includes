@@ -110,7 +110,7 @@ return deg;
 double turnright(double deg, double inc)
 {
 deg+=inc;
-if(deg>360)
+if(deg>=360)
 deg-=360;
 return deg;
 }

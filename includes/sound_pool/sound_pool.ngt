@@ -93,7 +93,7 @@ if(!memoryplaying)
 {
 string old_storage=get_sound_storage();
 set_sound_storage(packname);
-handle.load(filename);
+handle.stream(filename);
 set_sound_storage(old_storage);
 }
 else handle.load_from_memory(filename);
@@ -292,7 +292,7 @@ items[slot].start_volume=start_volume;
 items[slot].start_pitch=start_pitch;
 items[slot].persistent=persistent;
 if(!memory)
-items[slot].handle.load(items[slot].filename);
+items[slot].handle.stream(items[slot].filename);
 else
 {
 items[slot].memoryplaying=true;
@@ -380,7 +380,7 @@ return slot;
 }
 }
 if(!memory)
-items[slot].handle.load(items[slot].filename, true);
+items[slot].handle.stream(items[slot].filename, true);
 else
 {
 items[slot].memoryplaying=true;
@@ -465,7 +465,7 @@ return slot;
 }
 }
 if(!memory)
-items[slot].handle.load(items[slot].filename, true);
+items[slot].handle.stream(items[slot].filename, true);
 else
 {
 items[slot].memoryplaying=true;
@@ -553,7 +553,7 @@ return slot;
 }
 }
 if(!memory)
-items[slot].handle.load(items[slot].filename, true);
+items[slot].handle.stream(items[slot].filename, true);
 else
 {
 items[slot].memoryplaying=true;

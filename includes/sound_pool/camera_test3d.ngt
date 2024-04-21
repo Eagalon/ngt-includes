@@ -1,0 +1,51 @@
+#include"sound_pool.ngt"
+#include"../rotation/rotation.ngt"
+sound_pool p;
+double x=5,y=5,z=0;
+double face=0;
+vector camera;
+void main()
+{
+show_game_window("test");
+wait(1000);
+speak("press the left, right, up, down, page up/down to navigate. and c to check coordinates.");
+camera.x=x;camera.y=y;camera.z=z; //initialize the vector.
+p.set_global_fx("reverb");
+while(true)
+{
+delay(5);
+update_game_window();
+p.update_listener_3d(x,y,z,calculate_theta(face));
+if(key_repeat(SDLK_LEFT) && camera.x>0)
+{
+camera.x--;
+p.play_3d("snd/step"+random(1,5)+".ogg",x,y,z,camera.x,camera.y,camera.z,face,false);
+}
+else if(key_repeat(SDLK_RIGHT))
+{
+camera.x++;
+p.play_3d("snd/step"+random(1,5)+".ogg",x,y,z,camera.x,camera.y,camera.z,face,false);
+}
+else if(key_repeat(SDLK_DOWN) && camera.y>0)
+{
+camera.y--;
+p.play_3d("snd/step"+random(1,5)+".ogg",x,y,z,camera.x,camera.y,camera.z,face,false);
+}
+else if(key_repeat(SDLK_UP))
+{
+camera.y++;
+p.play_3d("snd/step"+random(1,5)+".ogg",x,y,z,camera.x,camera.y,camera.z,face,false);
+}
+else if(key_repeat(SDLK_PAGEUP))
+{
+camera.z++;
+p.play_3d("snd/step"+random(1,5)+".ogg",x,y,z,camera.x,camera.y,camera.z,face,false);
+}
+else if(key_repeat(SDLK_PAGEDOWN) && camera.z>0)
+{
+camera.z--;
+p.play_3d("snd/step"+random(1,5)+".ogg",x,y,z,camera.x,camera.y,camera.z,face,false);
+}
+if(key_pressed(SDLK_c)) speak(camera.x+", "+camera.y+", "+camera.z+". Your current location's "+x+", "+y+", "+z+", which is "+get_3d_distance(x,y,z,camera.x,camera.y,camera.z)+" feet away.");
+}
+}
