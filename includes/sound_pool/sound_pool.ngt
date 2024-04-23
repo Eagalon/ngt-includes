@@ -33,6 +33,13 @@ bool paused;
 bool stationary;
 double start_offset;
 bool persistent;
+string global_fx;
+float dry=0;
+float wet=0;
+float room_size=50;
+float damping=0;
+float decay=0.3;
+float mode=0;
 sound_pool_item()
 {
 reset();
@@ -68,6 +75,27 @@ paused=false;
 stationary=false;
 start_offset=0.0;
 persistent=false;
+}
+void set_global_fx(string fx)
+{
+global_fx=fx;
+handle.set_fx(global_fx);
+}
+void set_reverb_parameters(float dry, float wet, float roomsize, float damping, float mode)
+{
+dry=dry;
+wet=wet;
+room_size=roomsize;
+damping=damping;
+mode=mode;
+handle.set_reverb_parameters(dry,wet,room_size,damping,mode);
+}
+void set_delay_parameters(float dry, float wet, float decay)
+{
+dry=dry;
+wet=wet;
+decay=decay;
+handle.set_delay_parameters(dry,wet,decay);
 }
 
 /*
@@ -236,6 +264,13 @@ float volume_step;
 float behind_pitch_decrease;
 bool use_hrtf;
 string global_fx;
+float dry=0;
+float wet=0;
+float room_size=50;
+float damping=0;
+float decay=0.3;
+float mode=0;
+
 // Default constructor, where we give the user 100 sounds.
 sound_pool()
 {
@@ -299,7 +334,9 @@ items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
 
-items[slot].handle.set_fx(global_fx);
+items[slot].set_global_fx(global_fx);
+items[slot].set_reverb_parameters(dry,wet,room_size,damping,mode);
+items[slot].set_delay_parameters(dry,wet,decay);
 if(items[slot].handle.active==false)
 {
 items[slot].reset();
@@ -389,8 +426,9 @@ items[slot].handle.load_from_memory(items[slot].filename);
 
 items[slot].handle.set_hrtf(use_hrtf);
 
-items[slot].handle.set_fx(global_fx);
-
+items[slot].set_global_fx(global_fx);
+items[slot].set_reverb_parameters(dry,wet,room_size,damping,mode);
+items[slot].set_delay_parameters(dry,wet,decay);
 if(items[slot].handle.active==false)
 {
 items[slot].reset();
@@ -472,7 +510,9 @@ items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
 
-items[slot].handle.set_fx(global_fx);
+items[slot].set_global_fx(global_fx);
+items[slot].set_reverb_parameters(dry,wet,room_size,damping,mode);
+items[slot].set_delay_parameters(dry,wet,decay);
 items[slot].handle.set_hrtf(use_hrtf);
 if(items[slot].handle.active==false)
 {
@@ -560,7 +600,9 @@ items[slot].memoryplaying=true;
 items[slot].handle.load_from_memory(items[slot].filename);
 }
 
-items[slot].handle.set_fx(global_fx);
+items[slot].set_global_fx(global_fx);
+items[slot].set_reverb_parameters(dry,wet,room_size,damping,mode);
+items[slot].set_delay_parameters(dry,wet,decay);
 items[slot].handle.set_hrtf(use_hrtf);
 if(items[slot].handle.active==false)
 {
@@ -588,8 +630,22 @@ if(slot>highest_slot)
 highest_slot=slot;
 return slot;
 }
-void set_global_fx(string fx){
+void set_global_fx(string fx)
+{
 global_fx=fx;
+}
+void set_reverb_parameters(float dry, float wet, float roomsize, float damping, float mode)
+{
+dry=dry;
+wet=wet;
+room_size=roomsize;
+damping=damping;
+mode=mode;
+}
+void set_delay_parameters(float dry, float wet, float decay) {
+dry=dry;
+wet=wet;
+decay=decay;
 }
 bool sound_active(int slot)
 {

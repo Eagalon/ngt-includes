@@ -1,5 +1,10 @@
 # NGT Includes Changes
 
+## Changes on Tuesday, April 23, 2024
+* The use of reverb has been implemented in the sound pool. `void set_global_fx(string fx)`, `void set_reverb_parameters(float dry, float wet, float roomsize, float damping, float mode)`, `void set_delay_parameters(float dry, float wet, float decay)`.
+* introducing 1 new feature in the translation class. The ability to set language code. There are also default base language code variable (`base_lang_code`). The read only property is `code` which retrieves the language code of the currently used language. The method `get_code(string language)` is to get the language code from other translated language. To add language code into the translation language file, add the syntax to the file: `code:your_language_code`.
+* Added number speaker class (numspeaker) to the includes! This class supports the ability to play number files based on the number_to_words function in the engine's implementation.
+
 ## Changes on Sunday, April 21, 2024
 * The keyhold object has been changed. The method called pressing is no longer available. Instead, you use the method `get_pressing()`, or use property `pressing`. All the scripts using keyhold has been updated with this change.
 * The sound pool is now uses stream rather than load.

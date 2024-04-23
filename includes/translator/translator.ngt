@@ -11,6 +11,7 @@ class translator
 string lfolder="lang";
 string base_lang="english";
 string base_lang_flag="🇺🇸";
+string base_lang_code="eng";
 //The language extention.
 string lex=".lng";
 private string langdata, m_langname=this.base_lang;
@@ -90,5 +91,34 @@ return"";
 string get_flag() property
 {
 return this.get_flag(this.m_langname);
+}
+string get_code(string l)
+{
+if(l=="") l=this.m_langname;
+if(l=="") l=this.base_lang;
+if(l=="") return"";
+if(l==this.base_lang) return this.base_lang_code;
+string[] lines;
+if(this.m_langname!=l)
+{
+file f;
+f.open(this.lfolder+"/"+l+""+this.lex+"","r");
+lines=f.read(f.get_size()).split("\r\n");
+f.close();
+}
+else
+{
+lines=this.langdata.split("\r\n");
+}
+for(uint i=0;i<lines.length();i++)
+{
+string[] d=lines[i].split(":");
+if(d[0]=="code" && d.length()>1) return ""+d[1];
+}//i
+return"";
+}
+string get_code() property
+{
+return this.get_code(this.m_langname);
 }
 }//endclass

@@ -10,7 +10,6 @@ show_game_window("test");
 wait(1000);
 speak("press the left, right, up, down, page up/down to navigate. and c to check coordinates.");
 camera.x=x;camera.y=y;camera.z=z; //initialize the vector.
-p.set_global_fx("reverb");
 while(true)
 {
 delay(5);
