@@ -75,11 +75,30 @@ output+=items[i].name+del+items[i].amount+del2;
 }
 return output;
 }
-void give(const string what, const double amount)
+int64 import_inv(string data, string del="=", string del2="\r\n")
+{
+this.reset();
+if(data=="") return -1;
+string[] l=data.split(del2);
+if(l.length()<1) return -1;
+uint count=0;
+for(uint i=0;i<l.length();i++)
+{
+string[] parsed=l[i].split(del);
+if(parsed.length()<2) continue;
+uint64 amount=string_to_number(parsed[1]);
+if(amount<1) continue;
+this.give(parsed[0],amount);
+count++;
+}
+return count;
+}
+void give(const string what, const uint64 amount)
 {
 inventory_item@temp=get_inv_item_handle(what);
 if(@temp==null)
 {
+if(amount<1) return;
 @temp=inventory_item(what, amount);
 this.items.insert_last(temp);
 }
@@ -90,21 +109,21 @@ if(temp.amount<=0)
 this.items.remove_at(this.get_item_index(temp.name));
 }
 }
-double get_item_amount(const string a)
+uint64 get_item_amount(const string a)
 {
 for(int i=0; i<items.length(); i+=1)
 {
 if(items[i].name==a) return items[i].amount;
 }
-return -1;
-}
-}
+return 0;
+}//if
+}//i
 //end of inventory class.
 class inventory_item
 {
 string name;
-double amount;
-inventory_item(string a, double b)
+uint64 amount;
+inventory_item(string a, uint64 b)
 {
 this.name=a;
 this.amount=b;

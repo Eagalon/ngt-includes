@@ -1,5 +1,11 @@
 # NGT Includes Changes
 
+## Changes on Wednesday, April 24, 2024
+* Added `import_inv` method into the inventory class.
+* Fixed inventory class with values below 1.
+* Changed from double to uint64 in inventory class for inventory item amounts, which will never allow below 0, meaning it cannot overthrow to -1.
+* Fixed the rotation class, it is now more accurate.
+
 ## Changes on Tuesday, April 23, 2024
 * The use of reverb has been implemented in the sound pool. `void set_global_fx(string fx)`, `void set_reverb_parameters(float dry, float wet, float roomsize, float damping, float mode)`, `void set_delay_parameters(float dry, float wet, float decay)`.
 * introducing 1 new feature in the translation class. The ability to set language code. There are also default base language code variable (`base_lang_code`). The read only property is `code` which retrieves the language code of the currently used language. The method `get_code(string language)` is to get the language code from other translated language. To add language code into the translation language file, add the syntax to the file: `code:your_language_code`.

@@ -242,12 +242,19 @@ progress_sound.play();
 }*/
 double get5rating(double five,double four,double three,double two,double one,int round_to=1)
 {
+try
+{
 double first=five+four+three+two+one;
 double second=(five*5)+(four*4)+(three*3)+(two*2)+(one*1);
 if(first<1) return 0.0;
 double result=second/first;
 result=round(result,round_to);
 return result;
+}
+catch
+{
+return round(0,round_to);
+}
 }
 string get_item_text(string text,string split_with="[[]]")
 {
@@ -269,7 +276,14 @@ return final;
 }
 double percent(double n1, double n2)
 {
+try
+{
 return (n1/n2)*100;
+}
+catch
+{
+return 0;
+}
 }
 //these are the constants for the file_put_contents function.
 const uint8 FILE_WRITE=250;
@@ -559,9 +573,23 @@ return false;
 }
 bool inrange(double x, double y, double z, vector@ min, vector@ max)
 {
+try
+{
 return inrange(x,y,z,min.x,max.x,min.y,max.y,min.z,max.z);
+}
+catch
+{
+return false;
+}
 }
 bool inrange(vector@ current, vector@ min, vector@ max)
 {
+try
+{
 return inrange(current.x,current.y,current.z,min.x,max.x,min.y,max.y,min.z,max.z);
+}
+catch
+{
+return false;
+}
 }

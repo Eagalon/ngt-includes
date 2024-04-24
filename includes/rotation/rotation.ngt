@@ -133,21 +133,18 @@ return abs(x1-x2);
 }
 double get_2d_distance(double x1, double y1, double x2, double y2)
 {
-double x=get_1d_distance(x1, x2);
-double y=get_1d_distance(y1, y2);
-return x+y;
+return round(sqrt((x2-x1)**2+(y2-y1)**2),0);
 }
 double get_3d_distance(double x1, double y1, double z1, double x2, double y2, double z2)
 {
-double x=get_1d_distance(x1, x2);
-double y=get_1d_distance(y1, y2);
-double z=get_1d_distance(z1, z2);
-return x+y+z;
+return round(sqrt((x2-x1)**2+(y2-y1)**2+(z2-z1)**2),0);
 }
 double calculate_x_y_angle(double x1, double y1, double x2, double y2, double deg)
 {
 double x=x2-x1;
 double y=y2-y1;
+if(x==0 and y==0)
+return 0;
 if(x==0)
 {
 x+=0.0000001;
@@ -183,7 +180,7 @@ if(fdeg<0)
 {
 fdeg+=360;
 }
-fdeg=ceil(fdeg);
+fdeg=round(fdeg, 0);
 return fdeg;
 }
 string calculate_x_y_string(double deg)
@@ -194,19 +191,19 @@ return "streight in front";
 }
 else if(deg>0 and deg<10)
 {
-return "very slightly to the right";
+return "in front and very slightly to the right";
 }
 else if(deg>9 and deg<20)
 {
-return "slightly off to the right";
+return "in front and slightly off to the right";
 }
 else if(deg>19 and deg<40)
 {
-return "a little ways off to the right";
+return "in front a little ways off to the right";
 }
 else if(deg>39 and deg<90)
 {
-return "a fair distance off to the right";
+return "slightly in front and a fair distance off to the right";
 }
 else if(deg==90)
 {
@@ -258,23 +255,23 @@ return "streight off to the left";
 }
 else if(deg>270 and deg<300)
 {
-return "far off to the left";
+return "slightly in front far off to the left";
 }
 else if(deg>299 and deg<320)
 {
-return "a ways off to the left";
+return "in front and a ways off to the left";
 }
 else if(deg>319 and deg<340)
 {
-return "A little ways off to the left";
+return "in front and a little ways off to the left";
 }
 else if(deg>339 and deg<350)
 {
-return "slightly off to the left";
+return "in front and slightly off to the left";
 }
 else if(deg>349 and deg<=360)
 {
-return "very slightly off to the left";
+return "in front and very slightly off to the left";
 }
 return "";
 }
