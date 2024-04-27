@@ -593,3 +593,40 @@ catch
 return false;
 }
 }
+enum gendercodes
+{
+gender_s=1,
+gender_o,
+gender_pd,
+gender_pp,
+gender_r
+}
+string get_gender(string gend, int n = 0)
+{
+if (n == 0) return gend;
+string gen = gend.lower();
+if (gen == "male")
+{
+if (n == gender_s) return "he";
+else if (n == gender_o) return "him";
+else if (n == gender_pd) return "his";
+else if (n == gender_pp) return "his";
+else if (n == gender_r) return "himself";
+else return "";
+}
+else if (gen == "female")
+{
+if (n == gender_s) return "she";
+else if (n == gender_o) return "her";
+else if (n == gender_pd) return "her";
+else if (n == gender_pp) return "hers";
+else if (n == gender_r) return "herself";
+else return "";
+}
+else if (n == gender_s) return "they";
+else if (n == gender_o) return "them";
+else if (n == gender_pd) return "their";
+else if (n == gender_pp) return "theirs";
+else if (n == gender_r) return "themselves";
+else return "";
+}

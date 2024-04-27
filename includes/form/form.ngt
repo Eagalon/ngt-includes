@@ -83,7 +83,7 @@ audio_form()
 {
 reset();
 }
-void create_window(string window_title, bool change_screen_title=true, bool say_dialog=true, string window_label="")
+void create_window(string window_title, bool change_screen_title=false, bool say_dialog=true, string window_label="")
 {
 reset();
 form_error=0;
@@ -106,22 +106,22 @@ return;
 }
 if(speak_control_attributes_separately)
 {
-speak(window_title);
+speak(window_title,readerinterrupt);
 if(say_dialog)
 {
-speak("Dialog");
+speak("Dialog",readerinterrupt);
 }
-if(window_label!="") speak(window_label);
+if(window_label!="") speak(window_label,readerinterrupt);
 }
 else
 {
 if(say_dialog)
 {
-speak(window_title+" Dialog  "+(window_label!=""?window_label:""));
+speak(window_title+" Dialog  "+(window_label!=""?window_label:""),readerinterrupt);
 }
 else
 {
-speak(window_title+"  "+(window_label!=""?window_label:""));
+speak(window_title+"  "+(window_label!=""?window_label:""),readerinterrupt);
 }
 }
 get_input();
@@ -492,24 +492,24 @@ if(is_active_window != were_active_window)
 were_active_window=is_active_window;
 if(is_active_window and read_when_active_window)
 {
-wait(1000);
+wait(750);
 if(speak_control_attributes_separately)
 {
-speak(window_title, true);
+speak(window_title ,readerinterrupt);
 if(is_dialog)
 {
-speak("Dialog");
+speak("Dialog",readerinterrupt);
 }
 }
 else
 {
 if(is_dialog)
 {
-speak(window_title+" Dialog"+(window_label!=""?"  "+window_label:""), true);
+speak(window_title+" Dialog"+(window_label!=""?"  "+window_label:""),readerinterrupt);
 }
 else
 {
-speak(window_title+(window_label!=""?"  "+window_label:""));
+speak(window_title+(window_label!=""?"  "+window_label:""),readerinterrupt);
 }
 }
 focus(get_current_focus());
@@ -948,7 +948,7 @@ if((speak_deletion_status)&&(c_form[control_index].list_position>-1))
 speak(c_form[control_index].list[get_list_position(control_index)].item);
 if(c_form[control_index].list[get_list_position(control_index)].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 return true;
@@ -1015,7 +1015,7 @@ if((speak_deletion_status)&&(c_form[control_index].list_position>-1))
 speak(c_form[control_index].list[get_list_position(control_index)].item);
 if(c_form[control_index].list[get_list_position(control_index)].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 return true;
@@ -2051,7 +2051,7 @@ c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].set_contro
 c_form[control_focus].tab_page_index-=1;
 if(c_form[control_focus].tab_page_index<0)
 c_form[control_focus].tab_page_index=c_form[control_focus].tab_pages.length()-1;
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+" tab selected");
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+" tab selected",readerinterrupt);
 return true;
 }
 }
@@ -2119,7 +2119,7 @@ c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].set_contro
 c_form[control_focus].tab_page_index+=1;
 if(c_form[control_focus].tab_page_index>=c_form[control_focus].tab_pages.length())
 c_form[control_focus].tab_page_index=0;
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+" tab selected");
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+" tab selected",readerinterrupt);
 return true;
 }
 }
@@ -2127,7 +2127,7 @@ return true;
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()<c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].c_form.length()-1)
 {
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()==-1)
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+"  property page  "+c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_label);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+"  property page  "+c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_label,readerinterrupt);
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].focus_next_control(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus(), c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()!=-1))
 {
 return true;
@@ -2707,11 +2707,11 @@ speak(caption+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:""),true);
 else
 {
 if(type!=ct_tab_control)
-speak(caption+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:""));
+speak(caption+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:""),readerinterrupt);
 }
 string sdsd=(this.required?" required  ":"");
 if(type!=ct_tab_control)
-speak(typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""));
+speak(typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""),readerinterrupt);
 }
 else
 {
@@ -2725,7 +2725,7 @@ else
 {
 string sdsd=(this.required?" required  ":"");
 if(type!=ct_tab_control)
-speak(caption+" "+typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""));
+speak(caption+" "+typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""),readerinterrupt);
 }
 }
 if(type==ct_progress)
@@ -2735,14 +2735,14 @@ speak_progress(false);
 if(type==ct_tab_control)
 {
 if(tab_pages.length()>0 and tab_pages[tab_page_index].get_control_focus()==-1)
-speak(caption+" "+typename);
+speak(caption+" "+typename,readerinterrupt);
 if(tab_pages.length()>0)
 {
 if(tab_pages[tab_page_index].get_control_focus()==-1)
-speak(tab_pages[tab_page_index].window_title+" tab selected");
+speak(tab_pages[tab_page_index].window_title+" tab selected",readerinterrupt);
 else
 {
-speak(tab_pages[tab_page_index].window_title+"  property page  "+tab_pages[tab_page_index].window_label);
+speak(tab_pages[tab_page_index].window_title+"  property page  "+tab_pages[tab_page_index].window_label,readerinterrupt);
 tab_pages[tab_page_index].focus(tab_pages[tab_page_index].get_control_focus());
 }
 }
@@ -3125,7 +3125,7 @@ list_position--;
 speak(list[list_position].item,readerinterrupt);
 if(list[list_position].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 if(fkpgup.pressing)
@@ -3135,7 +3135,7 @@ if(list_position<0) list_position=0;
 speak(list[list_position].item,readerinterrupt);
 if(list[list_position].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 if(fkpgdn.pressing)
@@ -3145,7 +3145,7 @@ if(list_position>list_length) list_position=list_length;
 speak(list[list_position].item,readerinterrupt);
 if(list[list_position].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 if(key_pressed(SDLK_HOME))
@@ -3154,7 +3154,7 @@ list_position=0;
 speak(list[list_position].item,readerinterrupt);
 if(list[list_position].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 if(key_pressed(SDLK_END))
@@ -3163,7 +3163,7 @@ list_position=list_length;
 speak(list[list_position].item,readerinterrupt);
 if(list[list_position].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 if(fkdown.pressing)
@@ -3176,7 +3176,7 @@ list_position++;
 speak(list[list_position].item,readerinterrupt);
 if(list[list_position].checked)
 {
-speak("Checked");
+speak("Checked",readerinterrupt);
 }
 }
 }

@@ -2,7 +2,7 @@
 void main()
 {
 show_game_window("hello");
-wait(1000);
+form.reset();
 form.create_window("test window", false, true);
 int c1=form.create_input_box("test input1 outside tab pages");
 int c11=form.create_checkbox("test", true);
@@ -24,9 +24,9 @@ int cm2=form.create_button("cancel", false, true);
 form.focus(c1);
 while(true)
 {
+form.monitor();
 delay(5);
 update_game_window();
-form.monitor();
 if(form.is_pressed(cm2)) exit();
 if(form.is_pressed(cm1))
 {
