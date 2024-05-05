@@ -1,6 +1,7 @@
 # NGT Includes Changes
 
 ## Changes on Sunday, May 05, 2024
+* Custom_menu now supports music volume changing. Use ALT+(Page up and Page down)
 * Added buffer class, which can be used to provide logs, or known as buffers. [Number 6](https://github.com/harrymkt/ngt-includes/pull/6)
 * Added speed stop class, which can detect any speed hacking within the program.
 

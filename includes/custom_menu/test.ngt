@@ -27,7 +27,7 @@ c.add("test1","t1");
 c.add_checkbox("allow pressing escape to quit","escape",false);
 c.add_checkbox("menu wrapping","wrap",false);
 c.add_checkbox("menu sidescrolling","sidescr",false);
-c.add_slider("music volume", "mv", 0, -100, 0);
+c.add_slider("music pitch", "mp", 100, 0, 200);
 c.add_list("sounds","snd",true, "multilist");
 c.add_list_item_to("snd","sound1","");
 c.add_list_item_to("snd","sound2","");
@@ -45,8 +45,8 @@ c.monitor(); //The monitor function.
 c.wrap=c.is_checked("wrap");
 c.escapeable=c.is_checked("escape");
 c.sidescrolling=c.is_checked("sidescr");
-double mvs=c.get_slider_val("mv");
-if(c.musicvol!=mvs) c.musicvol=mvs;
+double mps=c.get_slider_val("mp");
+if(c.musicpitch!=mps) c.musicpitch=mps;
 if(c.is_clicked("q"))
 {
 speak("Exiting");

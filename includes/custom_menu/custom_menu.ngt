@@ -609,12 +609,24 @@ return;
 if(this.ttkey!=-1 && key_pressed(this.ttkey)) speak(this.title);
 if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing)
 {
+if(alt_is_down())
+{
+if(this.musicvol<0) this.musicvol++;
+speak("music volume "+this.musicvol);
+return;
+}
 this.line-=10;
 if(this.line<0) this.line=0;
 this.items[this.line].on_focus();
 }
 if(!key_pressed(SDLK_PAGEDOWN) && ckpagedown.pressing)
 {
+if(alt_is_down())
+{
+if(this.musicvol>-100) this.musicvol--;
+speak("music volume "+this.musicvol);
+return;
+}
 this.line+=10;
 if(this.line>items.length()-1) this.line=items.length()-1;
 this.items[this.line].on_focus();
