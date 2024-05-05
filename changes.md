@@ -1,5 +1,9 @@
 # NGT Includes Changes
 
+## Changes on Sunday, May 05, 2024
+* Added buffer class, which can be used to provide logs, or known as buffers. [Number 6](https://github.com/harrymkt/ngt-includes/pull/6)
+* Added speed stop class, which can detect any speed hacking within the program.
+
 ## Changes on Saturday, April 27, 2024
 * Added `get_gender(string, int)` function to general/hip.ngt. This function will return the gender based on given string, male or female. These values are then converted to the type you want in the second int parameter. The following enum constants can be used instead of numbers from 1 to 5: `gender_s`, he/she/they. `gender_o`, him/her/them. `gender_pd`, him/her/their. `gender_pp`, his/hers/theirs. `gender_r`, himself/herself/themselves.
 * Changed back using load instead of stream, in sound pool.
