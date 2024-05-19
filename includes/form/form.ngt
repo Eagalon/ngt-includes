@@ -1587,7 +1587,7 @@ return "";
 }
 return c_form[control_index].caption;
 }
-int get_default_button()
+int get_default_button() property
 {
 if(!active)
 {
@@ -1603,7 +1603,7 @@ return counter;
 }
 return -1;
 }
-int get_cancel_button()
+int get_cancel_button() property
 {
 if(!active)
 {
@@ -1824,12 +1824,12 @@ return "";
 }
 return c_form[control_index].type_to_name();
 }
-int get_control_count()
+int get_control_count() property
 {
 form_error=0;
 return control_counter+1;
 }
-int get_current_focus()
+int get_current_focus() property
 {
 if(!active)
 {
@@ -1845,7 +1845,7 @@ return counter;
 }
 return -1;
 }
-int get_last_error()
+int get_last_error() property
 {
 return form_error;
 }
@@ -1980,7 +1980,7 @@ cf++;
 }
 return true;
 }
-int get_last_control_index()
+int get_last_control_index() property
 {
 int cf=control_counter;
 while((c_form[cf].visible==false)||(c_form[cf].active==false))

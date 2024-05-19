@@ -1,5 +1,10 @@
 # NGT Includes Changes
 
+## Changes on Sunday, May 19, 2024
+* There is 1 new type available for Custom_menu! Audio! The audio type is to play an audio file on navigation rather than texts, and this will be useful for your game if you do not want to use screen reader, and audio files only. The fully implemented test file is also provided.
+* Fixed reference existance in custom_menu object.
+
+
 ## Changes on Sunday, May 05, 2024
 * Custom_menu now supports music volume changing. Use ALT+(Page up and Page down)
 * Added buffer class, which can be used to provide logs, or known as buffers. [Number 6](https://github.com/harrymkt/ngt-includes/pull/6)

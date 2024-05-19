@@ -61,6 +61,33 @@ this.menu_parent.clicked = this.ref;
 this.menu_parent.play_clicksound();
 }
 }
+class audio_menu_item: menu_item
+{
+audio_menu_item(string name, string ref, custom_menu@parent)
+{
+super(name, ref, cme_type_audio, parent);
+}
+void on_focus()
+{
+if(@this.menu_parent.soundaudio==null)
+{
+sound t;
+@this.menu_parent.soundaudio=t;
+}
+if(this.menu_parent.soundaudio.playing)
+{
+this.menu_parent.soundaudio.close();
+}
+bool successsoundplay=this.menu_parent.soundaudio.stream(this.name);
+if(!successsoundplay)
+{
+this.menu_parent.reset(true);
+return;
+}
+this.menu_parent.soundaudio.play();
+return;
+}
+}
 class slider_menu_item: menu_item
 {
 slider_menu_item(string name, string ref, double indexval, double min, double max, custom_menu@parent)
@@ -175,6 +202,7 @@ string clicked = "";
 private string char,multichar,test;
 private sound sndclick, sndedge, sndwrap, sndopen, sndmove;
 private sound musical;
+sound@ soundaudio;
 double musicvol=0, musicpitch=100;
 custom_menu()
 {
@@ -361,25 +389,37 @@ break;
 bool add_checkbox(string name, string ref, bool checked = false)
 {
 this.cm_error=cme_none;
+if(this.get_menu_item(ref)>-1) return false;
 checkbox_menu_item ch(name, ref, checked, this);
+this.items.insert_last(ch);
+return true;
+}
+bool add_audio(string name, string ref)
+{
+this.cm_error=cme_none;
+if(this.get_menu_item(ref)>-1) return false;
+audio_menu_item ch(name, ref, this);
 this.items.insert_last(ch);
 return true;
 }
 bool add_slider(string i,string ref, double sdindex=0, double sdmin=0, double sdmax=100)
 {
 this.cm_error=cme_none;
+if(this.get_menu_item(ref)>-1) return false;
 this.items.insert_last(slider_menu_item(i, ref, sdindex, sdmin, sdmax, this));
 return true;
 }
 bool add(string i,string ref)
 {
 this.cm_error=cme_none;
+if(this.get_menu_item(ref)>-1) return false;
 this.items.insert_last(text_menu_item(i, ref, this));
 return true;
 }
 bool add_list(string i,string ref, bool multi=false, string listtype="list")
 {
 this.cm_error=cme_none;
+if(this.get_menu_item(ref)>-1) return false;
 this.items.insert_last(list_menu_item(i, ref, multi, listtype, this));
 return true;
 }
