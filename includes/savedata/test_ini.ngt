@@ -7,13 +7,13 @@ void main()
 s=-1;
 loadsd();
 if(s>-1) alert("previously","the timer is "+s);
-show_game_window("test data",600,400);
+show_window("test data",600,400);
 wait(2000);
 speak("press escape to exit");
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 if(key_pressed(SDLK_ESCAPE))
 {
 savesd();

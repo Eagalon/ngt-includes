@@ -204,6 +204,7 @@ private sound sndclick, sndedge, sndwrap, sndopen, sndmove;
 private sound musical;
 sound@ soundaudio;
 double musicvol=0, musicpitch=100;
+private bool say_dialog=true, title_tts=true;
 custom_menu()
 {
 this.clicked = "";
@@ -232,6 +233,9 @@ this.sndopen.close();
 this.musical.close();
 this.musicvol=0;
 this.musicpitch=100;
+this.say_dialog=true;
+this.title_tts=true;
+@this.soundaudio=null;
 return;
 }
 }
@@ -239,7 +243,7 @@ bool get_running() property
 {
 return this.m_running;
 }
-void create(string ctitle,bool say_dialog=false,bool allowoverrun=false)
+void create(string ctitle,bool saydialog=false,bool allowoverrun=false, bool tts=true)
 {
 if(this.m_running && !allowoverrun)
 {
@@ -247,12 +251,38 @@ this.cm_error=cme_alreadyactive;
 return;
 }
 string d="";
-if(say_dialog) d="  dialog";
+this.say_dialog=saydialog;
 this.title=ctitle;
+this.title_tts=tts;
 this.m_running=true;
-speak(this.title+d,false);
+this.speak_title();
 this.clicked = "";
 this.play_opensound();
+return;
+}
+private void speak_title()
+{
+if(this.title_tts)
+{
+speak(this.title+""+(this.say_dialog?"  dialog":""));
+return;
+}
+if(@this.soundaudio==null)
+{
+sound t;
+@this.soundaudio=t;
+}
+if(this.soundaudio.playing)
+{
+this.soundaudio.close();
+}
+bool successsoundplay=this.soundaudio.stream(this.title);
+if(!successsoundplay)
+{
+this.reset(true);
+return;
+}
+this.soundaudio.play();
 return;
 }
 void set_music(string path) property
@@ -283,7 +313,7 @@ double cc=this.items[f].listper;
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
 string c=get_input().lower();
@@ -646,7 +676,7 @@ this.m_running=false;
 this.cm_error=cme_invalid_length;
 return;
 }
-if(this.ttkey!=-1 && key_pressed(this.ttkey)) speak(this.title);
+if(this.ttkey!=-1 && key_pressed(this.ttkey)) this.speak_title();
 if(!key_pressed(SDLK_PAGEUP) && ckpageup.pressing)
 {
 if(alt_is_down())

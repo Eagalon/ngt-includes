@@ -73,40 +73,41 @@ class audio_form
 bool active;
 bool speak_control_attributes_separately;
 bool progressbeep=false;
-bool is_active_window=is_game_window_active(), were_active_window=is_game_window_active();
+bool is_active_window=window_active, were_active_window=window_active;
 bool is_dialog;
 string window_label="";
-string window_title;
+string wintitle;
 bool read_when_active_window=true;
 //constructor
 audio_form()
 {
 reset();
 }
-void create_window(string window_title, bool change_screen_title=false, bool say_dialog=true, string window_label="")
+void create_window(string wintitle, bool change_screen_title=false, bool say_dialog=true, string window_label="")
 {
 reset();
 form_error=0;
 active=true;
-this.window_title = window_title;
+this.wintitle = wintitle;
 is_dialog=say_dialog;
 this.window_label=window_label;
 if(change_screen_title)
 {
-show_game_window(window_title);
+if(get_focused_window()>0) window_title=wintitle;
+else show_window(wintitle);
 }
 if(@ui_speech==null)
 {
 tts_voice temp_voice;
 @ui_speech=temp_voice;
 }
-if(window_title=="")
+if(wintitle=="")
 {
 return;
 }
 if(speak_control_attributes_separately)
 {
-speak(window_title,readerinterrupt);
+speak(wintitle,readerinterrupt);
 if(say_dialog)
 {
 speak("Dialog",readerinterrupt);
@@ -117,11 +118,11 @@ else
 {
 if(say_dialog)
 {
-speak(window_title+" Dialog  "+(window_label!=""?window_label:""),readerinterrupt);
+speak(wintitle+" Dialog  "+(window_label!=""?window_label:""),readerinterrupt);
 }
 else
 {
-speak(window_title+"  "+(window_label!=""?window_label:""),readerinterrupt);
+speak(wintitle+"  "+(window_label!=""?window_label:""),readerinterrupt);
 }
 }
 get_input();
@@ -132,7 +133,7 @@ void setup_tab_page(string title, string label="")
 reset();
 form_error=0;
 active=true;
-this.window_title = title;
+this.wintitle = title;
 this.window_label=label;
 if(@ui_speech==null)
 {
@@ -486,7 +487,7 @@ return true;
 }
 void monitor()
 {
-is_active_window=is_game_window_active();
+is_active_window=window_active;
 if(is_active_window != were_active_window)
 {
 were_active_window=is_active_window;
@@ -495,7 +496,7 @@ if(is_active_window and read_when_active_window)
 wait(750);
 if(speak_control_attributes_separately)
 {
-speak(window_title ,readerinterrupt);
+speak(wintitle ,readerinterrupt);
 if(is_dialog)
 {
 speak("Dialog",readerinterrupt);
@@ -505,11 +506,11 @@ else
 {
 if(is_dialog)
 {
-speak(window_title+" Dialog"+(window_label!=""?"  "+window_label:""),readerinterrupt);
+speak(wintitle+" Dialog"+(window_label!=""?"  "+window_label:""),readerinterrupt);
 }
 else
 {
-speak(window_title+(window_label!=""?"  "+window_label:""),readerinterrupt);
+speak(wintitle+(window_label!=""?"  "+window_label:""),readerinterrupt);
 }
 }
 focus(get_current_focus());
@@ -2003,8 +2004,8 @@ active_controls=-1;
 speech_output=0;
 c_form.resize(0);
 @ui_speech=null;
-is_active_window=is_game_window_active();
-were_active_window=is_game_window_active();
+is_active_window=window_active;
+were_active_window=window_active;
 is_dialog=false;
 window_label="";
 }
@@ -2051,7 +2052,7 @@ c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].set_contro
 c_form[control_focus].tab_page_index-=1;
 if(c_form[control_focus].tab_page_index<0)
 c_form[control_focus].tab_page_index=c_form[control_focus].tab_pages.length()-1;
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+" tab selected",readerinterrupt);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+" tab selected",readerinterrupt);
 return true;
 }
 }
@@ -2119,7 +2120,7 @@ c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].set_contro
 c_form[control_focus].tab_page_index+=1;
 if(c_form[control_focus].tab_page_index>=c_form[control_focus].tab_pages.length())
 c_form[control_focus].tab_page_index=0;
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+" tab selected",readerinterrupt);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+" tab selected",readerinterrupt);
 return true;
 }
 }
@@ -2127,7 +2128,7 @@ return true;
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()<c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].c_form.length()-1)
 {
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()==-1)
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_title+"  property page  "+c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_label,readerinterrupt);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+"  property page  "+c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_label,readerinterrupt);
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].focus_next_control(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus(), c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()!=-1))
 {
 return true;
@@ -2739,10 +2740,10 @@ speak(caption+" "+typename,readerinterrupt);
 if(tab_pages.length()>0)
 {
 if(tab_pages[tab_page_index].get_control_focus()==-1)
-speak(tab_pages[tab_page_index].window_title+" tab selected",readerinterrupt);
+speak(tab_pages[tab_page_index].wintitle+" tab selected",readerinterrupt);
 else
 {
-speak(tab_pages[tab_page_index].window_title+"  property page  "+tab_pages[tab_page_index].window_label,readerinterrupt);
+speak(tab_pages[tab_page_index].wintitle+"  property page  "+tab_pages[tab_page_index].window_label,readerinterrupt);
 tab_pages[tab_page_index].focus(tab_pages[tab_page_index].get_control_focus());
 }
 }
@@ -3216,13 +3217,13 @@ if(key_pressed(SDLK_RIGHT) and tab_page_index<tab_pages.length()-1)
 {
 tab_pages[tab_page_index].set_control_focus_to_before_controls();
 tab_page_index+=1;
-speak(tab_pages[tab_page_index].window_title+" tab selected");
+speak(tab_pages[tab_page_index].wintitle+" tab selected");
 }
 if(key_pressed(SDLK_LEFT) and tab_page_index>0)
 {
 tab_pages[tab_page_index].set_control_focus_to_before_controls();
 tab_page_index-=1;
-speak(tab_pages[tab_page_index].window_title+" tab selected");
+speak(tab_pages[tab_page_index].wintitle+" tab selected");
 }
 }
 else
@@ -4686,7 +4687,7 @@ form.focus(a);
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 form.monitor();
 process_form_loops();
 string t=form.get_text(a);
@@ -4727,7 +4728,7 @@ form.focus(a);
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 form.monitor();
 process_form_loops();
 string t=form.get_list_ref(a,form.get_list_position(a));

@@ -7,7 +7,7 @@ int result = 1;
 while(dlgaudio.playing)
 {
 delay(5);
-update_game_window();
+update_window();
 if(key_pressed(SDLK_ESCAPE)) {
 if (dlgfade==true)
 {

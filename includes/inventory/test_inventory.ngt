@@ -2,7 +2,7 @@
 void main()
 {
 inventory inv;
-show_game_window("Inventory test");
+show_window("Inventory test");
 string[] items = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"};
 for(int x=0;x<items.length();x+=1) inv.give(items[x], random(5, 15));
 wait(500);
@@ -12,7 +12,7 @@ speak("press escape when finished", false);
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 if(key_pressed(SDLK_TAB)) {
 int dir;
 if(key_down(SDLK_LSHIFT) or key_down(SDLK_RSHIFT)) dir = -1;

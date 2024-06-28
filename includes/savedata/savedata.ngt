@@ -33,8 +33,8 @@ void load()
 {
 file f;
 //fn is our previously declared filename string, so use that.
-f.open(fn,"r");
-d=loaddict(f.read(f.get_size()));
+int suc=f.open(fn,"r");
+if(suc==0) d=loaddict(f.read(f.get_size()));
 //Close the file
 f.close();
 }

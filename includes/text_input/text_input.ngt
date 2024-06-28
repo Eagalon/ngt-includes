@@ -227,7 +227,7 @@ cursor=entry.length();
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 string c=get_input();
 if(c!="" and c.length()==1){ 
 if(input_character(c)) cursor++;

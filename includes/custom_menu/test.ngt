@@ -12,7 +12,7 @@ This is the test script for the custom_menu object. This script is always being 
 custom_menu c;
 void main()
 {
-show_game_window("NGT menu test");
+show_window("NGT menu test");
 //Reset with the parameter true is necessary before doing things in the menu.
 c.reset(true);
 //Set menu sounds.
@@ -40,7 +40,7 @@ c.create("test");
 while(c.running)
 {
 delay(5); //For CPU / FAN optimization
-update_game_window();
+update_window();
 c.monitor(); //The monitor function.
 c.wrap=c.is_checked("wrap");
 c.escapeable=c.is_checked("escape");

@@ -10,18 +10,19 @@ this is the test script for the custom_menu object. this script is always being 
 custom_menu c;
 void main()
 {
-show_game_window("menu");
+show_window("menu");
 c.add_audio("sounds/sniper.ogg","sniper");
 c.add_audio("sounds/rifle.ogg","rifle");
-c.create("Menu");
+c.create("sounds/title.ogg", tts:false);
 while(c.running)
 {
 delay(5);
-update_game_window();
+update_window();
 c.monitor();
 string r=c.get_click();
 if(r!="")
 {
+c.reset(true);
 alert("ok","You clicked "+r);
 break;
 }

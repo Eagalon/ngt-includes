@@ -2,7 +2,7 @@
 text_input t;
 void main()
 {
-show_game_window("test");
+show_window("test");
 wait(750);
 t.reset();
 t.copyable=false;

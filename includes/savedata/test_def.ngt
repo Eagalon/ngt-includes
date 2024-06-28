@@ -2,18 +2,24 @@
 savedata sd("config.dat","",savedata_def);
 double s=-1;
 timer f;
+instance j("savedata");
 void main()
 {
+if(j.is_running())
+{
+alert("error","active");
+exit();
+}
 s=-1;
+show_window("test data");
 loadsd();
 if(s>-1) alert("previously","the timer is "+s);
-show_game_window("test data",600,400,false);
 wait(2000);
 speak("press escape to exit");
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 if(key_pressed(SDLK_ESCAPE))
 {
 savesd();
@@ -26,7 +32,7 @@ exit();
 void loadsd()
 {
 sd.load();
-s=sd.readn("time");
+if(sd.exists("time")) s=sd.readn("time");
 }
 void savesd()
 {

@@ -169,7 +169,7 @@ int result=0;
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 result=speak_next();
 if(result==-1)
 {

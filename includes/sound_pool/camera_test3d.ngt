@@ -6,7 +6,7 @@ double face=0;
 vector camera;
 void main()
 {
-show_game_window("test");
+show_window("test");
 wait(1000);
 p.set_global_fx("reverb");
 p.set_reverb_parameters(0.5,0.5,0.5,0.5,0);
@@ -16,7 +16,7 @@ camera.x=x;camera.y=y;camera.z=z; //initialize the vector.
 while(true)
 {
 delay(5);
-update_game_window();
+update_window();
 p.update_listener_3d(x,y,z,calculate_theta(face));
 if(key_repeat(SDLK_LEFT) && camera.x>0)
 {

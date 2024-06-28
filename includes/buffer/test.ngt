@@ -25,12 +25,12 @@ add_buffer_item("global", "user name is exit to the server");
 add_buffer_item("messages", "hello Im a user...");
 add_buffer_item("messages", "How are you");
 add_buffer_item("messages", "How is your day going");
-show_game_window("ngt buffer test");
+show_window("ngt buffer test");
 wait(1000);
 while(true)
 {
 delay(5); //for CPU / FAN optimization
-update_game_window();
+update_window();
 if(key_pressed(SDLK_PERIOD))
 {
 if(alt_is_down())
