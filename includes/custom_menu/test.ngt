@@ -39,8 +39,7 @@ c.create("test");
 //Use running property in while loop to insure no false information can be passed through.
 while(c.running)
 {
-delay(5); //For CPU / FAN optimization
-update_window();
+wait(5);
 c.monitor(); //The monitor function.
 c.wrap=c.is_checked("wrap");
 c.escapeable=c.is_checked("escape");

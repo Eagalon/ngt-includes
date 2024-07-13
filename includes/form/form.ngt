@@ -1,19 +1,18 @@
 /*
-this is just an audio form function.
-by: harry min khant.
-with the help of this function you can use common tasks such as asking to check or not check, asking to type their data (data such as phone numbers, names, etc), clicking the buttons (clicking the buttons such as ok button, send button, cancel button, play button, stop button, etc), and more.
+This is just an audio form function.
+by: Harry Min Khant.
+With the help of this function you can use common tasks such as asking to check or not check, asking to type their data (data such as phone numbers, names, etc), clicking the buttons (clicking the buttons such as ok button, send button, cancel button, play button, stop button, etc), and more.
 If you need any help, feel free to harrymk64@gmail.com
 */
 void process_form_loops()
 {
-//loops for processing other methods outside the form, such as input(), promt_slider() etc
+//Loops for processing other methods outside the form, such as input(), promt_slider() etc
 }
 #include"key_hold.ngt"
 //below are the variables that need in the class. you can save them in your own or the save data class.
 sound capital;
 int capmode=1;
 int charrepeat=1;
-bool readerinterrupt=false;
 key_hold fkleft(SDLK_LEFT,300,50);
 key_hold fkright(SDLK_RIGHT,300,50);
 key_hold fkup(SDLK_UP,300,50);
@@ -93,7 +92,7 @@ is_dialog=say_dialog;
 this.window_label=window_label;
 if(change_screen_title)
 {
-if(get_focused_window()>0) window_title=wintitle;
+if(window_active) window_title=wintitle;
 else show_window(wintitle);
 }
 if(@ui_speech==null)
@@ -107,22 +106,22 @@ return;
 }
 if(speak_control_attributes_separately)
 {
-speak(wintitle,readerinterrupt);
+speak(wintitle,screen_reader_interrupt);
 if(say_dialog)
 {
-speak("Dialog",readerinterrupt);
+speak("Dialog",screen_reader_interrupt);
 }
-if(window_label!="") speak(window_label,readerinterrupt);
+if(window_label!="") speak(window_label,screen_reader_interrupt);
 }
 else
 {
 if(say_dialog)
 {
-speak(wintitle+" Dialog  "+(window_label!=""?window_label:""),readerinterrupt);
+speak(wintitle+" Dialog  "+(window_label!=""?window_label:""),screen_reader_interrupt);
 }
 else
 {
-speak(wintitle+"  "+(window_label!=""?window_label:""),readerinterrupt);
+speak(wintitle+"  "+(window_label!=""?window_label:""),screen_reader_interrupt);
 }
 }
 get_input();
@@ -496,21 +495,21 @@ if(is_active_window and read_when_active_window)
 wait(750);
 if(speak_control_attributes_separately)
 {
-speak(wintitle ,readerinterrupt);
+speak(wintitle ,screen_reader_interrupt);
 if(is_dialog)
 {
-speak("Dialog",readerinterrupt);
+speak("Dialog",screen_reader_interrupt);
 }
 }
 else
 {
 if(is_dialog)
 {
-speak(wintitle+" Dialog"+(window_label!=""?"  "+window_label:""),readerinterrupt);
+speak(wintitle+" Dialog"+(window_label!=""?"  "+window_label:""),screen_reader_interrupt);
 }
 else
 {
-speak(wintitle+(window_label!=""?"  "+window_label:""),readerinterrupt);
+speak(wintitle+(window_label!=""?"  "+window_label:""),screen_reader_interrupt);
 }
 }
 focus(get_current_focus());
@@ -604,7 +603,7 @@ if(c_form[i].required)
 {
 if(c_form[i].type==ct_input && this.get_text(i)=="")
 {
-if(c_form[i].rqt!="") speak(c_form[i].rqt,readerinterrupt);
+if(c_form[i].rqt!="") speak(c_form[i].rqt,screen_reader_interrupt);
 this.focus(i);
 get_input();
 return true;
@@ -949,7 +948,7 @@ if((speak_deletion_status)&&(c_form[control_index].list_position>-1))
 speak(c_form[control_index].list[get_list_position(control_index)].item);
 if(c_form[control_index].list[get_list_position(control_index)].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 return true;
@@ -1016,7 +1015,7 @@ if((speak_deletion_status)&&(c_form[control_index].list_position>-1))
 speak(c_form[control_index].list[get_list_position(control_index)].item);
 if(c_form[control_index].list[get_list_position(control_index)].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 return true;
@@ -2052,7 +2051,7 @@ c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].set_contro
 c_form[control_focus].tab_page_index-=1;
 if(c_form[control_focus].tab_page_index<0)
 c_form[control_focus].tab_page_index=c_form[control_focus].tab_pages.length()-1;
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+" tab selected",readerinterrupt);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+" tab selected",screen_reader_interrupt);
 return true;
 }
 }
@@ -2120,7 +2119,7 @@ c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].set_contro
 c_form[control_focus].tab_page_index+=1;
 if(c_form[control_focus].tab_page_index>=c_form[control_focus].tab_pages.length())
 c_form[control_focus].tab_page_index=0;
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+" tab selected",readerinterrupt);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+" tab selected",screen_reader_interrupt);
 return true;
 }
 }
@@ -2128,7 +2127,7 @@ return true;
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()<c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].c_form.length()-1)
 {
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()==-1)
-speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+"  property page  "+c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_label,readerinterrupt);
+speak(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].wintitle+"  property page  "+c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].window_label,screen_reader_interrupt);
 if(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].focus_next_control(c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus(), c_form[control_focus].tab_pages[c_form[control_focus].tab_page_index].get_control_focus()!=-1))
 {
 return true;
@@ -2708,11 +2707,11 @@ speak(caption+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:""),true);
 else
 {
 if(type!=ct_tab_control)
-speak(caption+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:""),readerinterrupt);
+speak(caption+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:""),screen_reader_interrupt);
 }
 string sdsd=(this.required?" required  ":"");
 if(type!=ct_tab_control)
-speak(typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""),readerinterrupt);
+speak(typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""),screen_reader_interrupt);
 }
 else
 {
@@ -2726,7 +2725,7 @@ else
 {
 string sdsd=(this.required?" required  ":"");
 if(type!=ct_tab_control)
-speak(caption+" "+typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""),readerinterrupt);
+speak(caption+" "+typename+""+(hotkey_letter!=""?" ALT+"+hotkey_letter:"")+""+sdsd+""+(this.desc!=""?" "+this.desc:"")+""+(typetext!=""?" "+typetext:""),screen_reader_interrupt);
 }
 }
 if(type==ct_progress)
@@ -2736,14 +2735,14 @@ speak_progress(false);
 if(type==ct_tab_control)
 {
 if(tab_pages.length()>0 and tab_pages[tab_page_index].get_control_focus()==-1)
-speak(caption+" "+typename,readerinterrupt);
+speak(caption+" "+typename,screen_reader_interrupt);
 if(tab_pages.length()>0)
 {
 if(tab_pages[tab_page_index].get_control_focus()==-1)
-speak(tab_pages[tab_page_index].wintitle+" tab selected",readerinterrupt);
+speak(tab_pages[tab_page_index].wintitle+" tab selected",screen_reader_interrupt);
 else
 {
-speak(tab_pages[tab_page_index].wintitle+"  property page  "+tab_pages[tab_page_index].window_label,readerinterrupt);
+speak(tab_pages[tab_page_index].wintitle+"  property page  "+tab_pages[tab_page_index].window_label,screen_reader_interrupt);
 tab_pages[tab_page_index].focus(tab_pages[tab_page_index].get_control_focus());
 }
 }
@@ -2762,11 +2761,11 @@ if(char!="")
 {
 if(this.onlychars.length()>0 && !this.is_only_allowed_char(char))
 {
-if(this.oct!="") speak(this.oct,readerinterrupt);
+if(this.oct!="") speak(this.oct,screen_reader_interrupt);
 }
 else if(!this.is_allowed_char(char))
 {
-if(this.uct!="") speak(this.uct,readerinterrupt);
+if(this.uct!="") speak(this.uct,screen_reader_interrupt);
 }
 else
 {
@@ -2987,34 +2986,34 @@ if(type==ct_slider)
 if((fkup.pressing || fkright.pressing ) && sdindex<sdmax)
 {
 sdindex++;
-speak(""+sdindex,readerinterrupt);
+speak(""+sdindex,screen_reader_interrupt);
 }
 if((fkdown.pressing || fkleft.pressing ) && sdindex>sdmin)
 {
 sdindex--;
-speak(""+sdindex,readerinterrupt);
+speak(""+sdindex,screen_reader_interrupt);
 }
 if(fkpgup.pressing)
 {
 sdindex+=sdfastmove;
 if(sdindex>sdmax) sdindex=sdmax;
-speak(""+sdindex,readerinterrupt);
+speak(""+sdindex,screen_reader_interrupt);
 }
 if(fkpgdn.pressing)
 {
 sdindex-=sdfastmove;
 if(sdindex<sdmin) sdindex=sdmin;
-speak(""+sdindex,readerinterrupt);
+speak(""+sdindex,screen_reader_interrupt);
 }
 if(key_pressed(SDLK_HOME))
 {
 sdindex=sdmax;
-speak(""+sdindex,readerinterrupt);
+speak(""+sdindex,screen_reader_interrupt);
 }
 if(key_pressed(SDLK_END))
 {
 sdindex=sdmin;
-speak(""+sdindex,readerinterrupt);
+speak(""+sdindex,screen_reader_interrupt);
 }
 }//slider
 if(type==ct_list)
@@ -3057,7 +3056,7 @@ if (list_position<i)
 list_position=i;
 else if (list_position>i)
 list_position=i;
-speak(list[list_position].item+""+(list[list_position].checked?"  checked":""),readerinterrupt);
+speak(list[list_position].item+""+(list[list_position].checked?"  checked":""),screen_reader_interrupt);
 found=true;
 break;
 }
@@ -3083,7 +3082,7 @@ if (list_position<i)
 list_position=i;
 else if (list_position>i)
 list_position=i;
-speak(list[list_position].item+""+(list[list_position].checked?"  checked":""),readerinterrupt);
+speak(list[list_position].item+""+(list[list_position].checked?"  checked":""),screen_reader_interrupt);
 found=true;
 break;
 }
@@ -3123,48 +3122,48 @@ if(list_position<=0)
 return;
 }
 list_position--;
-speak(list[list_position].item,readerinterrupt);
+speak(list[list_position].item,screen_reader_interrupt);
 if(list[list_position].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 if(fkpgup.pressing)
 {
 list_position-=list_fm;
 if(list_position<0) list_position=0;
-speak(list[list_position].item,readerinterrupt);
+speak(list[list_position].item,screen_reader_interrupt);
 if(list[list_position].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 if(fkpgdn.pressing)
 {
 list_position+=list_fm;
 if(list_position>list_length) list_position=list_length;
-speak(list[list_position].item,readerinterrupt);
+speak(list[list_position].item,screen_reader_interrupt);
 if(list[list_position].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 if(key_pressed(SDLK_HOME))
 {
 list_position=0;
-speak(list[list_position].item,readerinterrupt);
+speak(list[list_position].item,screen_reader_interrupt);
 if(list[list_position].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 if(key_pressed(SDLK_END))
 {
 list_position=list_length;
-speak(list[list_position].item,readerinterrupt);
+speak(list[list_position].item,screen_reader_interrupt);
 if(list[list_position].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 if(fkdown.pressing)
@@ -3174,10 +3173,10 @@ if(list_position>=list_length)
 return;
 }
 list_position++;
-speak(list[list_position].item,readerinterrupt);
+speak(list[list_position].item,screen_reader_interrupt);
 if(list[list_position].checked)
 {
-speak("Checked",readerinterrupt);
+speak("Checked",screen_reader_interrupt);
 }
 }
 }
@@ -3270,11 +3269,11 @@ sel_length=sel_start-sel_highlight;
 }
 if(orig_sel_length>=sel_length)
 {
-speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_unselection_speech_text,readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_unselection_speech_text,screen_reader_interrupt);
 }
 else
 {
-speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_selection_speech_text,readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_selection_speech_text,screen_reader_interrupt);
 }
 }
 void highlight_right()
@@ -3299,17 +3298,17 @@ sel_length=sel_start-sel_highlight;
 }
 if(sel_start==text.length())
 {
-speak("Blank",readerinterrupt);
+speak("Blank",screen_reader_interrupt);
 }
 else
 {
 if(orig_sel_length>=sel_length)
 {
-speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_unselection_speech_text,readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_unselection_speech_text,screen_reader_interrupt);
 }
 else
 {
-speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_selection_speech_text,readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[sel_start]), true)+" "+highlight_selection_speech_text,screen_reader_interrupt);
 }
 }
 }
@@ -3322,7 +3321,7 @@ return;
 }
 if(sel_start>=text.length())
 {
-speak(read_line(text.length()-1),readerinterrupt);
+speak(read_line(text.length()-1),screen_reader_interrupt);
 return;
 }
 bool found=false;
@@ -3340,7 +3339,7 @@ continue;
 }
 found=true;
 sel_start=counter+1;
-speak(read_line(sel_start),readerinterrupt);
+speak(read_line(sel_start),screen_reader_interrupt);
 break;
 }
 if(!found)
@@ -3348,7 +3347,7 @@ if(!found)
 int ss=sel_start;
 if(ss<0) ss=0;
 else if(ss>=text.length()) ss=text.length()-1;
-if(ss>-1) speak(read_line(ss),readerinterrupt);
+if(ss>-1) speak(read_line(ss),screen_reader_interrupt);
 }
 }
 void previous_line()
@@ -3359,7 +3358,7 @@ int start;
 int end;
 if(sel_start<=0)
 {
-speak(read_line(0),readerinterrupt);
+speak(read_line(0),screen_reader_interrupt);
 return;
 }
 for(counter=sel_start-1; counter>=0; counter--)
@@ -3367,13 +3366,13 @@ for(counter=sel_start-1; counter>=0; counter--)
 if(counter>text.length())
 {
 sel_start=0;
-speak(read_line(sel_start),readerinterrupt);
+speak(read_line(sel_start),screen_reader_interrupt);
 break;
 }
 if((counter==0)||(counter>text.length()))
 {
 sel_start=0;
-speak(read_line(sel_start),readerinterrupt);
+speak(read_line(sel_start),screen_reader_interrupt);
 break;
 }
 if(text[counter]!="\r")
@@ -3390,7 +3389,7 @@ found_end=true;
 else
 {
 sel_start=counter+2;
-speak(read_line(sel_start),readerinterrupt);
+speak(read_line(sel_start),screen_reader_interrupt);
 break;
 }
 }
@@ -3401,7 +3400,7 @@ void highlight_all()
 sel_start=text.length();
 sel_highlight=0;
 sel_length=text.length();
-speak(get_text_selected(text)+" "+highlight_selection_speech_text,readerinterrupt);
+speak(get_text_selected(text)+" "+highlight_selection_speech_text,screen_reader_interrupt);
 }
 void add(string character)
 {
@@ -3429,7 +3428,7 @@ text=new_text;
 sel_start++;
 sel_highlight=sel_start;
 }
-if (charrepeat==1) speak(input_box_speak(find_appropriate_character(character)),readerinterrupt);
+if (charrepeat==1) speak(input_box_speak(find_appropriate_character(character)),screen_reader_interrupt);
 }
 void edit(string character)
 {
@@ -3454,7 +3453,7 @@ if(read_only==false)
 text.insert(sel_start,character);
 }
 
-speak(input_box_speak(find_appropriate_character(character)),readerinterrupt);
+speak(input_box_speak(find_appropriate_character(character)),screen_reader_interrupt);
 }
 bool add_silent(string content, int position)
 {
@@ -3609,7 +3608,7 @@ continue;
 copy_text+=text[counter];
 }
 }
-speak("Copied: "+get_text_selected(copy_text),readerinterrupt);
+speak("Copied: "+get_text_selected(copy_text),screen_reader_interrupt);
 clipboard_copy_text(copy_text);
 }
 void cut_highlighted()
@@ -3647,7 +3646,7 @@ continue;
 copy_text+=text[counter];
 }
 }
-speak("Cut: "+get_text_selected(copy_text),readerinterrupt);
+speak("Cut: "+get_text_selected(copy_text),screen_reader_interrupt);
 clipboard_copy_text(copy_text);
 delete_highlighted(0, false);
 }
@@ -3667,24 +3666,24 @@ return;
 }
 if((this.onlychars.length()>0 && !this.is_only_allowed_char(paste)) or !this.is_allowed_char(paste))
 {
-speak("failed to paste. the input contains unallowed characters",readerinterrupt);
+speak("failed to paste. the input contains unallowed characters",screen_reader_interrupt);
 return;
 }
 if(this.text.length()>=this.max_length && this.max_length>0)
 {
-speak("failed to paste. the maximum length is reached.",readerinterrupt);
+speak("failed to paste. the maximum length is reached.",screen_reader_interrupt);
 return;
 }
 if(sel_start<=0)
 {
 text=paste+text;
-speak("Pasted: "+get_text_selected(text),readerinterrupt);
+speak("Pasted: "+get_text_selected(text),screen_reader_interrupt);
 return;
 }
 if(sel_start>=text.length())
 {
 text+=paste;
-speak("Pasted: "+get_text_selected(text),readerinterrupt);
+speak("Pasted: "+get_text_selected(text),screen_reader_interrupt);
 return;
 }
 for(int counter=0; counter<sel_start; counter++)
@@ -3699,7 +3698,7 @@ new_text+=text[counter];
 sel_start=-1;
 text=new_text;
 sel_start=text.length()-1;
-speak("Pasted: "+get_text_selected(paste),readerinterrupt);
+speak("Pasted: "+get_text_selected(paste),screen_reader_interrupt);
 }
 void delete_highlighted()
 {
@@ -3773,11 +3772,11 @@ if(speak_deleted==true)
 {
 if((delete_text.length()==1)||(delete_text=="\r\n"))
 {
-speak(input_box_speak(find_appropriate_character(delete_text))+" "+delete_speech_text,readerinterrupt);
+speak(input_box_speak(find_appropriate_character(delete_text))+" "+delete_speech_text,screen_reader_interrupt);
 }
 else
 {
-speak(get_text_selected(delete_text)+" "+delete_speech_text,readerinterrupt);
+speak(get_text_selected(delete_text)+" "+delete_speech_text,screen_reader_interrupt);
 }
 }
 text=new_text;
@@ -3797,13 +3796,13 @@ void move_left()
 sel_length=0;
 if(text.length()<1)
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 if(sel_start<=0)
 {
 sel_start=0;
-speak(input_box_speak(find_appropriate_character(text[0]), true),readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[0]), true),screen_reader_interrupt);
 return;
 }
 sel_start--;
@@ -3815,13 +3814,13 @@ sel_highlight=sel_start;
 }
 if(text[sel_start]=="\n")
 {
-speak(input_box_speak(find_appropriate_character("\r\n"), true),readerinterrupt);
+speak(input_box_speak(find_appropriate_character("\r\n"), true),screen_reader_interrupt);
 sel_start--;
 sel_highlight=sel_start;
 }
 else
 {
-speak(input_box_speak(find_appropriate_character(text[sel_start]), true),readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[sel_start]), true),screen_reader_interrupt);
 }
 }
 void move_right()
@@ -3829,13 +3828,13 @@ void move_right()
 sel_length=0;
 if(text.length()<1)
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 if(sel_start>=text.length())
 {
 sel_start=text.length();
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 sel_start++;
@@ -3843,7 +3842,7 @@ sel_highlight=sel_start;
 if(sel_start>=text.length())
 {
 sel_start=text.length();
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 }
 else
 {
@@ -3854,13 +3853,13 @@ sel_highlight=sel_start;
 }
 if(sel_start<text.length()&&text[sel_start]=="\r")
 {
-speak(input_box_speak(find_appropriate_character("\r\n"), true),readerinterrupt);
+speak(input_box_speak(find_appropriate_character("\r\n"), true),screen_reader_interrupt);
 sel_start++;
 sel_highlight=sel_start;
 }
 else if(sel_start<text.length())
 {
-speak(input_box_speak(find_appropriate_character(text[sel_start]), true),readerinterrupt);
+speak(input_box_speak(find_appropriate_character(text[sel_start]), true),screen_reader_interrupt);
 }
 }
 }
@@ -3872,7 +3871,7 @@ return;
 }
 add("\r\n");
 sel_start+=1;
-speak("New Line",readerinterrupt);
+speak("New Line",screen_reader_interrupt);
 }
 string type_to_name()
 {
@@ -4243,12 +4242,12 @@ int start;
 int end;
 if(text=="")
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 if(sel_start<0 || sel_start>=text.length())
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 for(counter=sel_start; counter>=0; counter--)
@@ -4275,7 +4274,7 @@ found_end=true;
 else
 {
 sel_start=counter+1;
-speak(read_word_from_position(sel_start),readerinterrupt);
+speak(read_word_from_position(sel_start),screen_reader_interrupt);
 break;
 }
 }
@@ -4289,7 +4288,7 @@ found_end=true;
 else
 {
 sel_start=counter+2;
-speak(read_word_from_position(sel_start),readerinterrupt);
+speak(read_word_from_position(sel_start),screen_reader_interrupt);
 break;
 }
 }
@@ -4297,7 +4296,7 @@ break;
 if((counter<=0)||(counter>=text.length()))
 {
 sel_start=0;
-speak(read_word_from_position(sel_start),readerinterrupt);
+speak(read_word_from_position(sel_start),screen_reader_interrupt);
 }
 }
 void move_word_right()
@@ -4305,12 +4304,12 @@ void move_word_right()
 int counter;
 if(text=="")
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 if((sel_start<0)||(sel_start>=text.length()))
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 for(counter=sel_start; counter<text.length(); counter++)
@@ -4322,20 +4321,20 @@ continue;
 if(text[counter]==" ")
 {
 sel_start=counter+1;
-speak(read_word_from_position(sel_start),readerinterrupt);
+speak(read_word_from_position(sel_start),screen_reader_interrupt);
 break;
 }
 if(text[counter]=="\r")
 {
 sel_start=counter+2;
-speak(read_word_from_position(sel_start),readerinterrupt);
+speak(read_word_from_position(sel_start),screen_reader_interrupt);
 break;
 }
 }
 if(counter>=text.length()-1)
 {
 sel_start=text.length()-1;
-speak(read_word_from_position(sel_start),readerinterrupt);
+speak(read_word_from_position(sel_start),screen_reader_interrupt);
 }
 }
 void field_start()
@@ -4343,21 +4342,21 @@ void field_start()
 sel_start=0;
 if(text.length()<=0)
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
-if(!this.multiline) speak(input_box_speak(find_appropriate_character(text[0]), true),readerinterrupt);
-else speak(read_line(sel_start),readerinterrupt);
+if(!this.multiline) speak(input_box_speak(find_appropriate_character(text[0]), true),screen_reader_interrupt);
+else speak(read_line(sel_start),screen_reader_interrupt);
 }
 void field_end()
 {
 if(text.length()<=0)
 {
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 return;
 }
 sel_start=text.length();
-speak("blank",readerinterrupt);
+speak("blank",screen_reader_interrupt);
 }
 string read_word_from_position(int position)
 {
@@ -4397,7 +4396,7 @@ hl_text+=text[counter];
 sel_highlight=sel_start;
 sel_start=0;
 sel_length=sel_start+1;
-speak(get_text_selected(string_reverse(hl_text))+" "+highlight_selection_speech_text,readerinterrupt);
+speak(get_text_selected(string_reverse(hl_text))+" "+highlight_selection_speech_text,screen_reader_interrupt);
 }
 void highlight_to_field_end()
 {
@@ -4413,7 +4412,7 @@ hl_text+=text[counter];
 sel_highlight=sel_start;
 sel_start=text.length();
 sel_length=sel_start-sel_highlight;
-speak(get_text_selected(hl_text)+" "+highlight_selection_speech_text,readerinterrupt);
+speak(get_text_selected(hl_text)+" "+highlight_selection_speech_text,screen_reader_interrupt);
 }
 void highlight_to_word_start()
 {
@@ -4686,8 +4685,7 @@ int c=form.create_button(button2,false,true,true,button2auto);
 form.focus(a);
 while(true)
 {
-delay(5);
-update_window();
+wait(5);
 form.monitor();
 process_form_loops();
 string t=form.get_text(a);
@@ -4727,8 +4725,7 @@ if(b2descof!="") form.set_description(c,b2descof);
 form.focus(a);
 while(true)
 {
-delay(5);
-update_window();
+wait(5);
 form.monitor();
 process_form_loops();
 string t=form.get_list_ref(a,form.get_list_position(a));

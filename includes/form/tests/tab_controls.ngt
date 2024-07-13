@@ -25,8 +25,7 @@ form.focus(c1);
 while(true)
 {
 form.monitor();
-delay(5);
-update_window();
+wait(5);
 if(form.is_pressed(cm2)) exit();
 if(form.is_pressed(cm1))
 {

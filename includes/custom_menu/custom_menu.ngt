@@ -312,8 +312,7 @@ speak(this.items[f].name+"  "+this.items[f].listtype,false);
 double cc=this.items[f].listper;
 while(true)
 {
-delay(5);
-update_window();
+wait(5);
 if(navtime.elapsed_millis>1000 and multichar!="")
 multichar="";
 string c=get_input().lower();
